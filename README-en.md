@@ -14,7 +14,7 @@
 - Basic Login and resgister 
 - Client can see transfer history
 - Client can subscribe new dest people
-- Clien can make transfers
+- Client can make transfers
 
 
 ## Install
