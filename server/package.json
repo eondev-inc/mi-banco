@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/seventrust/mi-banco.git"
+    "url": "git+https://github.com/eondev-inc/mi-banco.git"
   },
   "keywords": [
     "pruebas",
@@ -19,9 +19,9 @@
   "author": "Yerffrey Romero",
   "license": "GPLv3",
   "bugs": {
-    "url": "https://github.com/seventrust/mi-banco/issues"
+    "url": "https://github.com/eondev-inc/mi-banco/issues"
   },
-  "homepage": "https://github.com/seventrust/mi-banco#readme",
+  "homepage": "https://github.com/eondev-inc/mi-banco#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "colors": "^1.4.0",
