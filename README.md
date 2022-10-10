@@ -1,5 +1,5 @@
 # Mi-Banco
-## Prueba de Concepto y resultado de prueba Técnica
+## Un desarrollo para test técnico
 
 Mi Banco es una aplicacion Cliente/Servidor realizada en el stack MEAN (Mongo, Express, Angular y Nodejs) desarrollado completamente en Typescript, además se utiliza Docker para levantar la Aplicación en el host
 
@@ -11,7 +11,7 @@ Mi Banco es una aplicacion Cliente/Servidor realizada en el stack MEAN (Mongo, E
 
 ## Features
 
-- Login y Registro Basico 
+- Login y Registro Básico 
 - Ver historial de transferencias
 - Incribir nuevos destinatarios
 - Realizar transferencias a destinatarios 
@@ -27,10 +27,9 @@ docker-compose up -d
 
 ## TODO
 
-- Mejorar el Login y registro basico
-- Se puede refactorizar un poco el código 
-- Crear DTO's responses (Falta de tiempo)
+- Mejorar el Login y registro básico
+- Se puede refactorizar el código 
 
 
 ## Site:
-http://34.82.228.169/
+:construction: El sitio pronto estará en netlify
