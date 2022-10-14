@@ -126,5 +126,8 @@
       }
     }
   },
-  "defaultProject": "mi-banco"
+  "defaultProject": "mi-banco",
+  "cli": {
+    "analytics": false
+  }
 }

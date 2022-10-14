@@ -14,8 +14,7 @@ export class UserModel {
 	private async conexionMongo() {
 		try {
 			await connect('mongodb://mongo-db:27017/mi-banco', {
-				useNewUrlParser: true,
-				useUnifiedTopology: true,
+				keepAlive: true
 			});
 		} catch (error) {
 			console.error(error.message);
@@ -99,7 +98,7 @@ export class UserModel {
 			console.log(destinatarios);
 
 			let doc = await UserModel.updateOne({ rut: rutCliente }, { $push: { destinatarios } });
-			if (doc.ok == 1) {
+			if (doc.upsertedId) {
 				return true;
 			} else {
 				return false;
@@ -131,7 +130,7 @@ export class UserModel {
 
 			let doc = await UserModel.updateOne({ rut: rutCliente }, { $push: { transferencia: transferenciaInsert } });
 			console.log(doc);
-			if (doc.ok == 1) {
+			if (doc.upsertedId) {
 				return true;
 			}
 			return false;
