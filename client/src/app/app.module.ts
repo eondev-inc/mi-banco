@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 //Modules
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
@@ -14,26 +14,19 @@ import { TransferenciasComponent } from './pages/transferencias/transferencias.c
 import { HistorialComponent } from './pages/historial/historial.component';
 import { RegistrarComponent } from './pages/registrar/registrar.component';
 
-@NgModule({
-	declarations: [
-		AppComponent,
-		NavbarComponent,
-		InicioComponent,
-		TransferenciasComponent,
-		HistorialComponent,
-		RegistrarComponent,
-	],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		HttpClientModule,
-		FormsModule,
-		ReactiveFormsModule,
-		BrowserAnimationsModule,
-		AngularMaterialModule,
-	],
-	providers: [],
-	bootstrap: [AppComponent],
-	schemas: [CUSTOM_ELEMENTS_SCHEMA],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        NavbarComponent,
+        InicioComponent,
+        TransferenciasComponent,
+        HistorialComponent,
+        RegistrarComponent,
+    ],
+    bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        AngularMaterialModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}

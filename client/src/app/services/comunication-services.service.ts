@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ListaBancos } from '../interfaces/bank-list.interface';
 import { clean } from 'rut.js';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { RequestData } from '../interfaces/request-data.interface';
 import { environment } from 'src/environments/environment';
 import { ListaHistorial } from '../interfaces/history.interface';
@@ -42,7 +42,7 @@ export class ComunicationService {
 			rut_cliente: clean(rut_cliente.trim()),
 		};
 
-		return this._client.post<HttpResponse<any>>(`${environment.apiUrl}/cuentas`, requestData, {}).toPromise();
+		return firstValueFrom(this._client.post<HttpResponse<any>>(`${environment.apiUrl}/cuentas`, requestData, {}));
 	}
 
 	/**
@@ -75,7 +75,7 @@ export class ComunicationService {
 	}
 
 	public guardarTransferencia(rut_cliente: any, data: any): Promise<HttpResponse<any>> {
-		return this._client
+		return firstValueFrom(this._client
 			.post<HttpResponse<any>>(
 				`${environment.apiUrl}/transferencias`,
 				{
@@ -87,11 +87,10 @@ export class ComunicationService {
 					monto: data.monto,
 				},
 				{}
-			)
-			.toPromise();
+			));
 	}
 	public registroUsuario(data: any): Promise<HttpResponse<any>> {
-		return this._client
+		return firstValueFrom(this._client
 			.post<HttpResponse<any>>(
 				`${environment.apiUrl}/usuario`,
 				{
@@ -101,8 +100,7 @@ export class ComunicationService {
 					password: data.password.trim(),
 				},
 				{}
-			)
-			.toPromise();
+			));
 	}
 
 	public buscarDestinatarios(rut: any): Observable<HttpResponse<any>> {

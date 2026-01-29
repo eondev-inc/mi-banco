@@ -53,16 +53,16 @@ export class TransferenciasComponent implements OnInit {
 
 	public async obtenerDatos() {
 		this.init();
-		this._cs.buscarDestinatarios(this.rut).subscribe(
-			(response: HttpResponse<any>) => {
+		this._cs.buscarDestinatarios(this.rut).subscribe({
+			next: (response: HttpResponse<any>) => {
 				this.busquedaResultados = response.body.destinatarios;
 				console.log('Destinatarios', this.busquedaResultados);
 			},
-			(error: any) => {
+			error: (error: any) => {
 				console.error(error.message);
 				Swal.fire(`No tienes destinatarios`);
 			}
-		);
+		});
 	}
 
 	private init() {

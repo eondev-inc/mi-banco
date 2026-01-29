@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mi-banco:build"
+            "buildTarget": "mi-banco:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mi-banco:build:production"
+              "buildTarget": "mi-banco:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mi-banco:build"
+            "buildTarget": "mi-banco:build"
           }
         },
         "test": {
@@ -126,7 +126,6 @@
       }
     }
   },
-  "defaultProject": "mi-banco",
   "cli": {
     "analytics": false
   }

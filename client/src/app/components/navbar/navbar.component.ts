@@ -19,9 +19,7 @@ export class NavbarComponent implements OnInit {
 		localStorage.removeItem('login');
 		localStorage.removeItem('bancos');
 		this.loggedIn = false;
-		this.router.navigate(['/inicio']).then(() => {
-			window.location.reload();
-		});
+		this.router.navigate(['/inicio']);
 	}
 
 	private comprobarSesion() {

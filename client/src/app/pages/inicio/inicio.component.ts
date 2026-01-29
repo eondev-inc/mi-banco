@@ -164,24 +164,22 @@ export class InicioComponent implements OnInit {
 				}
 			});
 		}
-		this._cs.usuarioLogin(this.datosLogin.value).subscribe(
-			(response: HttpResponse<any>) => {
+		this._cs.usuarioLogin(this.datosLogin.value).subscribe({
+			next: (response: HttpResponse<any>) => {
 				if (response.ok) {
 					let data = response.body;
 					if (data) {
 						localStorage.setItem('login', JSON.stringify(data));
-						this.router.navigate(['/historial']).then(() => {
-							window.location.reload();
-						});
+						this.router.navigate(['/historial']);
 					}
 				} else {
 					Swal.fire(`usuario o contrasena incorrectos`);
 				}
 			},
-			(error: any) => {
+			error: (error: any) => {
 				Swal.fire(`usuario o contrasena incorrectos`);
 			}
-		);
+		});
 	}
 
 	public async submitRegistro() {

@@ -95,22 +95,22 @@ export class RegistrarComponent implements OnInit {
 		if (Object.keys(bancos).length > 0) {
 			this.bancos = bancos;
 		} else {
-			this._cs.getBankList().subscribe(
-				(response: ListaBancos) => {
+			this._cs.getBankList().subscribe({
+				next: (response: ListaBancos) => {
 					if (response) {
 						this.bancos = response;
 						localStorage.setItem('bancos', JSON.stringify(this.bancos));
 						console.log('Registrar', JSON.stringify(this.bancos, null, 2));
 					}
 				},
-				(error: any) => {
+				error: (error: any) => {
 					Swal.fire({
 						title: 'Fallas en la comunicación',
 						text: `<p> ${error.message} <p>`,
 						toast: true,
 					});
 				}
-			);
+			});
 		}
 	}
 	/**

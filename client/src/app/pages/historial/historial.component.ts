@@ -37,18 +37,18 @@ export class HistorialComponent implements OnInit {
 	}
 
 	private async cargarHistorial(rut: any) {
-		this._cs.obtenerHistorial(rut).subscribe(
-			(response: HttpResponse<ListaHistorial>) => {
+		this._cs.obtenerHistorial(rut).subscribe({
+			next: (response: HttpResponse<ListaHistorial>) => {
 				if (response) {
 					this.historial = response.body;
 
 					console.log('Historial', JSON.stringify(this.historial, null, 2));
 				}
 			},
-			(error: any) => {
+			error: (error: any) => {
 				Swal.fire(`Aun no tienes transferencias realizadas`);
 				console.error(error);
 			}
-		);
+		});
 	}
 }
