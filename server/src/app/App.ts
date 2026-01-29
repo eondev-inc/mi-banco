@@ -1,5 +1,4 @@
 'use strict';
-import { json, urlencoded } from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import { Usuario } from '../routes/usuario.routes';
@@ -50,9 +49,9 @@ class Server {
 	 * @return void
 	 */
 	private config() {
-		//Use del body-parser para manejar JSON de entrada
-		this.app.use(json());
-		this.app.use(urlencoded({ extended: true }));
+		//Usar express built-in para manejar JSON de entrada
+		this.app.use(express.json());
+		this.app.use(express.urlencoded({ extended: true }));
 		this.app.use(cors());
 		// Caputar el error 404
 		this.app.use(function (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {

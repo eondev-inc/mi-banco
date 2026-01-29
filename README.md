@@ -5,7 +5,7 @@ Mi Banco es una aplicacion Cliente/Servidor realizada en el stack MEAN (Mongo, E
 
 - Angular 11.2.9
 - Mongo $latest
-- NodeJS 12 
+- NodeJS 12
 - Typescript 4.3.5
 - Express 4.17.1
 

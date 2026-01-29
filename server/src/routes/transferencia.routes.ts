@@ -42,7 +42,7 @@ export class Transferencias {
 							body: { message: `Sin RUT no puedo buscar -.-' ` },
 						});
 					}
-				} catch (error) {
+				} catch (error: any) {
 					res.status(500).send({
 						ok: false,
 						body: {
@@ -84,7 +84,7 @@ export class Transferencias {
 							body: { message: `Sin RUT no puedo buscar -.-' ` },
 						});
 					}
-				} catch (error) {
+				} catch (error: any) {
 					//! Error critico interno, no moistrar en cliente
 					res.status(500).send({
 						ok: false,
