@@ -14,19 +14,25 @@ import { TransferenciasComponent } from './pages/transferencias/transferencias.c
 import { HistorialComponent } from './pages/historial/historial.component';
 import { RegistrarComponent } from './pages/registrar/registrar.component';
 
-@NgModule({ declarations: [
-        AppComponent,
-        NavbarComponent,
-        InicioComponent,
-        TransferenciasComponent,
-        HistorialComponent,
-        RegistrarComponent,
-    ],
-    bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA], imports: [BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        AngularMaterialModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+	declarations: [
+		AppComponent,
+		NavbarComponent,
+		InicioComponent,
+		TransferenciasComponent,
+		HistorialComponent,
+		RegistrarComponent,
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		FormsModule,
+		ReactiveFormsModule,
+		BrowserAnimationsModule,
+		AngularMaterialModule
+	],
+	providers: [provideHttpClient(withInterceptorsFromDi())],
+	bootstrap: [AppComponent],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
 export class AppModule {}
