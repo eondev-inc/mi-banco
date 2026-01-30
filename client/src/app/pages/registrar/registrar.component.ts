@@ -14,9 +14,10 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
  * Migrado a Material Design con grid responsive y mat-select con íconos
  */
 @Component({
-  selector: 'app-registrar',
-  templateUrl: './registrar.component.html',
-  styleUrls: ['./registrar.component.scss'],
+    selector: 'app-registrar',
+    templateUrl: './registrar.component.html',
+    styleUrls: ['./registrar.component.scss'],
+    standalone: false
 })
 export class RegistrarComponent implements OnInit {
   public datosTransferencia!: FormGroup;

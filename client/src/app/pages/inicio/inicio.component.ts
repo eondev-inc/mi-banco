@@ -14,9 +14,10 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
  * Reemplaza Bootstrap + SweetAlert por Material nativo
  */
 @Component({
-  selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.scss'],
+    selector: 'app-inicio',
+    templateUrl: './inicio.component.html',
+    styleUrls: ['./inicio.component.scss'],
+    standalone: false
 })
 export class InicioComponent implements OnInit {
   public datosLogin!: FormGroup;

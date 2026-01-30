@@ -15,9 +15,10 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
  * Migrado a Material Design con estado vacío y confirmación elegante
  */
 @Component({
-  selector: 'app-transferencias',
-  templateUrl: './transferencias.component.html',
-  styleUrls: ['./transferencias.component.scss'],
+    selector: 'app-transferencias',
+    templateUrl: './transferencias.component.html',
+    styleUrls: ['./transferencias.component.scss'],
+    standalone: false
 })
 export class TransferenciasComponent implements OnInit {
   filteredOptions!: Observable<any[]>;

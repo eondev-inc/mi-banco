@@ -13,76 +13,82 @@
   <span class="navbar__spacer"></span>
 
   <!-- Links de navegación (desktop) -->
-  <nav class="navbar__links" *ngIf="loggedIn">
-    <a
-      mat-button
-      routerLink="/transferencias"
-      routerLinkActive="active"
-      aria-label="Ir a Transferencias">
-      <mat-icon>payment</mat-icon>
-      <span>Transferencias</span>
-    </a>
-    <a
-      mat-button
-      routerLink="/registrar"
-      routerLinkActive="active"
-      aria-label="Registrar nuevo destinatario">
-      <mat-icon>person_add</mat-icon>
-      <span>Nuevo Destinatario</span>
-    </a>
-    <a
-      mat-button
-      routerLink="/historial"
-      routerLinkActive="active"
-      aria-label="Ver historial de transferencias">
-      <mat-icon>history</mat-icon>
-      <span>Historial</span>
-    </a>
-  </nav>
+  @if (loggedIn) {
+    <nav class="navbar__links">
+      <a
+        mat-button
+        routerLink="/transferencias"
+        routerLinkActive="active"
+        aria-label="Ir a Transferencias">
+        <mat-icon>payment</mat-icon>
+        <span>Transferencias</span>
+      </a>
+      <a
+        mat-button
+        routerLink="/registrar"
+        routerLinkActive="active"
+        aria-label="Registrar nuevo destinatario">
+        <mat-icon>person_add</mat-icon>
+        <span>Nuevo Destinatario</span>
+      </a>
+      <a
+        mat-button
+        routerLink="/historial"
+        routerLinkActive="active"
+        aria-label="Ver historial de transferencias">
+        <mat-icon>history</mat-icon>
+        <span>Historial</span>
+      </a>
+    </nav>
+  }
 
   <!-- Usuario y logout (desktop) -->
-  <div class="navbar__user" *ngIf="loggedIn">
-    <button
-      mat-icon-button
-      [matMenuTriggerFor]="userMenu"
-      aria-label="Menú de usuario">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-    <mat-menu #userMenu="matMenu">
-      <div class="navbar__user-info" mat-menu-item disabled>
-        <mat-icon>person</mat-icon>
-        <span>{{ userName }}</span>
-      </div>
-      <mat-divider></mat-divider>
+  @if (loggedIn) {
+    <div class="navbar__user">
       <button
-        mat-menu-item
-        (click)="cerrarSesion()"
-        aria-label="Cerrar sesión">
-        <mat-icon>logout</mat-icon>
-        <span>Cerrar Sesión</span>
+        mat-icon-button
+        [matMenuTriggerFor]="userMenu"
+        aria-label="Menú de usuario">
+        <mat-icon>account_circle</mat-icon>
       </button>
-    </mat-menu>
-  </div>
+      <mat-menu #userMenu="matMenu">
+        <div class="navbar__user-info" mat-menu-item disabled>
+          <mat-icon>person</mat-icon>
+          <span>{{ userName }}</span>
+        </div>
+        <mat-divider></mat-divider>
+        <button
+          mat-menu-item
+          (click)="cerrarSesion()"
+          aria-label="Cerrar sesión">
+          <mat-icon>logout</mat-icon>
+          <span>Cerrar Sesión</span>
+        </button>
+      </mat-menu>
+    </div>
+  }
 
   <!-- Botón login (cuando no autenticado) -->
-  <a
-    *ngIf="!loggedIn"
-    mat-button
-    routerLink="/inicio"
-    aria-label="Iniciar sesión">
-    <mat-icon>login</mat-icon>
-    <span>Iniciar Sesión</span>
-  </a>
+  @if (!loggedIn) {
+    <a
+      mat-button
+      routerLink="/inicio"
+      aria-label="Iniciar sesión">
+      <mat-icon>login</mat-icon>
+      <span>Iniciar Sesión</span>
+    </a>
+  }
 
   <!-- Menú hamburguesa (móvil) -->
-  <button
-    mat-icon-button
-    class="navbar__menu-toggle"
-    [matMenuTriggerFor]="mobileMenu"
-    *ngIf="loggedIn"
-    aria-label="Abrir menú de navegación">
-    <mat-icon>menu</mat-icon>
-  </button>
+  @if (loggedIn) {
+    <button
+      mat-icon-button
+      class="navbar__menu-toggle"
+      [matMenuTriggerFor]="mobileMenu"
+      aria-label="Abrir menú de navegación">
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
 
   <mat-menu #mobileMenu="matMenu">
     <a
