@@ -30,7 +30,7 @@ export class ComunicationService {
 
 	public guardarFormulario(rut_cliente: string, data: any): Promise<HttpResponse<any>> {
 		//TODO: Definir el objeto que debe ser enviado al servicio
-		let requestData: RequestData = {
+		const requestData: RequestData = {
 			rut_destinatario: clean(data.rut),
 			nombre: data.nombre.trim(),
 			apellido: data.apellido.trim(),

@@ -22,7 +22,7 @@ import { LoadingService } from '../../shared/services/loading.service';
 export class HistorialComponent implements OnInit {
   public historial!: ListaHistorial;
   public dataSource!: MatTableDataSource<any>;
-  public searchText: string = '';
+  public searchText = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

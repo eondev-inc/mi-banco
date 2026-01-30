@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
     standalone: false
 })
 export class NavbarComponent implements OnInit {
-  public loggedIn: boolean = false;
-  public userName: string = '';
+  public loggedIn = false;
+  public userName = '';
 
   constructor(private router: Router) {}
 
