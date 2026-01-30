@@ -1,0 +1,48 @@
+# ============================================================================
+# Dockerfile.dev - Entorno de Desarrollo Angular con Hot Reload
+# ============================================================================
+# Este Dockerfile está optimizado para desarrollo local con recarga automática
+# de cambios. Usa ng serve con --host 0.0.0.0 para acceso desde el host.
+#
+# Uso:
+#   docker-compose up client-dev
+#
+# Acceso:
+#   http://localhost:4200
+# ============================================================================
+
+FROM node:20-alpine
+
+# Metadatos
+LABEL maintainer="Mi-Banco Development Team"
+LABEL description="Angular development environment with hot reload"
+LABEL version="1.0"
+
+# Instalar Angular CLI globalmente
+RUN npm install -g @angular/cli@18
+
+# Establecer directorio de trabajo
+WORKDIR /app
+
+# Copiar package.json y package-lock.json primero (mejor cache de capas)
+COPY package*.json ./
+
+# Instalar dependencias con npm ci (más rápido y determinista)
+# --legacy-peer-deps por si hay conflictos de dependencias
+RUN npm ci --legacy-peer-deps
+
+# Copiar el resto del código (se ignora con volumen en desarrollo)
+COPY . .
+
+# Exponer puerto de desarrollo de Angular
+EXPOSE 4200
+
+# Variables de entorno para desarrollo
+ENV NODE_ENV=development
+ENV NG_CLI_ANALYTICS=false
+
+# Comando de desarrollo con hot reload
+# --host 0.0.0.0: Permite acceso desde fuera del contenedor
+# --poll 1000: Detecta cambios en archivos cada 1 segundo (útil en Docker)
+# --disable-host-check: Desactiva verificación de host (seguro en dev local)
+CMD ["ng", "serve", "--host", "0.0.0.0", "--poll", "1000", "--disable-host-check"]

@@ -1,3 +1,45 @@
-/node_modules
-/e2e
+# Node modules (se instalan en el contenedor)
+node_modules/
+npm-debug.log
+
+# Archivos de build
+dist/
+.angular/
+
+# Archivos de testing
+coverage/
+.nyc_output/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
 .gitignore
+
+# Docker
+Dockerfile
+Dockerfile.dev
+.dockerignore
+docker-compose*.yml
+
+# Logs
+*.log
+logs/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Temporal
+tmp/
+temp/
+
+# Environment files con secretos
+.env
+.env.local
+.env.*.local

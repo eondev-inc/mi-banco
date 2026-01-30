@@ -1,0 +1,159 @@
+@use '../../../styles/variables' as vars;
+
+.registrar-page {
+  padding: vars.$spacing-lg;
+  background-color: vars.$background-page;
+  min-height: calc(100vh - vars.$toolbar-height);
+
+  @media (max-width: vars.$breakpoint-sm) {
+    min-height: calc(100vh - vars.$toolbar-height-mobile);
+    padding: vars.$spacing-md;
+  }
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: vars.$spacing-2xl;
+  text-align: center;
+
+  &__title {
+    font-size: vars.$font-size-h3;
+    font-weight: vars.$font-weight-medium;
+    color: vars.$text-primary;
+    margin-bottom: vars.$spacing-sm;
+
+    @media (max-width: vars.$breakpoint-sm) {
+      font-size: vars.$font-size-h4;
+    }
+  }
+
+  &__subtitle {
+    color: vars.$text-secondary;
+    font-size: vars.$font-size-body;
+    margin: 0;
+  }
+}
+
+.registrar-card {
+  padding: vars.$spacing-xl;
+
+  @media (max-width: vars.$breakpoint-sm) {
+    padding: vars.$spacing-md;
+  }
+}
+
+.registrar-form {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-lg;
+}
+
+// ============================================================================
+// GRID RESPONSIVE: 2 columnas desktop, 1 móvil
+// ============================================================================
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: vars.$spacing-md;
+
+  @media (max-width: vars.$breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  // Estilos para mat-select con íconos
+  ::ng-deep .mat-option {
+    display: flex;
+    align-items: center;
+
+    mat-icon {
+      margin-right: vars.$spacing-sm;
+      color: vars.$gray-600;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &.mat-selected {
+      mat-icon {
+        color: vars.$primary-500;
+      }
+    }
+  }
+
+  // Íconos prefix en form fields
+  ::ng-deep .mat-form-field-prefix {
+    mat-icon {
+      color: vars.$gray-600;
+      margin-right: vars.$spacing-sm;
+    }
+  }
+
+  ::ng-deep .mat-focused .mat-form-field-prefix mat-icon {
+    color: vars.$primary-500;
+  }
+}
+
+// ============================================================================
+// ACCIONES DEL FORMULARIO
+// ============================================================================
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: vars.$spacing-sm;
+  margin-top: vars.$spacing-md;
+  padding-top: vars.$spacing-lg;
+  border-top: 1px solid vars.$divider-color;
+
+  @media (max-width: vars.$breakpoint-sm) {
+    flex-direction: column-reverse;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-xs;
+  }
+
+  .mat-flat-button {
+    height: 48px;
+    padding: 0 vars.$spacing-lg;
+    font-weight: vars.$font-weight-medium;
+
+    @media (max-width: vars.$breakpoint-sm) {
+      height: 44px;
+    }
+  }
+}
+
+// ============================================================================
+// ESTILOS ADICIONALES PARA MAT-FORM-FIELD
+// ============================================================================
+::ng-deep .mat-form-field {
+  .mat-form-field-wrapper {
+    padding-bottom: 0.5em;
+  }
+
+  .mat-form-field-label {
+    color: vars.$text-secondary;
+  }
+
+  &.mat-focused .mat-form-field-label {
+    color: vars.$primary-500;
+  }
+
+  &.mat-form-field-invalid .mat-form-field-label {
+    color: vars.$error-500;
+  }
+}

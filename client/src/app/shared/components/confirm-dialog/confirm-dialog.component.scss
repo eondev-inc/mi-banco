@@ -1,0 +1,30 @@
+@use '../../../../styles/variables' as vars;
+
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  margin: 0;
+  padding: vars.$spacing-lg vars.$spacing-lg vars.$spacing-md;
+}
+
+.dialog-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.dialog-content {
+  padding: 0 vars.$spacing-lg vars.$spacing-lg;
+  color: vars.$text-secondary;
+  line-height: vars.$line-height-relaxed;
+
+  p {
+    margin: 0;
+  }
+}
+
+.dialog-actions {
+  padding: vars.$spacing-md vars.$spacing-lg vars.$spacing-lg;
+  gap: vars.$spacing-sm;
+}

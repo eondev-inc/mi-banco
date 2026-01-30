@@ -6,6 +6,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
+import { SharedModule } from './shared/shared.module';
 //Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -29,7 +30,8 @@ import { RegistrarComponent } from './pages/registrar/registrar.component';
 		FormsModule,
 		ReactiveFormsModule,
 		BrowserAnimationsModule,
-		AngularMaterialModule
+		AngularMaterialModule,
+		SharedModule
 	],
 	providers: [provideHttpClient(withInterceptorsFromDi())],
 	bootstrap: [AppComponent],

@@ -1,22 +1,82 @@
 version: "3.7"
+
 services:
+  # ==========================================================================
+  # BASE DE DATOS MONGODB
+  # ==========================================================================
   mongo-db:
     image: mongo
+    container_name: mi-banco-mongodb
     ports:
       - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: "mi-banco"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - mi-banco-network
 
+  # ==========================================================================
+  # SERVIDOR BACKEND (Express/Node.js)
+  # ==========================================================================
   server:
     build: ./server
     image: seventrust/mean_backend
+    container_name: mi-banco-server
     ports:
       - "8000:8000"
     links:
       - mongo-db
+    depends_on:
+      - mongo-db
+    networks:
+      - mi-banco-network
+    restart: unless-stopped
 
+  # ==========================================================================
+  # CLIENTE FRONTEND - PRODUCCIÓN (Angular + Nginx)
+  # ==========================================================================
+  # Este servicio compila la aplicación Angular y la sirve con Nginx
+  # Útil para pruebas de producción local
   client:
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
     image: seventrust/mean_frontend
+    container_name: mi-banco-client
     ports:
-      - "80:80"
+      - "80:4200"
+    volumes:
+      # Montar código fuente para hot reload
+      - ./client/src:/app/src
+      - ./client/angular.json:/app/angular.json
+      - ./client/tsconfig.json:/app/tsconfig.json
+      - ./client/tsconfig.app.json:/app/tsconfig.app.json
+      # Volumen nombrado para node_modules (evita conflictos con host)
+      - client-node-modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - NG_CLI_ANALYTICS=false
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - mi-banco-network
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+# ==========================================================================
+# VOLÚMENES PERSISTENTES
+# ==========================================================================
+volumes:
+  mongo-data:
+    name: mi-banco-mongo-data
+  client-node-modules:
+    name: mi-banco-client-node-modules
+
+# ==========================================================================
+# RED PERSONALIZADA
+# ==========================================================================
+networks:
+  mi-banco-network:
+    name: mi-banco-network
+    driver: bridge
