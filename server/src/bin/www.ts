@@ -1,22 +1,22 @@
 'use strict';
-const app = require('../app/App');
-const debug = require('debug')('express:server');
-const http = require('http');
-const cluster = require('cluster');
-const os = require('os');
+import app from '../app/App';
+import http from 'http';
+import cluster from 'cluster';
+import os from 'os';
+import morgan from 'morgan';
+
 const numCPUs = os.cpus().length;
-const morgan = require('morgan');
 //Iniciar el proceso de creación del servidor
 var port = normalizePort(process.env.PORT || 8000);
 
-app.default.set('port', port);
-var server = http.createServer(app.default);
+app.set('port', port);
+var server = http.createServer(app);
 server.on('error', onError);
 server.on('listening', onListening);
 
 morgan(':method :url :status :res[content-length] - :response-time ms');
 
-if (cluster.isMaster) {
+if (cluster.isPrimary) {
 	console.log(`Maestro ${process.pid} esta corriendo`);
 	//fork del maestro pars los clusters
 	for (let i = 0; i < numCPUs; i++) {
@@ -29,7 +29,7 @@ if (cluster.isMaster) {
 } else {
 	// Workers pueden compartir cualquier conexion TCP
 	// En ese caso es un servisor http
-	var server = http.createServer(app.default);
+	var server = http.createServer(app);
 
 	server.listen(port);
 	server.on('error', onError);
@@ -87,6 +87,7 @@ function onError(error: any) {
  */
 function onListening() {
 	var addr = server.address();
+	if (!addr) return;
 	var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
 	console.log('server now', ' Listening On: ' + bind);
 }

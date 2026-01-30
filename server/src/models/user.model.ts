@@ -1,11 +1,15 @@
 import * as UserSchema from '../schemes/users.scheme';
 import { Destinatarios, Transferencia, User } from '../interface/user.interface';
-import { connect, model } from 'mongoose';
+import { connect, model, Model } from 'mongoose';
 import { DestinatarioNuevo, TransferenciaNueva, UsuarioNuevo } from '../interface/request.interface';
 
 export class UserModel {
+	private userModel: Model<User>;
+
 	constructor() {
 		this.conexionMongo();
+		// Crear el modelo una sola vez en el constructor
+		this.userModel = model<User>('User', UserSchema.default);
 	}
 
 	/**
@@ -13,10 +17,8 @@ export class UserModel {
 	 */
 	private async conexionMongo() {
 		try {
-			await connect('mongodb://mongo-db:27017/mi-banco', {
-				keepAlive: true
-			});
-		} catch (error) {
+			await connect('mongodb://mongo-db:27017/mi-banco');
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	}
@@ -25,10 +27,8 @@ export class UserModel {
 	 */
 	public async agregarNuevoUsuario(usuario: UsuarioNuevo): Promise<User | undefined> {
 		try {
-			//Crear el modelo UserModel
-			let UserModel = model<User>('User', UserSchema.default);
 			//Crear el nuevo documento a insertar en la coleccion usuarios
-			let doc = new UserModel({
+			let doc = new this.userModel({
 				nombre: usuario.nombre,
 				email: usuario.email,
 				rut: usuario.rut,
@@ -47,17 +47,14 @@ export class UserModel {
 				transferencia: doc.transferencia,
 			};
 			return createdUser;
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	}
 
 	public async obtenerUsuario(rut: string, password: string): Promise<User | undefined> {
 		try {
-			//Crear el modelo UserModel
-			let UserModel = model<User>('User', UserSchema.default);
-
-			let doc = await UserModel.findOne(
+			let doc = await this.userModel.findOne(
 				{ rut, password },
 				'nombre correo rut destinatarios transferencia'
 			).exec();
@@ -69,7 +66,7 @@ export class UserModel {
 				return response;
 			}
 			return undefined;
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	}
@@ -81,8 +78,6 @@ export class UserModel {
 	 */
 	public async agregarNuevoDestinatario(rutCliente: string, destinatario: DestinatarioNuevo): Promise<boolean> {
 		try {
-			//Crear el modelo UserModel
-			let UserModel = model<User>('User', UserSchema.default);
 			//* Se crea el objeto destinatarios para guardar en la coleccion que s
 			//* coincida con el RUT que lo agreg[o]
 			let destinatarios: Destinatarios = {
@@ -97,13 +92,13 @@ export class UserModel {
 			};
 			console.log(destinatarios);
 
-			let doc = await UserModel.updateOne({ rut: rutCliente }, { $push: { destinatarios } });
+			let doc = await this.userModel.updateOne({ rut: rutCliente }, { $push: { destinatarios } });
 			if (doc.upsertedId) {
 				return true;
 			} else {
 				return false;
 			}
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 			return false;
 		}
@@ -115,8 +110,6 @@ export class UserModel {
 	 */
 	public async agregarNuevaTransferencia(rutCliente: any, transferencia: TransferenciaNueva): Promise<boolean> {
 		try {
-			//* Crear el modelo UserModel
-			let UserModel = model<User>('User', UserSchema.default);
 			//* Se crea el objeto transferencia para guardar en la coleccion que s
 			//* coincida con el RUT que la realiz[o]
 			let transferenciaInsert: Transferencia = {
@@ -128,13 +121,13 @@ export class UserModel {
 				tipo_cuenta: transferencia.tipo_cuenta,
 			};
 
-			let doc = await UserModel.updateOne({ rut: rutCliente }, { $push: { transferencia: transferenciaInsert } });
+			let doc = await this.userModel.updateOne({ rut: rutCliente }, { $push: { transferencia: transferenciaInsert } });
 			console.log(doc);
 			if (doc.upsertedId) {
 				return true;
 			}
 			return false;
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 			return false;
 		}
@@ -147,10 +140,7 @@ export class UserModel {
 	 */
 	public async buscarDestinatarios(rut: any): Promise<any> {
 		try {
-			//* Crear el modelo UserModel
-			let UserModel = model<User>('User', UserSchema.default);
-
-			let doc = await UserModel.findOne({ rut }).exec();
+			let doc = await this.userModel.findOne({ rut }).exec();
 
 			if (null !== doc) {
 				//*Se encontraron los destinatarios de la persona que quiere hacer la transferencia
@@ -159,7 +149,7 @@ export class UserModel {
 				//! No se encontraron los destinatarios !!!
 				return null;
 			}
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	}
@@ -170,10 +160,7 @@ export class UserModel {
 	 */
 	public async buscarTransferencias(params: any): Promise<any> {
 		try {
-			//* Crear el modelo UserModel
-			let UserModel = model<User>('User', UserSchema.default);
-
-			let doc = await UserModel.findOne({ rut: params }).exec();
+			let doc = await this.userModel.findOne({ rut: params }).exec();
 
 			if (null !== doc) {
 				//*Se encontraron el historial de transferencia
@@ -182,7 +169,7 @@ export class UserModel {
 				//! No se encontraron los destinatarios !!!
 				return null;
 			}
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	}

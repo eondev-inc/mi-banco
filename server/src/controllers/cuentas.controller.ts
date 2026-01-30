@@ -19,7 +19,7 @@ export class CuentasController {
 			} else {
 				return [];
 			}
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	}
@@ -35,7 +35,7 @@ export class CuentasController {
 			//por ahora no puedo revisar  el estado de la actualizacion
 			let result = await this.usermodel.agregarNuevoDestinatario(rutCliente, destinatario);
 			return result;
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 			return false;
 		}

@@ -1,152 +1,187 @@
-<div class="container">
-<div class=" text-center mt-5 ">
-	<h1>Agregar nuevo destinatario</h1>
+<div class="registrar-page">
+  <div class="container">
+    <!-- Header -->
+    <div class="page-header">
+      <h1 class="page-header__title">Agregar Nuevo Destinatario</h1>
+      <p class="page-header__subtitle">Registra los datos del beneficiario para futuras transferencias</p>
+    </div>
+
+    <!-- Formulario -->
+    <mat-card class="registrar-card">
+      <form
+        class="registrar-form"
+        [formGroup]="datosTransferencia"
+        (ngSubmit)="enviarFormulario()"
+        autocomplete="off">
+
+        <!-- Grid 2 columnas -->
+        <div class="form-grid">
+          <!-- Nombre -->
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input
+              matInput
+              formControlName="nombre"
+              placeholder="Juan"
+              autocomplete="given-name"
+              aria-label="Nombre del destinatario"
+              required>
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="nombreNoValido">
+              El nombre es requerido (mínimo 3 caracteres)
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Apellido -->
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input
+              matInput
+              formControlName="apellido"
+              placeholder="Pérez"
+              autocomplete="family-name"
+              aria-label="Apellido del destinatario"
+              required>
+            <mat-icon matPrefix>person_outline</mat-icon>
+            <mat-error *ngIf="apellidoNoValido">
+              El apellido es requerido (mínimo 3 caracteres)
+            </mat-error>
+          </mat-form-field>
+
+          <!-- RUT -->
+          <mat-form-field appearance="outline">
+            <mat-label>RUT</mat-label>
+            <input
+              matInput
+              formControlName="rut"
+              placeholder="12.345.678-9"
+              (keyup)="verificarRut($event)"
+              autocomplete="off"
+              aria-label="RUT del destinatario"
+              required>
+            <mat-icon matPrefix>badge</mat-icon>
+            <mat-error *ngIf="rutNoValido">
+              El RUT ingresado no es válido
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Teléfono -->
+          <mat-form-field appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input
+              matInput
+              type="tel"
+              formControlName="telefono"
+              placeholder="+56 9 1234 5678"
+              autocomplete="tel"
+              aria-label="Teléfono del destinatario"
+              required>
+            <mat-icon matPrefix>phone</mat-icon>
+            <mat-error *ngIf="telefonoNoValido">
+              El teléfono es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Email -->
+          <mat-form-field appearance="outline">
+            <mat-label>Correo Electrónico</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              placeholder="ejemplo@correo.com"
+              autocomplete="email"
+              aria-label="Correo del destinatario"
+              required>
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="emailNoValido">
+              Ingrese un correo electrónico válido
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Número de Cuenta -->
+          <mat-form-field appearance="outline">
+            <mat-label>Número de Cuenta</mat-label>
+            <input
+              matInput
+              formControlName="cuenta"
+              placeholder="1234567890"
+              autocomplete="off"
+              aria-label="Número de cuenta del destinatario"
+              required>
+            <mat-icon matPrefix>account_balance_wallet</mat-icon>
+            <mat-error *ngIf="cuentanoValido">
+              El número de cuenta es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Banco -->
+          <mat-form-field appearance="outline">
+            <mat-label>Banco</mat-label>
+            <mat-select formControlName="banco" aria-label="Seleccione el banco">
+              <mat-option value="">
+                <mat-icon>info</mat-icon>
+                <span>-- Seleccione un banco --</span>
+              </mat-option>
+              <mat-option *ngFor="let banco of bancos?.banks" [value]="banco.name">
+                <mat-icon>account_balance</mat-icon>
+                <span>{{ banco.name }}</span>
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>account_balance</mat-icon>
+            <mat-error>
+              Debe seleccionar un banco
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Tipo de Cuenta -->
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de Cuenta</mat-label>
+            <mat-select formControlName="tipo_cuenta" aria-label="Seleccione el tipo de cuenta">
+              <mat-option value="">
+                <mat-icon>info</mat-icon>
+                <span>-- Seleccione tipo --</span>
+              </mat-option>
+              <mat-option value="Cuenta Vista / RUT">
+                <mat-icon>credit_card</mat-icon>
+                <span>Cuenta Vista / RUT</span>
+              </mat-option>
+              <mat-option value="Cuenta Ahorros">
+                <mat-icon>savings</mat-icon>
+                <span>Cuenta Ahorros</span>
+              </mat-option>
+              <mat-option value="Cuenta Corriente">
+                <mat-icon>account_balance_wallet</mat-icon>
+                <span>Cuenta Corriente</span>
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>account_box</mat-icon>
+            <mat-error>
+              Debe seleccionar un tipo de cuenta
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="form-actions">
+          <button
+            mat-button
+            type="button"
+            routerLink="/transferencias"
+            aria-label="Cancelar y volver">
+            Cancelar
+          </button>
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="datosTransferencia.invalid"
+            aria-label="Registrar destinatario">
+            <mat-icon>person_add</mat-icon>
+            Registrar Destinatario
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
 </div>
-<div class="row ">
-	<div class="col-lg-7 mx-auto">
-		<div class="card mt-2 mx-auto p-4 bg-light">
-			<div class="card-body bg-light">
-				<div class="container">
-					<form id="msform" autocomplete="off" (ngSubmit)="enviarFormulario()" [formGroup]="datosTransferencia">
-						<div class="controls">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-										<!--Nombre-->
-										<label class="fieldlabels">Nombre: *</label>
-										<small *ngIf="nombreNoValido" class="danger">Campo requirido</small>
-										<input
-											type="text"
-											class="form-control"
-											placeholder="Nombre"
-											formControlName="nombre"
-											[class.is-invalid]="nombreNoValido"
-										/>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<!--Apellido-->
-										<label class="fieldlabels">Apellido: *</label>
-										<small *ngIf="apellidoNoValido" class="danger">Campo requirido</small>
-										<input
-											type="text"
-											class="form-control"
-											placeholder="Apellido"
-											formControlName="apellido"
-											[class.is-invalid]="apellidoNoValido"
-										/>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-										<!--RUT-->
-										<label class="fieldlabels">RUT: *</label>
-										<small *ngIf="rutNoValido" class="danger">RUT incorrecto</small>
-										<input
-											type="text"
-											class="form-control"
-											formControlName="rut"
-											placeholder="RUT"
-											[class.is-invalid]="rutNoValido"
-											(keyup)="verificarRut($event)"
-										/>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<!-- Telefono -->
-										<label for="" class="fieldlabels text-right"> Fono: *</label>
-										<small *ngIf="emailNoValido" class="danger">Fono no válido</small>
-										<input
-											type="phone"
-											class="form-control"
-											placeholder="Fono"
-											formControlName="telefono"
-											[class.is-invalid]="telefonoNoValido"
-										/>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<!-- BANCO-->
-									<div class="form-group">
-										<label class="fieldlabels">Banco: *</label>
-										<select name="" id="" class="form-control" formControlName="banco">
-											<option value="NONE" class="option" [selected]="true">-- Seleccione --</option>
-											<option *ngFor="let banco of bancos.banks" [value]="banco.name">
-												{{ banco.name }}
-											</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<!--Tipo de Cuenta-->
-										<label class="fieldlabels">Tipo de cuenta: *</label>
-										<select name="" id="" class="form-control" formControlName="tipo_cuenta">
-											<option value="0" class="option" [selected]="true">-- Seleccione --</option>
-											<option value="Cuenta Vista / RUT" class="option" >Cuenta Vista / RUT</option>
-											<option value="Cuenta Ahorros" class="option" >Cuenta Ahorros</option>
-											<option value="Cuenta Ahorros" class="option" >Cuenta Corriente</option>
-
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-										<!-- EMAIL -->
-										<label for="" class="fieldlabels"> Email: *</label>
-										<small *ngIf="emailNoValido" class="danger">Email no válido</small>
-										<input
-											type="email"
-											class="form-control"
-											placeholder="Email"
-											formControlName="email"
-											[class.is-invalid]="emailNoValido"
-										/>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<!-- Numero de Cuenta-->
-										<label class="fieldlabels">Número de cuenta: *</label>
-										<small *ngIf="cuentanoValido" class="danger">Campo requirido</small>
-										<input
-											type="text"
-											class="form-control"
-											placeholder="Número de cuenta"
-											formControlName="cuenta"
-											[class.is-invalid]="cuentanoValido"
-										/>
-									</div>
-								</div>
-							<div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-group">
-										<input
-											type="submit"
-											class="btn btn-success btn-send pt-2 btn-block"
-											value="Registrar"
-										/>
-									</div>
-								</div>
-							</div>
-							</div>
-
-
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div> <!-- /.8 -->
-	</div> <!-- /.row-->
-</div>
-

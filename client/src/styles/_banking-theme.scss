@@ -1,0 +1,304 @@
+// ============================================================================
+// MI-BANCO - TEMA MATERIAL CUSTOM
+// Tema bancario profesional basado en Material Design 3
+// Compatible con Angular Material 18
+// ============================================================================
+
+@use '@angular/material' as mat;
+@use './variables' as vars;
+
+// ----------------------------------------------------------------------------
+// INCLUIR CORE DE MATERIAL (solo una vez)
+// ----------------------------------------------------------------------------
+@include mat.core();
+
+// ----------------------------------------------------------------------------
+// DEFINIR PALETAS DE COLOR PERSONALIZADAS
+// Usando los colores definidos en _variables.scss
+// ----------------------------------------------------------------------------
+
+// Paleta primaria (azul)
+$mi-banco-primary-palette: (
+  50: vars.$primary-50,
+  100: vars.$primary-100,
+  200: vars.$primary-100,
+  300: vars.$primary-300,
+  400: vars.$primary-300,
+  500: vars.$primary-500,
+  600: vars.$primary-500,
+  700: vars.$primary-700,
+  800: vars.$primary-700,
+  900: vars.$primary-900,
+  A100: vars.$primary-100,
+  A200: vars.$primary-300,
+  A400: vars.$primary-500,
+  A700: vars.$primary-700,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: white,
+    A700: white,
+  )
+);
+
+// Paleta accent (naranja)
+$mi-banco-accent-palette: (
+  50: vars.$accent-100,
+  100: vars.$accent-100,
+  200: vars.$accent-100,
+  300: vars.$accent-300,
+  400: vars.$accent-300,
+  500: vars.$accent-500,
+  600: vars.$accent-500,
+  700: vars.$accent-700,
+  800: vars.$accent-700,
+  900: vars.$accent-900,
+  A100: vars.$accent-100,
+  A200: vars.$accent-300,
+  A400: vars.$accent-500,
+  A700: vars.$accent-700,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: white,
+    A700: white,
+  )
+);
+
+// Paleta warn (rojo)
+$mi-banco-warn-palette: (
+  50: vars.$error-100,
+  100: vars.$error-100,
+  200: vars.$error-100,
+  300: vars.$error-300,
+  400: vars.$error-300,
+  500: vars.$error-500,
+  600: vars.$error-500,
+  700: vars.$error-700,
+  800: vars.$error-700,
+  900: vars.$error-700,
+  A100: vars.$error-100,
+  A200: vars.$error-300,
+  A400: vars.$error-500,
+  A700: vars.$error-700,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: white,
+    A700: white,
+  )
+);
+
+$mi-banco-primary: mat.m2-define-palette($mi-banco-primary-palette, 500);
+$mi-banco-accent: mat.m2-define-palette($mi-banco-accent-palette, 500);
+$mi-banco-warn: mat.m2-define-palette($mi-banco-warn-palette, 500);
+
+// ----------------------------------------------------------------------------
+// CREAR TEMA CLARO
+// ----------------------------------------------------------------------------
+$mi-banco-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $mi-banco-primary,
+    accent: $mi-banco-accent,
+    warn: $mi-banco-warn,
+  )
+));
+
+// ----------------------------------------------------------------------------
+// APLICAR TEMA A TODOS LOS COMPONENTES
+// ----------------------------------------------------------------------------
+@include mat.all-component-themes($mi-banco-theme);
+
+// ----------------------------------------------------------------------------
+// CUSTOMIZACIONES ESPECÍFICAS DEL TEMA BANCARIO
+// ----------------------------------------------------------------------------
+
+// Toolbar con color primario más prominente
+.mat-toolbar.mat-primary {
+  background-color: vars.$primary-500;
+  color: white;
+}
+
+// Cards con elevación sutil
+.mat-mdc-card {
+  box-shadow: vars.$shadow-2;
+  border-radius: vars.$border-radius-md;
+
+  &:hover {
+    box-shadow: vars.$shadow-3;
+    transition: box-shadow vars.$transition-base;
+  }
+}
+
+// Form fields con apariencia outline profesional
+.mat-mdc-form-field {
+  font-family: vars.$font-family-base;
+}
+
+// Botones con alturas y espaciados consistentes
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button {
+  min-width: vars.$button-min-width;
+  height: vars.$button-height;
+  border-radius: vars.$border-radius-sm;
+  font-weight: vars.$font-weight-medium;
+  letter-spacing: 0.5px;
+}
+
+// Snackbars con colores semánticos
+.mat-mdc-snack-bar-container {
+  &.success-snackbar {
+    --mdc-snackbar-container-color: #{vars.$success-500};
+    --mat-snack-bar-button-color: #{vars.$success-100};
+    --mdc-snackbar-supporting-text-color: white;
+  }
+
+  &.error-snackbar {
+    --mdc-snackbar-container-color: #{vars.$error-500};
+    --mat-snack-bar-button-color: #{vars.$error-100};
+    --mdc-snackbar-supporting-text-color: white;
+  }
+
+  &.warning-snackbar {
+    --mdc-snackbar-container-color: #{vars.$warning-700};
+    --mat-snack-bar-button-color: #{vars.$warning-100};
+    --mdc-snackbar-supporting-text-color: white;
+  }
+
+  &.info-snackbar {
+    --mdc-snackbar-container-color: #{vars.$info-500};
+    --mat-snack-bar-button-color: #{vars.$info-100};
+    --mdc-snackbar-supporting-text-color: white;
+  }
+}
+
+// Tablas con estilos bancarios
+.mat-mdc-table {
+  background-color: white;
+
+  .mat-mdc-header-row {
+    background-color: vars.$gray-100;
+  }
+
+  .mat-mdc-row {
+    &:hover {
+      background-color: vars.$background-hover;
+    }
+  }
+
+  .mat-mdc-header-cell {
+    color: vars.$text-primary;
+    font-weight: vars.$font-weight-medium;
+    font-size: vars.$font-size-small;
+  }
+
+  .mat-mdc-cell {
+    color: vars.$text-secondary;
+  }
+}
+
+// Paginador con mejor contraste
+.mat-mdc-paginator {
+  background-color: white;
+  border-top: 1px solid vars.$divider-color;
+}
+
+// Tabs con estilo bancario
+.mat-mdc-tab-group {
+  .mat-mdc-tab {
+    color: vars.$text-secondary;
+    font-weight: vars.$font-weight-medium;
+    min-width: 120px;
+
+    &.mat-mdc-tab-active {
+      color: vars.$primary-500;
+    }
+  }
+}
+
+// Dialog con mejores sombras
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-elevation: #{vars.$shadow-5};
+  border-radius: vars.$border-radius-lg;
+}
+
+// Menu con separación visual
+.mat-mdc-menu-panel {
+  box-shadow: vars.$shadow-3;
+  border-radius: vars.$border-radius-md;
+}
+
+// Chips con colores semánticos
+.mat-mdc-chip {
+  &.chip-success {
+    --mdc-chip-elevated-container-color: #{vars.$success-100};
+    --mdc-chip-label-text-color: #{vars.$success-700};
+  }
+
+  &.chip-error {
+    --mdc-chip-elevated-container-color: #{vars.$error-100};
+    --mdc-chip-label-text-color: #{vars.$error-700};
+  }
+
+  &.chip-warning {
+    --mdc-chip-elevated-container-color: #{vars.$warning-100};
+    --mdc-chip-label-text-color: #{vars.$warning-700};
+  }
+
+  &.chip-info {
+    --mdc-chip-elevated-container-color: #{vars.$info-100};
+    --mdc-chip-label-text-color: #{vars.$info-700};
+  }
+}
+
+// Progress spinner con color primario
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #{vars.$primary-500};
+}
+
+// Focus visible mejorado para accesibilidad
+*:focus-visible {
+  outline: vars.$focus-ring-width solid vars.$focus-ring-color;
+  outline-offset: vars.$focus-ring-offset;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: vars.$focus-ring-width solid vars.$focus-ring-color;
+  outline-offset: vars.$focus-ring-offset;
+}

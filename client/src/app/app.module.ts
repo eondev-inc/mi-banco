@@ -2,10 +2,11 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 //Modules
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
+import { SharedModule } from './shared/shared.module';
 //Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -26,14 +27,14 @@ import { RegistrarComponent } from './pages/registrar/registrar.component';
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
-		HttpClientModule,
 		FormsModule,
 		ReactiveFormsModule,
 		BrowserAnimationsModule,
 		AngularMaterialModule,
+		SharedModule
 	],
-	providers: [],
+	providers: [provideHttpClient(withInterceptorsFromDi())],
 	bootstrap: [AppComponent],
-	schemas: [CUSTOM_ELEMENTS_SCHEMA],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

@@ -21,7 +21,7 @@ export class Usuario {
 					let { rut, password } = req.query;
 					console.log(rut, password);
 					if (null != rut && null != password) {
-						let resultGet: User = await this.usuarioController.obtenerUsuario(
+						let resultGet: User | undefined = await this.usuarioController.obtenerUsuario(
 							rut.toString(),
 							password.toString()
 						);
@@ -46,7 +46,7 @@ export class Usuario {
 							body: { message: `Sin RUT y sin Password no puedo buscar -.-' ` },
 						});
 					}
-				} catch (error) {
+				} catch (error: any) {
 					//! Error interno del servidor no mostrar en cliente
 					res.status(500).send({
 						ok: false,
@@ -84,7 +84,7 @@ export class Usuario {
 							body: { message: `Entrega un rut -.-' ` },
 						});
 					}
-				} catch (error) {
+				} catch (error: any) {
 					//! Error interno del servidor no mostrar en cliente
 					res.status(500).send({
 						ok: false,

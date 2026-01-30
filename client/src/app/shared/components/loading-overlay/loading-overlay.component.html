@@ -1,0 +1,8 @@
+<div class="loading-overlay" *ngIf="loading$ | async" role="alert" aria-live="assertive" aria-busy="true">
+  <div class="loading-overlay__content">
+    <mat-spinner diameter="48" aria-label="Cargando"></mat-spinner>
+    <p class="loading-overlay__message" aria-live="polite">
+      {{ message$ | async }}
+    </p>
+  </div>
+</div>

@@ -20,7 +20,7 @@ export class UsuarioController {
 				return user;
 			}
 			return undefined;
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	}
@@ -36,7 +36,7 @@ export class UsuarioController {
 			//por ahora no puedo revisar  el estado de la actualizacion
 			let result = await this.usermodel.agregarNuevoUsuario(usuarioNuevo);
 			return result;
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	}

@@ -1,34 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+/**
+ * Componente Navbar con Material Design
+ * Barra de navegación principal con menú responsive y gestión de sesión
+ */
 @Component({
-	selector: 'app-navbar',
-	templateUrl: './navbar.component.html',
-	styleUrls: ['./navbar.component.css'],
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-	public loggedIn: boolean = false;
-	constructor(private router: Router) {}
+  public loggedIn: boolean = false;
+  public userName: string = '';
 
-	ngOnInit(): void {
-		this.comprobarSesion();
-	}
+  constructor(private router: Router) {}
 
-	public cerrarSesion() {
-		console.log(`Me invocaron`);
-		localStorage.removeItem('login');
-		localStorage.removeItem('bancos');
-		this.loggedIn = false;
-		this.router.navigate(['/inicio']).then(() => {
-			window.location.reload();
-		});
-	}
+  ngOnInit(): void {
+    this.comprobarSesion();
+  }
 
-	private comprobarSesion() {
-		let login = JSON.parse(localStorage.getItem('login') || '{}');
-		console.log('Login', JSON.stringify(login, null, 2) + Object.keys(login).length);
-		if (Object.keys(login).length > 0) {
-			this.loggedIn = true;
-		}
-	}
+  /**
+   * Cierra la sesión del usuario y limpia localStorage
+   */
+  public cerrarSesion(): void {
+    localStorage.removeItem('login');
+    localStorage.removeItem('bancos');
+    localStorage.removeItem('rut');
+    localStorage.removeItem('nombre');
+    this.loggedIn = false;
+    this.userName = '';
+    this.router.navigate(['/inicio']);
+  }
+
+  /**
+   * Comprueba si existe una sesión activa en localStorage
+   */
+  private comprobarSesion(): void {
+    const login = JSON.parse(localStorage.getItem('login') || '{}');
+    const nombre = localStorage.getItem('nombre');
+
+    if (Object.keys(login).length > 0) {
+      this.loggedIn = true;
+      this.userName = nombre || 'Usuario';
+    } else {
+      this.loggedIn = false;
+      this.userName = '';
+    }
+  }
 }

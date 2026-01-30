@@ -40,7 +40,7 @@ export class Cuentas {
 							body: { message: `Sin RUT no puedo buscar -.-' ` },
 						});
 					}
-				} catch (error) {
+				} catch (error: any) {
 					//! Error interno del servidor no mostrar en cliente
 					res.status(500).send({
 						ok: false,
@@ -80,7 +80,7 @@ export class Cuentas {
 							body: { message: `Sin RUT no puedo buscar -.-' ` },
 						});
 					}
-				} catch (error) {
+				} catch (error: any) {
 					//! Error interno del servidor no mostrar en cliente
 					res.status(500).send({
 						ok: false,

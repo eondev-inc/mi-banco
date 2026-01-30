@@ -4,7 +4,7 @@
 
 export const environment = {
 	production: false,
-	apiUrl: 'http://34.82.228.169:8000',
+	apiUrl: 'http://localhost:8000',
 	banksUrl: 'https://bast.dev/api/banks.php',
 };
 

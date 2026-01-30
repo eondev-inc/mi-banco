@@ -1,118 +1,207 @@
-<div class="container mt-5 mb-4" *ngIf="alreadyLogged == false">
-	<div class="col-sm-8 ml-auto mr-auto">
-	  <ul class="nav nav-pills nav-fill mb-1" id="pills-tab" role="tablist">
-		<li class="nav-item"> <a class="nav-link active" id="pills-signin-tab" data-toggle="pill" href="#pills-signin" role="tab" aria-controls="pills-signin" aria-selected="true">Login</a> </li>
-		<li class="nav-item"> <a class="nav-link" id="pills-signup-tab" data-toggle="pill" href="#pills-signup" role="tab" aria-controls="pills-signup" aria-selected="false">Registrarse</a> </li>
-	  </ul>
-	  <div class="tab-content" id="pills-tabContent">
-		<div class="tab-pane fade show active" id="pills-signin" role="tabpanel" aria-labelledby="pills-signin-tab">
-		  <div class="col-sm-12 border border-primary shadow rounded pt-2">
-			<!-- <div class="text-center"><img src="https://placehold.it/80x80" class="rounded-circle border p-1"></div> -->
-			<form id="loginform" autocomplete="off" (ngSubmit)="submitLogin()" [formGroup]="datosLogin">
-			  <div class="form-group">
-				<label class="font-weight-bold">RUT <span class="text-danger">*</span></label>
-				<small *ngIf="rutNoValido" class="danger">El RUT ingresado no es correcto</small>
-				<!-- RUT -->
-				<input
-					type="text"
-					name="rut"
-					formControlName="rut"
-					class="form-control"
-					placeholder="RUT"
-					[class.is-invalid]="rutNoValidoLogin"
-					(keyup)="verificarRut($event)"
+<div class="inicio-page">
+  <!-- Estado: Ya autenticado -->
+  <div class="container" *ngIf="alreadyLogged">
+    <mat-card class="welcome-card fade-in">
+      <mat-card-header>
+        <mat-icon mat-card-avatar color="primary">account_circle</mat-icon>
+        <mat-card-title>Bienvenido, {{ sesion.usuario.nombre }}</mat-card-title>
+        <mat-card-subtitle>Ya tienes una sesión activa</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Utiliza el menú de navegación para acceder a las funcionalidades de la aplicación.</p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary" routerLink="/transferencias">
+          <mat-icon>payment</mat-icon>
+          Ir a Transferencias
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 
-				/>
-			  </div>
+  <!-- Estado: No autenticado - Login/Registro -->
+  <div class="container" *ngIf="!alreadyLogged">
+    <mat-card class="auth-card slide-in-up">
+      <!-- Header de la card -->
+      <div class="auth-card__header">
+        <mat-icon color="primary" class="auth-card__icon">account_balance</mat-icon>
+        <h1 class="auth-card__title">Mi Banco</h1>
+        <p class="auth-card__subtitle">Gestiona tus transferencias de forma segura</p>
+      </div>
 
-			  <!-- Password -->
-			  <div class="form-group">
-				<label class="font-weight-bold">Password <span class="text-danger">*</span></label>
-				<small *ngIf="passwordNoValidoLogin" class="danger">min 8 letras o numeros</small>
-				<input
-					type="password"
-					class="form-control"
-					placeholder="*******"
-					formControlName="password"
-					[class.is-invalid]="passwordNoValidoLogin"
-				/>
+      <!-- Tabs de Login/Registro -->
+      <mat-tab-group
+        [(selectedIndex)]="selectedTabIndex"
+        animationDuration="300ms"
+        class="auth-tabs">
 
-			  </div>
-			  <div class="form-group">
-				<input type="submit" name="submit" value="Login" class="btn btn-block btn-primary">
-			  </div>
-			</form>
-		  </div>
-		</div>
-		<div class="tab-pane fade" id="pills-signup" role="tabpanel" aria-labelledby="pills-signup-tab">
-		  <div class="col-sm-12 border border-primary shadow rounded pt-2">
-			<!-- <div class="text-center"><img src="https://placehold.it/80x80" class="rounded-circle border p-1"></div> -->
-			<form id="registroform" autocomplete="off" (ngSubmit)="submitRegistro()" [formGroup]="datosRegistro">
-				<div class="form-group">
-					<label class="font-weight-bold">RUT <span class="text-danger">*</span></label>
-					<small *ngIf="rutNoValido" class="danger">El RUT ingresado no es correcto</small>
-					<!-- RUT -->
-					<input
-						type="text"
-						formControlName="rut"
-						class="form-control"
-						placeholder="RUT"
-						[class.is-invalid]="rutNoValido"
-						(keyup)="verificarRut($event)"
+        <!-- TAB LOGIN -->
+        <mat-tab label="Iniciar Sesión">
+          <form
+            class="auth-form"
+            [formGroup]="datosLogin"
+            (ngSubmit)="submitLogin()"
+            autocomplete="off">
 
-					/>
-				  </div>
-				  <!-- Nombre -->
-				  <div class="form-group">
-					<label class="font-weight-bold">Nombre <span class="text-danger">*</span></label>
-					<small *ngIf="nombreNoValido" class="danger">Campo requirido</small>
-					<input
-						type="text"
-						id="password"
-						class="form-control"
-						placeholder="Nombre"
-						formControlName="nombre"
-						[class.is-invalid]="nombreNoValido"
-					/>
-					<!-- Password -->
-					<div class="form-group">
-						<label class="font-weight-bold">Password <span class="text-danger">*</span></label>
-						<small *ngIf="passwordNoValidoRegistro" class="danger">min 8 letras o numeros</small>
-						<input
-							type="password"
-							id="password"
-							class="form-control"
-							placeholder="*******"
-							formControlName="password"
-							[class.is-invalid]="passwordNoValidoRegistro"
-						/>
+            <!-- RUT -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>RUT</mat-label>
+              <input
+                matInput
+                formControlName="rut"
+                placeholder="12.345.678-9"
+                (keyup)="verificarRut($event)"
+                autocomplete="off"
+                aria-label="Ingrese su RUT"
+                aria-describedby="rut-login-error"
+                required>
+              <mat-icon matPrefix>badge</mat-icon>
+              <mat-error id="rut-login-error" *ngIf="rutNoValidoLogin">
+                El RUT ingresado no es válido
+              </mat-error>
+            </mat-form-field>
 
-					</div>
-				  </div>
-				  <!-- Email -->
-				  <div class="form-group">
-					<label class="font-weight-bold">Email <span class="text-danger">*</span></label>
-					<small *ngIf="emailNoValido" class="danger">Email no válido</small>
-					<input
-						type="email"
-						class="form-control"
-						placeholder="Email"
-						formControlName="email"
-						[class.is-invalid]="emailNoValido"
-					/>
+            <!-- Password -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Contraseña</mat-label>
+              <input
+                matInput
+                [type]="hidePasswordLogin ? 'password' : 'text'"
+                formControlName="password"
+                placeholder="Mínimo 8 caracteres"
+                autocomplete="current-password"
+                aria-label="Ingrese su contraseña"
+                aria-describedby="password-login-error"
+                required>
+              <mat-icon matPrefix>lock</mat-icon>
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="hidePasswordLogin = !hidePasswordLogin"
+                [attr.aria-label]="'Mostrar contraseña'"
+                [attr.aria-pressed]="!hidePasswordLogin">
+                <mat-icon>{{ hidePasswordLogin ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <mat-error id="password-login-error" *ngIf="passwordNoValidoLogin">
+                La contraseña debe tener al menos 8 caracteres
+              </mat-error>
+            </mat-form-field>
 
-				  </div>
-				  <div class="form-group">
-					<input type="submit" name="submit" value="Registro" class="btn btn-block btn-primary">
-				  </div>
-			</form>
-		  </div>
-		</div>
-	  </div>
-	</div>
+            <!-- Botón Submit -->
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              class="full-width submit-button"
+              [disabled]="datosLogin.invalid"
+              aria-label="Iniciar sesión">
+              Iniciar Sesión
+            </button>
+          </form>
+        </mat-tab>
 
+        <!-- TAB REGISTRO -->
+        <mat-tab label="Registrarse">
+          <form
+            class="auth-form"
+            [formGroup]="datosRegistro"
+            (ngSubmit)="submitRegistro()"
+            autocomplete="off">
 
-</div>
-<div class="container mt-5 mb-4" *ngIf="alreadyLogged == true">
-	<h1>Hola {{sesion.usuario.nombre}}, puedes hacer varias cosas</h1>
+            <!-- RUT -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>RUT</mat-label>
+              <input
+                matInput
+                formControlName="rut"
+                placeholder="12.345.678-9"
+                (keyup)="verificarRut($event)"
+                autocomplete="off"
+                aria-label="Ingrese su RUT"
+                aria-describedby="rut-registro-error"
+                required>
+              <mat-icon matPrefix>badge</mat-icon>
+              <mat-error id="rut-registro-error" *ngIf="rutNoValido">
+                El RUT ingresado no es válido
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Nombre -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Nombre Completo</mat-label>
+              <input
+                matInput
+                formControlName="nombre"
+                placeholder="Juan Pérez"
+                autocomplete="name"
+                aria-label="Ingrese su nombre completo"
+                aria-describedby="nombre-error"
+                required>
+              <mat-icon matPrefix>person</mat-icon>
+              <mat-error id="nombre-error" *ngIf="nombreNoValido">
+                El nombre es requerido (mínimo 3 caracteres)
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Correo Electrónico</mat-label>
+              <input
+                matInput
+                type="email"
+                formControlName="email"
+                placeholder="ejemplo@correo.com"
+                autocomplete="email"
+                aria-label="Ingrese su correo electrónico"
+                aria-describedby="email-error"
+                required>
+              <mat-icon matPrefix>email</mat-icon>
+              <mat-error id="email-error" *ngIf="emailNoValido">
+                Ingrese un correo electrónico válido
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Contraseña</mat-label>
+              <input
+                matInput
+                [type]="hidePasswordRegistro ? 'password' : 'text'"
+                formControlName="password"
+                placeholder="Mínimo 8 caracteres"
+                autocomplete="new-password"
+                aria-label="Ingrese una contraseña"
+                aria-describedby="password-registro-error"
+                required>
+              <mat-icon matPrefix>lock</mat-icon>
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="hidePasswordRegistro = !hidePasswordRegistro"
+                [attr.aria-label]="'Mostrar contraseña'"
+                [attr.aria-pressed]="!hidePasswordRegistro">
+                <mat-icon>{{ hidePasswordRegistro ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <mat-error id="password-registro-error" *ngIf="passwordNoValidoRegistro">
+                La contraseña debe tener al menos 8 caracteres
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Botón Submit -->
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              class="full-width submit-button"
+              [disabled]="datosRegistro.invalid"
+              aria-label="Registrarse">
+              Crear Cuenta
+            </button>
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </div>
 </div>

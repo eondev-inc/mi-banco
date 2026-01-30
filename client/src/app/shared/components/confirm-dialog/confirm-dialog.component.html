@@ -1,0 +1,27 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon [color]="getIconColor()" class="dialog-icon" aria-hidden="true">
+    {{ getIconName() }}
+  </mat-icon>
+  <span>{{ data.title }}</span>
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p>{{ data.message }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button
+    mat-button
+    (click)="onCancel()"
+    aria-label="Cancelar acción">
+    {{ data.cancelText }}
+  </button>
+  <button
+    mat-flat-button
+    [color]="data.type === 'error' ? 'warn' : 'primary'"
+    (click)="onConfirm()"
+    cdkFocusInitial
+    aria-label="Confirmar acción">
+    {{ data.confirmText }}
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,602 @@
+// ============================================================================
+// MI-BANCO - UTILIDADES Y HELPERS
+// Clases utilitarias responsive y helpers de layout
+// ============================================================================
+
+@use './variables' as vars;
+
+// ----------------------------------------------------------------------------
+// MIXINS RESPONSIVE
+// ----------------------------------------------------------------------------
+@mixin respond-above($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  @media (max-width: $breakpoint - 1px) {
+    @content;
+  }
+}
+
+@mixin respond-between($min, $max) {
+  @media (min-width: $min) and (max-width: $max - 1px) {
+    @content;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// LAYOUT HELPERS
+// ----------------------------------------------------------------------------
+
+// Contenedor centrado con max-width
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: vars.$spacing-md;
+  padding-right: vars.$spacing-md;
+
+  @include respond-above(vars.$breakpoint-sm) {
+    max-width: 540px;
+  }
+
+  @include respond-above(vars.$breakpoint-md) {
+    max-width: 720px;
+    padding-left: vars.$spacing-lg;
+    padding-right: vars.$spacing-lg;
+  }
+
+  @include respond-above(vars.$breakpoint-lg) {
+    max-width: 960px;
+  }
+
+  @include respond-above(vars.$breakpoint-xl) {
+    max-width: 1140px;
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  padding-left: vars.$spacing-md;
+  padding-right: vars.$spacing-md;
+
+  @include respond-above(vars.$breakpoint-md) {
+    padding-left: vars.$spacing-xl;
+    padding-right: vars.$spacing-xl;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// FLEXBOX UTILITIES
+// ----------------------------------------------------------------------------
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
+}
+
+.flex-none {
+  flex: none;
+}
+
+// Justify content
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+// Align items
+.items-start {
+  align-items: flex-start;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.items-baseline {
+  align-items: baseline;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+// Gap utilities
+.gap-xs {
+  gap: vars.$spacing-xs;
+}
+
+.gap-sm {
+  gap: vars.$spacing-sm;
+}
+
+.gap-md {
+  gap: vars.$spacing-md;
+}
+
+.gap-lg {
+  gap: vars.$spacing-lg;
+}
+
+.gap-xl {
+  gap: vars.$spacing-xl;
+}
+
+// ----------------------------------------------------------------------------
+// GRID SYSTEM
+// ----------------------------------------------------------------------------
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+// Responsive grid
+@include respond-above(vars.$breakpoint-sm) {
+  .grid-cols-sm-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@include respond-above(vars.$breakpoint-md) {
+  .grid-cols-md-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid-cols-md-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+// ----------------------------------------------------------------------------
+// SPACING UTILITIES
+// ----------------------------------------------------------------------------
+@each $name, $value in (
+  'xs': vars.$spacing-xs,
+  'sm': vars.$spacing-sm,
+  'md': vars.$spacing-md,
+  'lg': vars.$spacing-lg,
+  'xl': vars.$spacing-xl,
+  '2xl': vars.$spacing-2xl,
+  '3xl': vars.$spacing-3xl
+) {
+  // Margin
+  .m-#{$name} { margin: $value; }
+  .mt-#{$name} { margin-top: $value; }
+  .mr-#{$name} { margin-right: $value; }
+  .mb-#{$name} { margin-bottom: $value; }
+  .ml-#{$name} { margin-left: $value; }
+  .mx-#{$name} { margin-left: $value; margin-right: $value; }
+  .my-#{$name} { margin-top: $value; margin-bottom: $value; }
+
+  // Padding
+  .p-#{$name} { padding: $value; }
+  .pt-#{$name} { padding-top: $value; }
+  .pr-#{$name} { padding-right: $value; }
+  .pb-#{$name} { padding-bottom: $value; }
+  .pl-#{$name} { padding-left: $value; }
+  .px-#{$name} { padding-left: $value; padding-right: $value; }
+  .py-#{$name} { padding-top: $value; padding-bottom: $value; }
+}
+
+// Auto margins
+.m-auto { margin: auto; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.my-auto { margin-top: auto; margin-bottom: auto; }
+
+// ----------------------------------------------------------------------------
+// TYPOGRAPHY UTILITIES
+// ----------------------------------------------------------------------------
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-primary {
+  color: vars.$primary-500;
+}
+
+.text-accent {
+  color: vars.$accent-500;
+}
+
+.text-success {
+  color: vars.$success-500;
+}
+
+.text-error {
+  color: vars.$error-500;
+}
+
+.text-warning {
+  color: vars.$warning-500;
+}
+
+.text-muted {
+  color: vars.$text-secondary;
+}
+
+.text-disabled {
+  color: vars.$text-disabled;
+}
+
+.font-light {
+  font-weight: vars.$font-weight-light;
+}
+
+.font-regular {
+  font-weight: vars.$font-weight-regular;
+}
+
+.font-medium {
+  font-weight: vars.$font-weight-medium;
+}
+
+.font-bold {
+  font-weight: vars.$font-weight-bold;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ----------------------------------------------------------------------------
+// DISPLAY UTILITIES
+// ----------------------------------------------------------------------------
+.hidden {
+  display: none !important;
+}
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+// Responsive visibility
+@include respond-below(vars.$breakpoint-sm) {
+  .hidden-xs {
+    display: none !important;
+  }
+}
+
+@include respond-below(vars.$breakpoint-md) {
+  .hidden-sm {
+    display: none !important;
+  }
+}
+
+@include respond-below(vars.$breakpoint-lg) {
+  .hidden-md {
+    display: none !important;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// BACKGROUND UTILITIES
+// ----------------------------------------------------------------------------
+.bg-page {
+  background-color: vars.$background-page;
+}
+
+.bg-card {
+  background-color: vars.$background-card;
+}
+
+.bg-primary {
+  background-color: vars.$primary-500;
+  color: white;
+}
+
+.bg-accent {
+  background-color: vars.$accent-500;
+  color: rgba(black, 0.87);
+}
+
+.bg-success {
+  background-color: vars.$success-100;
+  color: vars.$success-700;
+}
+
+.bg-error {
+  background-color: vars.$error-100;
+  color: vars.$error-700;
+}
+
+.bg-warning {
+  background-color: vars.$warning-100;
+  color: vars.$warning-700;
+}
+
+// ----------------------------------------------------------------------------
+// BORDER UTILITIES
+// ----------------------------------------------------------------------------
+.border {
+  border: vars.$border-width solid vars.$border-color;
+}
+
+.border-top {
+  border-top: vars.$border-width solid vars.$border-color;
+}
+
+.border-bottom {
+  border-bottom: vars.$border-width solid vars.$border-color;
+}
+
+.rounded {
+  border-radius: vars.$border-radius-md;
+}
+
+.rounded-sm {
+  border-radius: vars.$border-radius-sm;
+}
+
+.rounded-lg {
+  border-radius: vars.$border-radius-lg;
+}
+
+.rounded-full {
+  border-radius: vars.$border-radius-full;
+}
+
+// ----------------------------------------------------------------------------
+// SHADOW UTILITIES
+// ----------------------------------------------------------------------------
+.shadow-1 {
+  box-shadow: vars.$shadow-1;
+}
+
+.shadow-2 {
+  box-shadow: vars.$shadow-2;
+}
+
+.shadow-3 {
+  box-shadow: vars.$shadow-3;
+}
+
+.shadow-none {
+  box-shadow: none;
+}
+
+// ----------------------------------------------------------------------------
+// WIDTH/HEIGHT UTILITIES
+// ----------------------------------------------------------------------------
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.h-auto {
+  height: auto;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+// ----------------------------------------------------------------------------
+// ESTADOS VACÍOS Y PLACEHOLDERS
+// ----------------------------------------------------------------------------
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: vars.$spacing-3xl vars.$spacing-lg;
+  text-align: center;
+  color: vars.$text-secondary;
+
+  &__icon {
+    font-size: 64px;
+    color: vars.$gray-400;
+    margin-bottom: vars.$spacing-lg;
+  }
+
+  &__title {
+    font-size: vars.$font-size-h5;
+    font-weight: vars.$font-weight-medium;
+    color: vars.$text-primary;
+    margin-bottom: vars.$spacing-sm;
+  }
+
+  &__description {
+    max-width: 400px;
+    margin-bottom: vars.$spacing-lg;
+    line-height: vars.$line-height-relaxed;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// ACCESIBILIDAD
+// ----------------------------------------------------------------------------
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: vars.$primary-500;
+  color: white;
+  padding: vars.$spacing-sm vars.$spacing-md;
+  text-decoration: none;
+  z-index: vars.$z-index-tooltip;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// LOADING STATES
+// ----------------------------------------------------------------------------
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: vars.$z-index-loading-overlay;
+
+  &__content {
+    background-color: white;
+    border-radius: vars.$border-radius-lg;
+    padding: vars.$spacing-xl;
+    box-shadow: vars.$shadow-5;
+    text-align: center;
+    min-width: 200px;
+  }
+
+  &__message {
+    margin-top: vars.$spacing-md;
+    color: vars.$text-secondary;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// ANIMACIONES
+// ----------------------------------------------------------------------------
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn vars.$transition-base;
+}
+
+.slide-in-up {
+  animation: slideInUp vars.$transition-base;
+}
+
+// ----------------------------------------------------------------------------
+// MISC UTILITIES
+// ----------------------------------------------------------------------------
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}

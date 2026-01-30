@@ -1,0 +1,208 @@
+@use '../../../styles/variables' as vars;
+
+.inicio-page {
+  min-height: calc(100vh - vars.$toolbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: vars.$spacing-lg;
+  background: linear-gradient(135deg, vars.$primary-50 0%, vars.$gray-50 100%);
+
+  @media (max-width: vars.$breakpoint-sm) {
+    min-height: calc(100vh - vars.$toolbar-height-mobile);
+    padding: vars.$spacing-md;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+}
+
+// ============================================================================
+// WELCOME CARD (cuando ya está autenticado)
+// ============================================================================
+.welcome-card {
+  text-align: center;
+
+  mat-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: vars.$spacing-xl;
+  }
+
+  .mat-card-avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 64px;
+    margin-bottom: vars.$spacing-md;
+  }
+
+  mat-card-title {
+    font-size: vars.$font-size-h4;
+    margin-bottom: vars.$spacing-xs;
+  }
+
+  mat-card-content {
+    padding: vars.$spacing-lg;
+    color: vars.$text-secondary;
+  }
+
+  mat-card-actions {
+    padding: 0 vars.$spacing-lg vars.$spacing-lg;
+  }
+}
+
+// ============================================================================
+// AUTH CARD (Login/Registro)
+// ============================================================================
+.auth-card {
+  padding: 0;
+  overflow: hidden;
+
+  &__header {
+    background: linear-gradient(135deg, vars.$primary-500 0%, vars.$primary-700 100%);
+    color: white;
+    text-align: center;
+    padding: vars.$spacing-2xl vars.$spacing-lg;
+
+    @media (max-width: vars.$breakpoint-sm) {
+      padding: vars.$spacing-xl vars.$spacing-md;
+    }
+  }
+
+  &__icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: vars.$spacing-md;
+  }
+
+  &__title {
+    font-size: vars.$font-size-h3;
+    font-weight: vars.$font-weight-medium;
+    margin: 0 0 vars.$spacing-xs 0;
+    color: white;
+
+    @media (max-width: vars.$breakpoint-sm) {
+      font-size: vars.$font-size-h4;
+    }
+  }
+
+  &__subtitle {
+    font-size: vars.$font-size-body;
+    margin: 0;
+    opacity: 0.9;
+  }
+}
+
+.auth-tabs {
+  ::ng-deep .mat-tab-header {
+    background-color: vars.$gray-100;
+  }
+
+  ::ng-deep .mat-tab-label {
+    font-weight: vars.$font-weight-medium;
+    opacity: 0.7;
+
+    &.mat-tab-label-active {
+      opacity: 1;
+    }
+  }
+
+  ::ng-deep .mat-tab-body-wrapper {
+    padding: vars.$spacing-lg;
+
+    @media (max-width: vars.$breakpoint-sm) {
+      padding: vars.$spacing-md;
+    }
+  }
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-md;
+  padding-top: vars.$spacing-md;
+
+  .full-width {
+    width: 100%;
+  }
+
+  .submit-button {
+    margin-top: vars.$spacing-md;
+    height: 48px;
+    font-size: vars.$font-size-body;
+    font-weight: vars.$font-weight-medium;
+  }
+
+  // Estilos para mat-form-field
+  mat-form-field {
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0.5em;
+    }
+
+    ::ng-deep .mat-icon {
+      color: vars.$gray-600;
+    }
+
+    ::ng-deep .mat-form-field-label {
+      color: vars.$text-secondary;
+    }
+  }
+}
+
+// ============================================================================
+// ANIMACIONES
+// ============================================================================
+.fade-in {
+  animation: fadeIn vars.$transition-base ease-in;
+}
+
+.slide-in-up {
+  animation: slideInUp vars.$transition-base ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// ============================================================================
+// RESPONSIVE
+// ============================================================================
+@media (max-width: vars.$breakpoint-sm) {
+  .auth-card {
+    &__header {
+      padding: vars.$spacing-xl vars.$spacing-md;
+    }
+
+    &__icon {
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .auth-form {
+    .submit-button {
+      height: 44px;
+    }
+  }
+}

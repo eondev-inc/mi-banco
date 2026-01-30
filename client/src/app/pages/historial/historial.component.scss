@@ -1,0 +1,287 @@
+@use '../../../styles/variables' as vars;
+
+.historial-page {
+  padding: vars.$spacing-lg;
+  background-color: vars.$background-page;
+  min-height: calc(100vh - vars.$toolbar-height);
+
+  @media (max-width: vars.$breakpoint-sm) {
+    min-height: calc(100vh - vars.$toolbar-height-mobile);
+    padding: vars.$spacing-md;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: vars.$spacing-2xl;
+  text-align: center;
+
+  &__title {
+    font-size: vars.$font-size-h3;
+    font-weight: vars.$font-weight-medium;
+    color: vars.$text-primary;
+    margin-bottom: vars.$spacing-sm;
+
+    @media (max-width: vars.$breakpoint-sm) {
+      font-size: vars.$font-size-h4;
+    }
+  }
+
+  &__subtitle {
+    color: vars.$text-secondary;
+    font-size: vars.$font-size-body;
+    margin: 0;
+  }
+}
+
+// ============================================================================
+// ESTADO VACÍO
+// ============================================================================
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: vars.$spacing-3xl vars.$spacing-lg;
+  text-align: center;
+  min-height: 400px;
+
+  &__icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+    color: vars.$gray-400;
+    margin-bottom: vars.$spacing-lg;
+
+    @media (max-width: vars.$breakpoint-sm) {
+      font-size: 64px;
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  &__title {
+    font-size: vars.$font-size-h4;
+    font-weight: vars.$font-weight-medium;
+    color: vars.$text-primary;
+    margin-bottom: vars.$spacing-sm;
+
+    @media (max-width: vars.$breakpoint-sm) {
+      font-size: vars.$font-size-h5;
+    }
+  }
+
+  &__description {
+    max-width: 400px;
+    margin-bottom: vars.$spacing-xl;
+    line-height: vars.$line-height-relaxed;
+    color: vars.$text-secondary;
+  }
+
+  button {
+    height: 48px;
+    padding: 0 vars.$spacing-xl;
+    font-weight: vars.$font-weight-medium;
+
+    mat-icon {
+      margin-right: vars.$spacing-xs;
+    }
+  }
+}
+
+// ============================================================================
+// CARD DE HISTORIAL
+// ============================================================================
+.historial-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+// ============================================================================
+// BARRA DE BÚSQUEDA
+// ============================================================================
+.search-bar {
+  padding: vars.$spacing-lg;
+  background-color: vars.$gray-50;
+  border-bottom: 1px solid vars.$divider-color;
+
+  @media (max-width: vars.$breakpoint-sm) {
+    padding: vars.$spacing-md;
+  }
+
+  .search-field {
+    width: 100%;
+
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
+}
+
+// ============================================================================
+// TABLA
+// ============================================================================
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media (max-width: vars.$breakpoint-md) {
+    // Scroll horizontal en móviles
+    max-width: 100%;
+  }
+}
+
+.historial-table {
+  width: 100%;
+  background-color: white;
+
+  // Headers de la tabla
+  th.mat-header-cell {
+    background-color: vars.$gray-100;
+    color: vars.$text-primary;
+    font-weight: vars.$font-weight-medium;
+    font-size: vars.$font-size-small;
+    padding: vars.$spacing-md vars.$spacing-md;
+    border-bottom: 2px solid vars.$divider-color;
+
+    &.text-right {
+      text-align: right;
+    }
+  }
+
+  // Celdas de la tabla
+  td.mat-cell {
+    padding: vars.$spacing-md vars.$spacing-md;
+    color: vars.$text-secondary;
+    font-size: vars.$font-size-small;
+
+    &:first-of-type {
+      font-weight: vars.$font-weight-medium;
+      color: vars.$text-primary;
+    }
+  }
+
+  // Filas con hover
+  .table-row {
+    transition: background-color vars.$transition-fast;
+
+    &:hover {
+      background-color: vars.$background-hover;
+    }
+  }
+
+  // Contenido de celdas con ícono
+  .cell-content {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-sm;
+
+    .cell-icon {
+      color: vars.$gray-500;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  // Celda de monto destacada
+  .monto-cell {
+    text-align: right;
+    font-weight: vars.$font-weight-medium;
+
+    .monto-badge {
+      display: inline-block;
+      padding: vars.$spacing-xs vars.$spacing-sm;
+      background-color: vars.$success-100;
+      color: vars.$success-700;
+      border-radius: vars.$border-radius-sm;
+      font-weight: vars.$font-weight-medium;
+      font-size: vars.$font-size-small;
+    }
+  }
+
+  // Chip de tipo de cuenta
+  .tipo-cuenta-chip {
+    font-size: vars.$font-size-caption;
+    min-height: 24px;
+    padding: 0 vars.$spacing-sm;
+  }
+
+  // Mensaje cuando no hay resultados
+  .no-results {
+    padding: vars.$spacing-2xl;
+    text-align: center;
+    color: vars.$text-secondary;
+
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      color: vars.$gray-400;
+      margin-bottom: vars.$spacing-md;
+    }
+
+    p {
+      margin: 0;
+      font-size: vars.$font-size-body;
+    }
+  }
+}
+
+// ============================================================================
+// PAGINADOR
+// ============================================================================
+::ng-deep .mat-paginator {
+  background-color: white;
+  border-top: 1px solid vars.$divider-color;
+  padding: vars.$spacing-md vars.$spacing-lg;
+
+  @media (max-width: vars.$breakpoint-sm) {
+    padding: vars.$spacing-sm vars.$spacing-md;
+  }
+
+  .mat-paginator-page-size-label,
+  .mat-paginator-range-label {
+    color: vars.$text-secondary;
+    font-size: vars.$font-size-small;
+  }
+}
+
+// ============================================================================
+// RESPONSIVE
+// ============================================================================
+@media (max-width: vars.$breakpoint-md) {
+  .historial-table {
+    // Ancho mínimo en móvil para permitir scroll
+    min-width: 800px;
+
+    th.mat-header-cell,
+    td.mat-cell {
+      padding: vars.$spacing-sm;
+      font-size: vars.$font-size-caption;
+    }
+
+    .cell-icon {
+      display: none;
+    }
+
+    .cell-content {
+      gap: 0;
+    }
+  }
+}
+
+@media (max-width: vars.$breakpoint-sm) {
+  .historial-table {
+    min-width: 700px;
+
+    th.mat-header-cell,
+    td.mat-cell {
+      padding: vars.$spacing-xs vars.$spacing-sm;
+    }
+  }
+}

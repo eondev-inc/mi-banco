@@ -23,7 +23,7 @@ export class TransferenciaController {
 				return transferencias;
 			}
 			return [];
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	}
@@ -39,7 +39,7 @@ export class TransferenciaController {
 			}
 			let result = await this.usermodel.agregarNuevaTransferencia(rutCliente, transferencia);
 			return result;
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 			return false;
 		}

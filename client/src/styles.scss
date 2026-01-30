@@ -1,0 +1,365 @@
+// ============================================================================
+// MI-BANCO - ESTILOS GLOBALES
+// Punto de entrada para el sistema de diseño bancario
+// ============================================================================
+
+// Importar tema Material Design custom
+@use './styles/banking-theme';
+
+// Importar variables (ya incluidas en banking-theme, pero disponibles aquí si se necesitan)
+@use './styles/variables' as vars;
+
+// Importar utilidades
+@use './styles/utilities';
+
+// ----------------------------------------------------------------------------
+// ESTILOS GLOBALES BASE
+// ----------------------------------------------------------------------------
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: vars.$font-family-base;
+  font-size: vars.$font-size-body;
+  line-height: vars.$line-height-normal;
+  color: vars.$text-primary;
+  background-color: vars.$background-page;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// ----------------------------------------------------------------------------
+// RESET Y NORMALIZACIÓN
+// ----------------------------------------------------------------------------
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: vars.$font-weight-medium;
+  line-height: vars.$line-height-tight;
+}
+
+h1 {
+  font-size: vars.$font-size-h1;
+}
+
+h2 {
+  font-size: vars.$font-size-h2;
+}
+
+h3 {
+  font-size: vars.$font-size-h3;
+}
+
+h4 {
+  font-size: vars.$font-size-h4;
+}
+
+h5 {
+  font-size: vars.$font-size-h5;
+}
+
+h6 {
+  font-size: vars.$font-size-h6;
+}
+
+p {
+  margin: 0 0 vars.$spacing-md 0;
+}
+
+a {
+  color: vars.$primary-500;
+  text-decoration: none;
+  transition: color vars.$transition-fast;
+
+  &:hover {
+    color: vars.$primary-700;
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: vars.$focus-ring-width solid vars.$focus-ring-color;
+    outline-offset: vars.$focus-ring-offset;
+  }
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// LAYOUT PRINCIPAL
+// ----------------------------------------------------------------------------
+.main-content {
+  min-height: calc(100vh - vars.$toolbar-height);
+  padding: vars.$spacing-lg;
+
+  @media (max-width: vars.$breakpoint-sm) {
+    min-height: calc(100vh - vars.$toolbar-height-mobile);
+    padding: vars.$spacing-md;
+  }
+}
+
+.page-header {
+  margin-bottom: vars.$spacing-xl;
+
+  &__title {
+    font-size: vars.$font-size-h3;
+    font-weight: vars.$font-weight-medium;
+    color: vars.$text-primary;
+    margin-bottom: vars.$spacing-sm;
+  }
+
+  &__subtitle {
+    color: vars.$text-secondary;
+    font-size: vars.$font-size-body;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// CARDS Y CONTENEDORES
+// ----------------------------------------------------------------------------
+.card {
+  background-color: vars.$background-card;
+  border-radius: vars.$border-radius-md;
+  box-shadow: vars.$shadow-2;
+  padding: vars.$card-padding;
+  margin-bottom: vars.$spacing-lg;
+
+  @media (max-width: vars.$breakpoint-sm) {
+    padding: vars.$card-padding-mobile;
+  }
+
+  &__header {
+    margin-bottom: vars.$spacing-lg;
+    padding-bottom: vars.$spacing-md;
+    border-bottom: 1px solid vars.$divider-color;
+
+    &-title {
+      font-size: vars.$font-size-h5;
+      font-weight: vars.$font-weight-medium;
+      color: vars.$text-primary;
+      margin: 0;
+    }
+
+    &-subtitle {
+      color: vars.$text-secondary;
+      font-size: vars.$font-size-small;
+      margin-top: vars.$spacing-xs;
+    }
+  }
+
+  &__content {
+    // Contenido principal de la card
+  }
+
+  &__actions {
+    margin-top: vars.$spacing-lg;
+    padding-top: vars.$spacing-md;
+    display: flex;
+    gap: vars.$spacing-sm;
+    justify-content: flex-end;
+
+    @media (max-width: vars.$breakpoint-sm) {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// ----------------------------------------------------------------------------
+// FORMULARIOS
+// ----------------------------------------------------------------------------
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: vars.$spacing-md;
+  margin-bottom: vars.$spacing-md;
+
+  @media (max-width: vars.$breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  margin-bottom: vars.$spacing-md;
+
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// ESTADOS DE VALIDACIÓN
+// ----------------------------------------------------------------------------
+.validation-error {
+  color: vars.$error-500;
+  font-size: vars.$font-size-small;
+  margin-top: vars.$spacing-xs;
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-xs;
+}
+
+.validation-success {
+  color: vars.$success-500;
+  font-size: vars.$font-size-small;
+  margin-top: vars.$spacing-xs;
+}
+
+// ----------------------------------------------------------------------------
+// TABLAS RESPONSIVE
+// ----------------------------------------------------------------------------
+.table-container {
+  overflow-x: auto;
+  margin: vars.$spacing-md 0;
+  box-shadow: vars.$shadow-2;
+  border-radius: vars.$border-radius-md;
+
+  @media (max-width: vars.$breakpoint-md) {
+    // Scroll horizontal en móviles
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// BADGES Y CHIPS
+// ----------------------------------------------------------------------------
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: vars.$spacing-xs vars.$spacing-sm;
+  border-radius: vars.$border-radius-full;
+  font-size: vars.$font-size-caption;
+  font-weight: vars.$font-weight-medium;
+  line-height: 1;
+
+  &.badge-success {
+    background-color: vars.$success-100;
+    color: vars.$success-700;
+  }
+
+  &.badge-error {
+    background-color: vars.$error-100;
+    color: vars.$error-700;
+  }
+
+  &.badge-warning {
+    background-color: vars.$warning-100;
+    color: vars.$warning-700;
+  }
+
+  &.badge-info {
+    background-color: vars.$info-100;
+    color: vars.$info-700;
+  }
+
+  &.badge-default {
+    background-color: vars.$gray-200;
+    color: vars.$gray-700;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// DIVIDERS
+// ----------------------------------------------------------------------------
+.divider {
+  height: 1px;
+  background-color: vars.$divider-color;
+  border: none;
+  margin: vars.$spacing-lg 0;
+}
+
+.divider-vertical {
+  width: 1px;
+  background-color: vars.$divider-color;
+  border: none;
+  margin: 0 vars.$spacing-md;
+}
+
+// ----------------------------------------------------------------------------
+// SCROLLBARS PERSONALIZADOS (Webkit)
+// ----------------------------------------------------------------------------
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: vars.$gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: vars.$gray-400;
+  border-radius: vars.$border-radius-sm;
+
+  &:hover {
+    background: vars.$gray-500;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// PRINT STYLES
+// ----------------------------------------------------------------------------
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background-color: white;
+  }
+
+  .mat-toolbar,
+  .mat-sidenav,
+  button {
+    display: none;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// ACCESIBILIDAD - MOTION REDUCTION
+// ----------------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// HIGH CONTRAST MODE
+// ----------------------------------------------------------------------------
+@media (prefers-contrast: high) {
+  .mat-card,
+  .card {
+    border: 2px solid vars.$border-color;
+  }
+
+  button {
+    border: 2px solid currentColor;
+  }
+}
