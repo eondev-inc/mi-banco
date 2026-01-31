@@ -152,7 +152,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
 
     .quick-actions-card,
     .recent-transactions-card {
-      border-radius: 16px !important;
+      border-radius: 0.5rem !important;
       margin-bottom: 24px;
     }
 
@@ -169,7 +169,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
       align-items: center;
       gap: 8px;
       padding: 20px 24px;
-      border-radius: 16px !important;
+      border-radius: 0.5rem !important;
       min-width: 120px;
       font-size: 0.8125rem;
     }
@@ -178,7 +178,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
       font-size: 28px;
       width: 28px;
       height: 28px;
-      color: var(--mb-primary, #1976D2);
+      color: #0A2640;
     }
 
     .recent-transactions-card mat-card-header {
@@ -215,7 +215,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
       margin-left: auto;
     }
 
-    .transaction-amount.negative { color: #D32F2F; }
+    .transaction-amount.negative { color: #DC3545; }
     .transaction-amount.positive { color: #43A047; }
 
     .empty-state {
@@ -227,7 +227,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
       font-size: 56px;
       width: 56px;
       height: 56px;
-      color: #BDBDBD;
+      color: #C4C4C4;
     }
 
     .empty-state__text {

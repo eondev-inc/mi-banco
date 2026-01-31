@@ -1,183 +1,170 @@
 // ============================================================================
-// MI-BANCO - TEMA MATERIAL 3 EXPRESSIVE
-// Material Design 3 con colores vibrantes y personalidad financiera
-// Compatible con Angular Material 21
+// MI-BANCO - TEMA MATERIAL 3 (Boldo-inspired)
+// Navy + Green CTA + Cyan accents con pill-shaped components
 // ============================================================================
 
 @use '@angular/material' as mat;
 @use './variables' as vars;
 
 // ----------------------------------------------------------------------------
-// MATERIAL 3 THEME CONFIGURATION
-// Usando M3 theme API con paletas de Angular Material 21
+// MATERIAL 3 THEME - Boldo-adapted palette
 // ----------------------------------------------------------------------------
 
 $mi-banco-theme: mat.define-theme((
   color: (
     theme-type: light,
-    primary: mat.$blue-palette,
-    tertiary: mat.$orange-palette,
+    primary: mat.$cyan-palette,
+    tertiary: mat.$green-palette,
   ),
   typography: (
-    brand-family: 'Roboto',
-    plain-family: 'Roboto',
+    brand-family: 'Manrope',
+    plain-family: 'Manrope',
   ),
   density: (
     scale: 0,
   )
 ));
 
-// Apply the theme globally
 html {
   @include mat.all-component-themes($mi-banco-theme);
 }
 
 // ----------------------------------------------------------------------------
-// CSS CUSTOM PROPERTIES (Design Tokens M3 Expressive)
-// Para uso consistente en componentes standalone
+// CSS CUSTOM PROPERTIES (Boldo Design Tokens)
 // ----------------------------------------------------------------------------
 :root {
-  // Primary palette
   --mb-primary: #{vars.$primary-500};
   --mb-primary-light: #{vars.$primary-100};
   --mb-primary-dark: #{vars.$primary-700};
   --mb-on-primary: #ffffff;
 
-  // Accent / Tertiary
   --mb-accent: #{vars.$accent-500};
   --mb-accent-light: #{vars.$accent-100};
+  --mb-accent-dark: #{vars.$accent-700};
 
-  // Semantic colors
+  --mb-secondary: #{vars.$secondary-500};
+  --mb-secondary-light: #{vars.$secondary-100};
+
   --mb-success: #{vars.$success-500};
   --mb-error: #{vars.$error-500};
   --mb-warning: #{vars.$warning-500};
   --mb-info: #{vars.$info-500};
 
-  // Surfaces
   --mb-surface: #ffffff;
-  --mb-surface-variant: #{vars.$gray-50};
+  --mb-surface-variant: #{vars.$gray-100};
   --mb-background: #{vars.$background-page};
+  --mb-background-dark: #{vars.$primary-500};
   --mb-divider: #{vars.$divider-color};
 
-  // Text
   --mb-text-primary: #{vars.$text-primary};
   --mb-text-secondary: #{vars.$text-secondary};
+  --mb-text-on-dark: #{vars.$text-on-dark};
+  --mb-text-on-dark-muted: #{vars.$text-on-dark-muted};
 
-  // Elevation
   --mb-shadow-sm: #{vars.$shadow-1};
   --mb-shadow-md: #{vars.$shadow-2};
   --mb-shadow-lg: #{vars.$shadow-3};
+  --mb-shadow-btn: #{vars.$shadow-4};
 
-  // Shape (M3 Expressive rounded corners)
-  --mb-shape-sm: 8px;
-  --mb-shape-md: 12px;
-  --mb-shape-lg: 16px;
-  --mb-shape-xl: 24px;
-  --mb-shape-full: 9999px;
+  --mb-shape-sm: #{vars.$border-radius-sm};
+  --mb-shape-md: #{vars.$border-radius-md};
+  --mb-shape-lg: #{vars.$border-radius-lg};
+  --mb-shape-xl: #{vars.$border-radius-xl};
+  --mb-shape-pill: #{vars.$border-radius-pill};
 
-  // Motion (M3 Expressive emphasis curves)
-  --mb-motion-standard: 300ms cubic-bezier(0.2, 0, 0, 1);
-  --mb-motion-emphasized: 500ms cubic-bezier(0.2, 0, 0, 1);
+  --mb-motion-standard: #{vars.$transition-base};
+  --mb-motion-fast: #{vars.$transition-fast};
 }
 
 // ----------------------------------------------------------------------------
-// M3 EXPRESSIVE COMPONENT OVERRIDES
-// Colores vibrantes, tipografia audaz, animaciones dinamicas
+// BOLDO COMPONENT OVERRIDES
 // ----------------------------------------------------------------------------
 
-// Toolbar con gradiente sutil y elevacion
+/* Toolbar: dark navy background */
 .mat-toolbar.mat-primary {
-  background: linear-gradient(135deg, vars.$primary-500, vars.$primary-700);
+  background: vars.$primary-500;
   color: white;
   box-shadow: vars.$shadow-2;
 }
 
-// Cards con bordes redondeados M3 y hover expresivo
+/* Cards: Boldo subtle shadow, soft radius */
 .mat-mdc-card {
-  border-radius: var(--mb-shape-lg) !important;
+  border-radius: var(--mb-shape-md) !important;
   box-shadow: var(--mb-shadow-md);
-  transition: transform var(--mb-motion-standard),
-              box-shadow var(--mb-motion-standard);
-
-  &:hover {
-    box-shadow: var(--mb-shadow-lg);
-  }
+  transition: transform vars.$transition-base, box-shadow vars.$transition-base;
+}
+.mat-mdc-card:hover {
+  box-shadow: var(--mb-shadow-lg);
 }
 
-// Form fields
+/* Form fields */
 .mat-mdc-form-field {
   font-family: vars.$font-family-base;
 }
 
-// Botones M3 Expressive
+/* Buttons: pill-shaped (Boldo signature) */
 .mat-mdc-button,
 .mat-mdc-raised-button,
 .mat-mdc-unelevated-button,
 .mat-mdc-outlined-button,
 .mat-mdc-flat-button {
-  border-radius: var(--mb-shape-md) !important;
-  font-weight: vars.$font-weight-medium;
+  border-radius: var(--mb-shape-pill) !important;
+  font-weight: vars.$font-weight-bold;
   letter-spacing: 0.3px;
-  transition: all var(--mb-motion-standard);
+  transition: all vars.$transition-fast;
+  border-width: vars.$border-width-thick;
 }
 
 .mat-mdc-fab,
 .mat-mdc-mini-fab {
-  border-radius: var(--mb-shape-lg) !important;
+  border-radius: var(--mb-shape-xl) !important;
 }
 
-// Snackbars semanticos
+/* Snackbars */
 .mat-mdc-snack-bar-container {
-  &.success-snackbar {
-    --mat-snackbar-container-color: #{vars.$success-500};
-    --mat-snack-bar-button-color: #{vars.$success-100};
-    --mat-snackbar-supporting-text-color: white;
-  }
-
-  &.error-snackbar {
-    --mat-snackbar-container-color: #{vars.$error-500};
-    --mat-snack-bar-button-color: #{vars.$error-100};
-    --mat-snackbar-supporting-text-color: white;
-  }
-
-  &.warning-snackbar {
-    --mat-snackbar-container-color: #{vars.$warning-700};
-    --mat-snack-bar-button-color: #{vars.$warning-100};
-    --mat-snackbar-supporting-text-color: white;
-  }
-
-  &.info-snackbar {
-    --mat-snackbar-container-color: #{vars.$info-500};
-    --mat-snack-bar-button-color: #{vars.$info-100};
-    --mat-snackbar-supporting-text-color: white;
-  }
+  border-radius: var(--mb-shape-md) !important;
+}
+.mat-mdc-snack-bar-container.success-snackbar {
+  --mat-snackbar-container-color: #{vars.$accent-500};
+  --mat-snack-bar-button-color: #{vars.$primary-500};
+  --mat-snackbar-supporting-text-color: #{vars.$primary-500};
+}
+.mat-mdc-snack-bar-container.error-snackbar {
+  --mat-snackbar-container-color: #{vars.$error-500};
+  --mat-snack-bar-button-color: #{vars.$error-100};
+  --mat-snackbar-supporting-text-color: white;
+}
+.mat-mdc-snack-bar-container.warning-snackbar {
+  --mat-snackbar-container-color: #{vars.$warning-700};
+  --mat-snack-bar-button-color: #{vars.$warning-100};
+  --mat-snackbar-supporting-text-color: white;
+}
+.mat-mdc-snack-bar-container.info-snackbar {
+  --mat-snackbar-container-color: #{vars.$secondary-500};
+  --mat-snack-bar-button-color: #{vars.$primary-500};
+  --mat-snackbar-supporting-text-color: #{vars.$primary-500};
 }
 
-// Tablas bancarias
+/* Tables */
 .mat-mdc-table {
   background-color: white;
-
-  .mat-mdc-header-row {
-    background-color: vars.$gray-50;
-  }
-
-  .mat-mdc-row {
-    transition: background-color var(--mb-motion-standard);
-
-    &:hover {
-      background-color: vars.$background-hover;
-    }
-  }
-
-  .mat-mdc-header-cell {
-    color: vars.$text-primary;
-    font-weight: vars.$font-weight-medium;
-    font-size: vars.$font-size-small;
-  }
-
-  .mat-mdc-cell {
-    color: vars.$text-secondary;
-  }
+}
+.mat-mdc-table .mat-mdc-header-row {
+  background-color: vars.$gray-100;
+}
+.mat-mdc-table .mat-mdc-row {
+  transition: background-color vars.$transition-fast;
+}
+.mat-mdc-table .mat-mdc-row:hover {
+  background-color: vars.$background-hover;
+}
+.mat-mdc-table .mat-mdc-header-cell {
+  color: vars.$text-primary;
+  font-weight: vars.$font-weight-semi-bold;
+  font-size: vars.$font-size-small;
+}
+.mat-mdc-table .mat-mdc-cell {
+  color: vars.$text-secondary;
 }
 
 .mat-mdc-paginator {
@@ -185,61 +172,57 @@ html {
   border-top: 1px solid vars.$divider-color;
 }
 
-.mat-mdc-tab-group {
-  .mat-mdc-tab {
-    font-weight: vars.$font-weight-medium;
-    min-width: 120px;
-  }
+.mat-mdc-tab-group .mat-mdc-tab {
+  font-weight: vars.$font-weight-semi-bold;
+  min-width: 120px;
 }
 
-// Dialog M3
+/* Dialog */
 .mat-mdc-dialog-container {
-  border-radius: var(--mb-shape-xl) !important;
+  border-radius: var(--mb-shape-lg) !important;
 }
 
+/* Menu */
 .mat-mdc-menu-panel {
   border-radius: var(--mb-shape-md) !important;
 }
 
-// Chips semanticos
+/* Chips: pill-shaped */
 .mat-mdc-chip {
-  border-radius: var(--mb-shape-sm) !important;
-
-  &.chip-success {
-    --mat-chip-elevated-container-color: #{vars.$success-100};
-    --mat-chip-label-text-color: #{vars.$success-700};
-  }
-
-  &.chip-error {
-    --mat-chip-elevated-container-color: #{vars.$error-100};
-    --mat-chip-label-text-color: #{vars.$error-700};
-  }
-
-  &.chip-warning {
-    --mat-chip-elevated-container-color: #{vars.$warning-100};
-    --mat-chip-label-text-color: #{vars.$warning-700};
-  }
-
-  &.chip-info {
-    --mat-chip-elevated-container-color: #{vars.$info-100};
-    --mat-chip-label-text-color: #{vars.$info-700};
-  }
+  border-radius: var(--mb-shape-pill) !important;
+}
+.mat-mdc-chip.chip-success {
+  --mat-chip-elevated-container-color: #{vars.$success-100};
+  --mat-chip-label-text-color: #{vars.$success-700};
+}
+.mat-mdc-chip.chip-error {
+  --mat-chip-elevated-container-color: #{vars.$error-100};
+  --mat-chip-label-text-color: #{vars.$error-700};
+}
+.mat-mdc-chip.chip-warning {
+  --mat-chip-elevated-container-color: #{vars.$warning-100};
+  --mat-chip-label-text-color: #{vars.$warning-700};
+}
+.mat-mdc-chip.chip-info {
+  --mat-chip-elevated-container-color: #{vars.$info-100};
+  --mat-chip-label-text-color: #{vars.$info-700};
 }
 
+/* Progress spinner */
 .mat-mdc-progress-spinner {
-  --mat-progress-spinner-active-indicator-color: #{vars.$primary-500};
+  --mat-progress-spinner-active-indicator-color: #{vars.$secondary-500};
 }
 
+/* Sidenav */
 .mat-sidenav {
-  border-radius: 0 var(--mb-shape-lg) var(--mb-shape-lg) 0;
+  border-radius: 0;
 }
 
-// Focus visible mejorado (WCAG 2.0 AA)
+/* Focus visible (WCAG 2.0 AA) */
 *:focus-visible {
   outline: vars.$focus-ring-width solid vars.$focus-ring-color;
   outline-offset: vars.$focus-ring-offset;
 }
-
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,

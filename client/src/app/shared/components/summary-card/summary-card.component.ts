@@ -28,7 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
   `,
   styles: [`
     .summary-card {
-      border-radius: 16px;
+      border-radius: 0.5rem;
       transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
                   box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -50,19 +50,19 @@ import { MatIconModule } from '@angular/material/icon';
     .summary-card__label {
       font-size: 0.875rem;
       font-weight: 500;
-      color: var(--mb-text-secondary, #616161);
+      color: var(--mb-text-secondary, #5B7075);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     .summary-card__value {
       font-size: 1.75rem;
       font-weight: 700;
-      color: var(--mb-text-primary, #212121);
+      color: var(--mb-text-primary, #000000);
       letter-spacing: -0.5px;
     }
     .summary-card__subtitle {
       font-size: 0.8125rem;
-      color: var(--mb-text-secondary, #616161);
+      color: var(--mb-text-secondary, #5B7075);
     }
     .summary-card__icon-wrapper {
       width: 56px;
@@ -78,20 +78,20 @@ import { MatIconModule } from '@angular/material/icon';
       height: 28px;
     }
     .summary-card--primary .summary-card__icon-wrapper {
-      background: rgba(25, 118, 210, 0.12);
-      color: #1976D2;
+      background: rgba(10, 38, 64, 0.08);
+      color: #0A2640;
     }
     .summary-card--success .summary-card__icon-wrapper {
-      background: rgba(67, 160, 71, 0.12);
-      color: #43A047;
+      background: rgba(101, 228, 163, 0.12);
+      color: #65E4A3;
     }
     .summary-card--warning .summary-card__icon-wrapper {
-      background: rgba(251, 140, 0, 0.12);
-      color: #FB8C00;
+      background: rgba(253, 126, 20, 0.12);
+      color: #FD7E14;
     }
     .summary-card--accent .summary-card__icon-wrapper {
-      background: rgba(156, 39, 176, 0.12);
-      color: #9C27B0;
+      background: rgba(13, 202, 240, 0.12);
+      color: #0DCAF0;
     }
   `]
 })

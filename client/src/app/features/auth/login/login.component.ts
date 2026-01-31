@@ -122,7 +122,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
       align-items: center;
       justify-content: center;
       padding: 24px;
-      background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #E8EAF6 100%);
+      background: linear-gradient(135deg, #0A2640 0%, #1A4A6D 100%);
     }
 
     .auth-brand {
@@ -134,19 +134,19 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
       font-size: 48px;
       width: 48px;
       height: 48px;
-      color: #1976D2;
+      color: #65E4A3;
     }
 
     .auth-brand__name {
       font-size: 2rem;
       font-weight: 700;
-      color: #1565C0;
+      color: #ffffff;
       margin: 8px 0 4px;
       letter-spacing: -1px;
     }
 
     .auth-brand__tagline {
-      color: #616161;
+      color: rgba(255,255,255,0.7);
       font-size: 0.9375rem;
       margin: 0;
     }
@@ -154,7 +154,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
     .auth-card {
       width: 100%;
       max-width: 420px;
-      border-radius: 20px !important;
+      border-radius: 0.5rem !important;
       padding: 8px 16px 16px;
     }
 
@@ -164,8 +164,8 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
       gap: 8px;
       padding: 12px 16px;
       border-radius: 8px;
-      background: rgba(211, 47, 47, 0.08);
-      color: #C62828;
+      background: rgba(220,53,69,0.1);
+      color: #DC3545;
       margin-bottom: 16px;
       font-size: 0.875rem;
     }
@@ -181,7 +181,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
       font-size: 1rem;
       font-weight: 600;
       margin-top: 8px;
-      border-radius: 12px !important;
+      border-radius: 5rem !important;
     }
 
     .btn-spinner {
@@ -191,7 +191,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
 
     .auth-link-text {
       font-size: 0.875rem;
-      color: #757575;
+      color: #76979E;
       margin-right: 4px;
     }
 
@@ -201,14 +201,14 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
       gap: 6px;
       margin-top: 24px;
       font-size: 0.8125rem;
-      color: #757575;
+      color: rgba(255,255,255,0.5);
     }
 
     .auth-footer__icon {
       font-size: 16px;
       width: 16px;
       height: 16px;
-      color: #43A047;
+      color: #65E4A3;
     }
   `]
 })

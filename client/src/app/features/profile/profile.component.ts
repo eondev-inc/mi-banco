@@ -145,7 +145,7 @@ import { rutValidator } from '../../shared/validators/rut.validator';
 
     .profile-summary-card,
     .profile-edit-card {
-      border-radius: 16px !important;
+      border-radius: 0.5rem !important;
     }
 
     .profile-summary-card {
@@ -161,7 +161,7 @@ import { rutValidator } from '../../shared/validators/rut.validator';
       font-size: 80px;
       width: 80px;
       height: 80px;
-      color: #1976D2;
+      color: #0A2640;
     }
 
     .profile-name {
@@ -171,7 +171,7 @@ import { rutValidator } from '../../shared/validators/rut.validator';
     }
 
     .profile-rut {
-      color: #757575;
+      color: #5B7075;
       font-size: 0.875rem;
       margin: 0 0 16px;
     }
@@ -204,12 +204,12 @@ import { rutValidator } from '../../shared/validators/rut.validator';
       align-items: center;
       gap: 16px;
       padding: 12px 16px;
-      border-radius: 12px;
-      background: #F5F5F5;
+      border-radius: 0.5rem;
+      background: #F1F1F1;
     }
 
     .security-item__icon {
-      color: #1976D2;
+      color: #0A2640;
       font-size: 28px;
       width: 28px;
       height: 28px;
@@ -230,14 +230,14 @@ import { rutValidator } from '../../shared/validators/rut.validator';
     .submit-btn {
       height: 48px;
       padding: 0 32px;
-      border-radius: 12px !important;
+      border-radius: 5rem !important;
     }
 
     .submit-btn mat-icon { margin-right: 8px; }
 
     .chip-success {
-      --mat-chip-elevated-container-color: #C8E6C9;
-      --mat-chip-label-text-color: #388E3C;
+      --mat-chip-elevated-container-color: #E0FAED;
+      --mat-chip-label-text-color: #2E8B57;
     }
   `]
 })

@@ -145,7 +145,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
   styles: [`
     .beneficiary-card {
       max-width: 720px;
-      border-radius: 16px !important;
+      border-radius: 0.5rem !important;
     }
 
     .full-width { width: 100%; }
@@ -172,7 +172,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
     .submit-btn {
       height: 48px;
       padding: 0 32px;
-      border-radius: 12px !important;
+      border-radius: 5rem !important;
     }
 
     .submit-btn mat-icon { margin-right: 8px; }

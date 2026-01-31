@@ -55,10 +55,10 @@ export interface ConfirmDialogData {
       margin: 0 auto 16px;
     }
 
-    .confirm-dialog__icon-wrapper--info { background: rgba(41, 182, 246, 0.12); color: #29B6F6; }
-    .confirm-dialog__icon-wrapper--success { background: rgba(67, 160, 71, 0.12); color: #43A047; }
-    .confirm-dialog__icon-wrapper--warning { background: rgba(255, 167, 38, 0.12); color: #FFA726; }
-    .confirm-dialog__icon-wrapper--error { background: rgba(211, 47, 47, 0.12); color: #D32F2F; }
+    .confirm-dialog__icon-wrapper--info { background: #CFF4FC; color: #0DCAF0; }
+    .confirm-dialog__icon-wrapper--success { background: #E0FAED; color: #65E4A3; }
+    .confirm-dialog__icon-wrapper--warning { background: #FFF3E0; color: #FD7E14; }
+    .confirm-dialog__icon-wrapper--error { background: #FBE7E9; color: #DC3545; }
 
     .confirm-dialog__icon {
       font-size: 32px;

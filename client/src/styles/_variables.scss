@@ -1,90 +1,105 @@
 // ============================================================================
-// MI-BANCO - VARIABLES DE DISEÑO
-// Sistema de diseño bancario profesional con paleta de confianza
+// MI-BANCO - VARIABLES DE DISEÑO (Boldo-inspired)
+// Design system bancario moderno con paleta navy + green CTA
+// Inspirado en: https://themewagon.github.io/boldo/
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// PALETA DE COLORES BANCARIA
+// PALETA DE COLORES BOLDO-BANKING
 // ----------------------------------------------------------------------------
-// Primario: Azul corporativo - transmite confianza, seguridad, profesionalismo
-$primary-500: #1976D2;
-$primary-700: #1565C0;
-$primary-900: #0D47A1;
-$primary-300: #42A5F5;
-$primary-100: #BBDEFB;
-$primary-50: #E3F2FD;
+// Primario: Deep Navy - transmite confianza, seriedad, profesionalismo
+$primary-500: #0A2640;
+$primary-700: #082035;
+$primary-900: #051626;
+$primary-300: #1A4A6D;
+$primary-100: #D1DEE8;
+$primary-50: #EBF0F4;
 
-// Acento: Naranja energético - para CTAs, acciones importantes
-$accent-500: #FB8C00;
-$accent-700: #F57C00;
-$accent-900: #E65100;
-$accent-300: #FFB74D;
-$accent-100: #FFE0B2;
+// Acento (CTA): Boldo Green - acciones principales, botones CTA
+$accent-500: #65E4A3;
+$accent-700: #54BD87;
+$accent-900: #2E8B57;
+$accent-300: #A0EEC7;
+$accent-100: #E0FAED;
 
-// Éxito: Verde - transacciones exitosas, confirmaciones
-$success-500: #43A047;
+// Secondary: Cyan (Boldo Primary) - links, elementos activos, highlights
+$secondary-500: #0DCAF0;
+$secondary-700: #0AA2C0;
+$secondary-300: #86E5F8;
+$secondary-100: #CFF4FC;
+
+// Exito: Verde - transacciones exitosas, confirmaciones
+$success-500: #65E4A3;
 $success-700: #388E3C;
-$success-300: #66BB6A;
-$success-100: #C8E6C9;
+$success-300: #A0EEC7;
+$success-100: #E0FAED;
 
 // Error: Rojo - advertencias, validaciones fallidas
-$error-500: #D32F2F;
-$error-700: #C62828;
+$error-500: #DC3545;
+$error-700: #B72C39;
 $error-300: #E57373;
-$error-100: #FFCDD2;
+$error-100: #FBE7E9;
 
-// Warning: Ámbar - acciones que requieren atención
-$warning-500: #FFA726;
-$warning-700: #F57C00;
+// Warning: Orange - acciones que requieren atencion
+$warning-500: #FD7E14;
+$warning-700: #E56B00;
 $warning-300: #FFB74D;
-$warning-100: #FFE0B2;
+$warning-100: #FFF3E0;
 
-// Información: Azul claro - mensajes informativos
-$info-500: #29B6F6;
-$info-700: #0288D1;
-$info-300: #4FC3F7;
-$info-100: #B3E5FC;
-
-// ----------------------------------------------------------------------------
-// ESCALA DE GRISES (WCAG AA Compliant)
-// Todos los ratios de contraste validados ≥4.5:1
-// ----------------------------------------------------------------------------
-$gray-900: #212121; // Textos principales - ratio 16.1:1 sobre blanco
-$gray-800: #424242; // Textos secundarios - ratio 11.9:1
-$gray-700: #616161; // Textos terciarios - ratio 7.6:1
-$gray-600: #757575; // Labels, placeholders - ratio 6.0:1
-$gray-500: #9E9E9E; // Disabled text - ratio 3.9:1
-$gray-400: #BDBDBD; // Bordes, divisores - ratio 2.9:1
-$gray-300: #E0E0E0; // Backgrounds secundarios
-$gray-200: #EEEEEE; // Backgrounds claros
-$gray-100: #F5F5F5; // Backgrounds sutiles
-$gray-50: #FAFAFA;  // Backgrounds página
+// Informacion: Indigo/Purple
+$info-500: #6610F2;
+$info-700: #5300CC;
+$info-300: #A480F2;
+$info-100: #E8DEFE;
 
 // ----------------------------------------------------------------------------
-// COLORES SEMÁNTICOS
+// ESCALA DE GRISES (Boldo palette + WCAG AA)
 // ----------------------------------------------------------------------------
-$text-primary: $gray-900;
-$text-secondary: $gray-700;
+$gray-900: #0A2640;   // Headings, navbar bg (Boldo Dark)
+$gray-800: #384345;   // Strong emphasis
+$gray-700: #5B7075;   // Body text (Boldo default)
+$gray-600: #627E84;   // Secondary text
+$gray-500: #76979E;   // Muted, placeholders
+$gray-400: #8E8E8E;   // Borders
+$gray-300: #C4C4C4;   // Light borders, disabled
+$gray-200: #E8ECEE;   // Light backgrounds
+$gray-100: #F1F1F1;   // Section backgrounds (Boldo Light)
+$gray-50: #F7F9FA;    // Page background
+
+// ----------------------------------------------------------------------------
+// COLORES SEMANTICOS
+// ----------------------------------------------------------------------------
+$text-primary: #000000;            // Headings (Boldo uses black for headings)
+$text-secondary: $gray-700;        // Body text (#5B7075)
 $text-disabled: $gray-500;
 $text-hint: $gray-600;
+$text-on-dark: rgba(255, 255, 255, 0.9);
+$text-on-dark-muted: rgba(255, 255, 255, 0.7);
 
 $background-page: $gray-50;
 $background-card: #FFFFFF;
-$background-hover: rgba($primary-500, 0.04);
-$background-selected: rgba($primary-500, 0.08);
-$background-disabled: $gray-200;
+$background-hover: rgba($secondary-500, 0.06);
+$background-selected: rgba($secondary-500, 0.10);
+$background-disabled: $gray-300;
+$background-dark: $primary-500;     // Dark sections (navy)
 
 $border-color: $gray-400;
 $border-light: $gray-300;
-$divider-color: $gray-300;
+$divider-color: rgba(0, 0, 0, 0.08);
+
+// Soft/tinted backgrounds (Boldo pattern)
+$soft-primary: #E2F9FD;
+$soft-success: #EDFCF4;
+$soft-danger: #FBE7E9;
+$soft-warning: #FFF3E0;
 
 // ----------------------------------------------------------------------------
-// TIPOGRAFÍA
+// TIPOGRAFIA (Manrope - Boldo's primary font)
 // ----------------------------------------------------------------------------
-$font-family-base: 'Roboto', 'Helvetica Neue', sans-serif;
-$font-family-display: 'Roboto', 'Arial', sans-serif;
+$font-family-base: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-display: 'Manrope', 'Arial', sans-serif;
 
-// Tamaños (escala modular 1.25)
+// Tamanos (Boldo type scale 1.200 - minor third)
 $font-size-h1: 2.488rem;   // ~40px
 $font-size-h2: 2.074rem;   // ~33px
 $font-size-h3: 1.728rem;   // ~28px
@@ -99,32 +114,35 @@ $font-size-caption: 0.75rem; // 12px
 $font-weight-light: 300;
 $font-weight-regular: 400;
 $font-weight-medium: 500;
+$font-weight-semi-bold: 600;
 $font-weight-bold: 700;
 
 // Line heights
 $line-height-tight: 1.2;
-$line-height-normal: 1.5;
+$line-height-normal: 1.45;  // Boldo body line-height
 $line-height-relaxed: 1.75;
 
 // ----------------------------------------------------------------------------
-// ESPACIADO (basado en 8px grid)
+// ESPACIADO (Boldo spacer scale based on 1rem)
 // ----------------------------------------------------------------------------
-$spacing-xs: 0.25rem;  // 4px
-$spacing-sm: 0.5rem;   // 8px
-$spacing-md: 1rem;     // 16px
-$spacing-lg: 1.5rem;   // 24px
-$spacing-xl: 2rem;     // 32px
-$spacing-2xl: 3rem;    // 48px
-$spacing-3xl: 4rem;    // 64px
+$spacing-xs: 0.25rem;   // 4px
+$spacing-sm: 0.5rem;    // 8px
+$spacing-md: 1rem;      // 16px
+$spacing-lg: 1.8rem;    // ~29px (Boldo level 4)
+$spacing-xl: 3rem;      // 48px (Boldo level 5)
+$spacing-2xl: 4rem;     // 64px (Boldo level 6)
+$spacing-3xl: 5rem;     // 80px (Boldo level 7)
+$spacing-4xl: 7.5rem;   // 120px (Boldo level 8)
 
 // ----------------------------------------------------------------------------
 // BREAKPOINTS RESPONSIVE
 // ----------------------------------------------------------------------------
 $breakpoint-xs: 0;
-$breakpoint-sm: 600px;
-$breakpoint-md: 960px;
-$breakpoint-lg: 1280px;
-$breakpoint-xl: 1920px;
+$breakpoint-sm: 540px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1440px;
 
 // ----------------------------------------------------------------------------
 // Z-INDEX HIERARCHY
@@ -139,44 +157,45 @@ $z-index-tooltip: 1070;
 $z-index-loading-overlay: 2000;
 
 // ----------------------------------------------------------------------------
-// SOMBRAS (Material Design Elevation)
+// SOMBRAS (Boldo shadow system)
 // ----------------------------------------------------------------------------
-$shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-$shadow-2: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
-$shadow-3: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10);
-$shadow-4: 0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
+$shadow-1: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+$shadow-2: 0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+$shadow-3: 0 1rem 4rem rgba(0, 0, 0, 0.175);
+$shadow-4: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
 $shadow-5: 0 20px 40px rgba(0, 0, 0, 0.2);
 
 // ----------------------------------------------------------------------------
-// BORDES Y RADIOS
+// BORDES Y RADIOS (Boldo: pill buttons, rounded cards)
 // ----------------------------------------------------------------------------
-$border-radius-sm: 4px;
-$border-radius-md: 8px;
-$border-radius-lg: 12px;
-$border-radius-xl: 16px;
+$border-radius-sm: 0.3rem;         // Small elements
+$border-radius-md: 0.5rem;         // Cards (Boldo card radius)
+$border-radius-lg: 0.7rem;         // Large elements, modals
+$border-radius-xl: 1rem;           // Extra large
+$border-radius-pill: 5rem;         // Pill-shaped buttons & inputs (Boldo signature)
 $border-radius-full: 9999px;
 
 $border-width: 1px;
-$border-width-thick: 2px;
+$border-width-thick: 2px;          // Boldo uses 2px borders on buttons/inputs
 
 // ----------------------------------------------------------------------------
-// TRANSICIONES
+// TRANSICIONES (Boldo patterns)
 // ----------------------------------------------------------------------------
-$transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-$transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-$transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-fast: 150ms ease-in-out;
+$transition-base: 300ms ease;
+$transition-slow: 500ms ease;
 
 // ----------------------------------------------------------------------------
 // ACCESIBILIDAD
 // ----------------------------------------------------------------------------
-$focus-ring-color: $primary-500;
+$focus-ring-color: $secondary-300;  // Cyan for focus rings
 $focus-ring-width: 3px;
 $focus-ring-offset: 2px;
 
-$min-touch-target: 48px; // WCAG AA mínimo para dispositivos táctiles
+$min-touch-target: 48px; // WCAG AA
 
 // ----------------------------------------------------------------------------
-// COMPONENTES ESPECÍFICOS
+// COMPONENTES
 // ----------------------------------------------------------------------------
 // Toolbar/Navbar
 $toolbar-height: 64px;
@@ -186,16 +205,23 @@ $toolbar-height-mobile: 56px;
 $card-padding: $spacing-lg;
 $card-padding-mobile: $spacing-md;
 
-// Forms
+// Forms (Boldo: pill inputs with 2px border)
 $input-height: 56px;
-$input-padding-x: $spacing-md;
-$input-padding-y: $spacing-sm;
+$input-padding-x: $spacing-lg;
+$input-padding-y: $spacing-md;
 
-// Buttons
-$button-height: 40px;
-$button-padding-x: $spacing-lg;
+// Buttons (Boldo: pill shape, generous padding)
+$button-height: 48px;
+$button-padding-x: 3rem;
+$button-padding-x-sm: 1.2rem;
+$button-padding-x-lg: 5rem;
 $button-min-width: 88px;
 
 // Tables
 $table-row-height: 52px;
 $table-header-height: 56px;
+
+// Gradients (Boldo patterns)
+$gradient-primary: linear-gradient(-45deg, #1970E2, #4695FF);
+$gradient-dark: linear-gradient(135deg, $primary-500, $primary-700);
+$gradient-success: linear-gradient(135deg, $accent-500, $accent-700);
