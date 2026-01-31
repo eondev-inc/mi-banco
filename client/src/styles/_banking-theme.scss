@@ -8,11 +8,6 @@
 @use './variables' as vars;
 
 // ----------------------------------------------------------------------------
-// INCLUIR CORE DE MATERIAL (solo una vez)
-// ----------------------------------------------------------------------------
-@include mat.core();
-
-// ----------------------------------------------------------------------------
 // DEFINIR PALETAS DE COLOR PERSONALIZADAS
 // Usando los colores definidos en _variables.scss
 // ----------------------------------------------------------------------------
@@ -180,27 +175,27 @@ $mi-banco-theme: mat.m2-define-light-theme((
 // Snackbars con colores semánticos
 .mat-mdc-snack-bar-container {
   &.success-snackbar {
-    --mdc-snackbar-container-color: #{vars.$success-500};
+    --mat-snackbar-container-color: #{vars.$success-500};
     --mat-snack-bar-button-color: #{vars.$success-100};
-    --mdc-snackbar-supporting-text-color: white;
+    --mat-snackbar-supporting-text-color: white;
   }
 
   &.error-snackbar {
-    --mdc-snackbar-container-color: #{vars.$error-500};
+    --mat-snackbar-container-color: #{vars.$error-500};
     --mat-snack-bar-button-color: #{vars.$error-100};
-    --mdc-snackbar-supporting-text-color: white;
+    --mat-snackbar-supporting-text-color: white;
   }
 
   &.warning-snackbar {
-    --mdc-snackbar-container-color: #{vars.$warning-700};
+    --mat-snackbar-container-color: #{vars.$warning-700};
     --mat-snack-bar-button-color: #{vars.$warning-100};
-    --mdc-snackbar-supporting-text-color: white;
+    --mat-snackbar-supporting-text-color: white;
   }
 
   &.info-snackbar {
-    --mdc-snackbar-container-color: #{vars.$info-500};
+    --mat-snackbar-container-color: #{vars.$info-500};
     --mat-snack-bar-button-color: #{vars.$info-100};
-    --mdc-snackbar-supporting-text-color: white;
+    --mat-snackbar-supporting-text-color: white;
   }
 }
 
@@ -250,7 +245,7 @@ $mi-banco-theme: mat.m2-define-light-theme((
 
 // Dialog con mejores sombras
 .mat-mdc-dialog-container {
-  --mdc-dialog-container-elevation: #{vars.$shadow-5};
+  --mat-dialog-container-elevation: #{vars.$shadow-5};
   border-radius: vars.$border-radius-lg;
 }
 
@@ -263,29 +258,29 @@ $mi-banco-theme: mat.m2-define-light-theme((
 // Chips con colores semánticos
 .mat-mdc-chip {
   &.chip-success {
-    --mdc-chip-elevated-container-color: #{vars.$success-100};
-    --mdc-chip-label-text-color: #{vars.$success-700};
+    --mat-chip-elevated-container-color: #{vars.$success-100};
+    --mat-chip-label-text-color: #{vars.$success-700};
   }
 
   &.chip-error {
-    --mdc-chip-elevated-container-color: #{vars.$error-100};
-    --mdc-chip-label-text-color: #{vars.$error-700};
+    --mat-chip-elevated-container-color: #{vars.$error-100};
+    --mat-chip-label-text-color: #{vars.$error-700};
   }
 
   &.chip-warning {
-    --mdc-chip-elevated-container-color: #{vars.$warning-100};
-    --mdc-chip-label-text-color: #{vars.$warning-700};
+    --mat-chip-elevated-container-color: #{vars.$warning-100};
+    --mat-chip-label-text-color: #{vars.$warning-700};
   }
 
   &.chip-info {
-    --mdc-chip-elevated-container-color: #{vars.$info-100};
-    --mdc-chip-label-text-color: #{vars.$info-700};
+    --mat-chip-elevated-container-color: #{vars.$info-100};
+    --mat-chip-label-text-color: #{vars.$info-700};
   }
 }
 
 // Progress spinner con color primario
 .mat-mdc-progress-spinner {
-  --mdc-circular-progress-active-indicator-color: #{vars.$primary-500};
+  --mat-progress-spinner-active-indicator-color: #{vars.$primary-500};
 }
 
 // Focus visible mejorado para accesibilidad

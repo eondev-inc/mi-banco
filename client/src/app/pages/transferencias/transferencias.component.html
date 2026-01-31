@@ -7,173 +7,171 @@
     </div>
 
     <!-- Estado Vacío: Sin destinatarios -->
-    <div class="empty-state" *ngIf="busquedaResultados.length === 0">
-      <mat-icon class="empty-state__icon">account_balance_wallet</mat-icon>
-      <h2 class="empty-state__title">No tienes destinatarios registrados</h2>
-      <p class="empty-state__description">
-        Para realizar transferencias, primero debes agregar al menos un destinatario.
-      </p>
-      <button
-        mat-flat-button
-        color="primary"
-        routerLink="/registrar"
-        aria-label="Agregar primer destinatario">
-        <mat-icon>person_add</mat-icon>
-        Agregar Primer Destinatario
-      </button>
-    </div>
+    @if (busquedaResultados.length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-state__icon">account_balance_wallet</mat-icon>
+        <h2 class="empty-state__title">No tienes destinatarios registrados</h2>
+        <p class="empty-state__description">
+          Para realizar transferencias, primero debes agregar al menos un destinatario.
+        </p>
+        <button
+          mat-flat-button
+          color="primary"
+          routerLink="/registrar"
+          aria-label="Agregar primer destinatario">
+          <mat-icon>person_add</mat-icon>
+          Agregar Primer Destinatario
+        </button>
+      </div>
+    }
 
     <!-- Formulario de Transferencia: Cuando hay destinatarios -->
-    <div *ngIf="busquedaResultados.length > 0">
-      <!-- Buscador de Destinatarios -->
-      <mat-card class="search-card">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Buscar Destinatario</mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Escribe el nombre del destinatario"
-            [formControl]="busquedaControl"
-            (change)="selectedOne($event)"
-            [matAutocomplete]="auto"
-            aria-label="Buscar destinatario por nombre">
-          <mat-icon matPrefix>search</mat-icon>
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nombre">
-              <mat-icon>person</mat-icon>
-              <span>{{ option.nombre }}</span>
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </mat-card>
-
-      <!-- Formulario de Transferencia -->
-      <mat-card class="transfer-card">
-        <mat-card-header>
-          <mat-icon mat-card-avatar>payment</mat-icon>
-          <mat-card-title>Datos de la Transferencia</mat-card-title>
-          <mat-card-subtitle>Revisa los datos del destinatario antes de confirmar</mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-content>
-          <form
-            class="transfer-form"
-            [formGroup]="datosTransferencia"
-            (ngSubmit)="enviarTransferencia()"
-            autocomplete="off">
-
-            <!-- Grid 2 columnas - Datos del destinatario (solo lectura) -->
-            <div class="form-grid">
-              <!-- Nombre -->
-              <mat-form-field appearance="outline">
-                <mat-label>Nombre del Destinatario</mat-label>
-                <input
-                  matInput
-                  formControlName="nombre"
-                  readonly
-                  aria-label="Nombre del destinatario">
-                <mat-icon matPrefix>person</mat-icon>
-              </mat-form-field>
-
-              <!-- RUT -->
-              <mat-form-field appearance="outline">
-                <mat-label>RUT</mat-label>
-                <input
-                  matInput
-                  formControlName="rut_destinatario"
-                  readonly
-                  aria-label="RUT del destinatario">
-                <mat-icon matPrefix>badge</mat-icon>
-              </mat-form-field>
-
-              <!-- Email -->
-              <mat-form-field appearance="outline">
-                <mat-label>Correo Electrónico</mat-label>
-                <input
-                  matInput
-                  formControlName="email"
-                  readonly
-                  aria-label="Correo del destinatario">
-                <mat-icon matPrefix>email</mat-icon>
-              </mat-form-field>
-
-              <!-- Tipo de Cuenta -->
-              <mat-form-field appearance="outline">
-                <mat-label>Tipo de Cuenta</mat-label>
-                <input
-                  matInput
-                  formControlName="tipo_cuenta"
-                  readonly
-                  aria-label="Tipo de cuenta">
-                <mat-icon matPrefix>account_box</mat-icon>
-              </mat-form-field>
-
-              <!-- Banco -->
-              <mat-form-field appearance="outline">
-                <mat-label>Banco</mat-label>
-                <input
-                  matInput
-                  formControlName="banco"
-                  readonly
-                  aria-label="Banco del destinatario">
-                <mat-icon matPrefix>account_balance</mat-icon>
-              </mat-form-field>
-
-              <!-- Número de Cuenta -->
-              <mat-form-field appearance="outline">
-                <mat-label>Número de Cuenta</mat-label>
-                <input
-                  matInput
-                  formControlName="cuenta"
-                  readonly
-                  aria-label="Número de cuenta">
-                <mat-icon matPrefix>account_balance_wallet</mat-icon>
-              </mat-form-field>
-            </div>
-
-            <!-- Monto (campo editable destacado) -->
-            <div class="monto-section">
-              <mat-form-field appearance="outline" class="monto-field">
-                <mat-label>Monto a Transferir</mat-label>
-                <input
-                  matInput
-                  type="number"
-                  formControlName="monto"
-                  placeholder="Ingrese el monto en CLP"
-                  aria-label="Monto a transferir"
-                  aria-describedby="monto-error"
-                  required>
-                <span matPrefix>$&nbsp;</span>
-                <span matSuffix>CLP</span>
-                <mat-icon matPrefix>attach_money</mat-icon>
-                <mat-error id="monto-error" *ngIf="montoNoValido">
-                  El monto debe ser mayor a $0
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <!-- Botones de acción -->
-            <div class="form-actions">
-              <button
-                mat-button
-                type="button"
-                (click)="limpiarFormulario()"
-                aria-label="Limpiar formulario">
-                Limpiar
-              </button>
-              <button
-                mat-flat-button
-                color="primary"
-                type="submit"
-                [disabled]="datosTransferencia.invalid"
-                aria-label="Transferir">
-                <mat-icon>send</mat-icon>
-                Transferir
-              </button>
-            </div>
-          </form>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-</div>
+    @if (busquedaResultados.length > 0) {
+      <div>
+        <!-- Buscador de Destinatarios -->
+        <mat-card class="search-card">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Buscar Destinatario</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Escribe el nombre del destinatario"
+              [formControl]="busquedaControl"
+              (change)="selectedOne($event)"
+              [matAutocomplete]="auto"
+              aria-label="Buscar destinatario por nombre">
+              <mat-icon matPrefix>search</mat-icon>
+              <mat-autocomplete #auto="matAutocomplete">
+                @for (option of filteredOptions | async; track option) {
+                  <mat-option [value]="option.nombre">
+                    <mat-icon>person</mat-icon>
+                    <span>{{ option.nombre }}</span>
+                  </mat-option>
+                }
+              </mat-autocomplete>
+            </mat-form-field>
+          </mat-card>
+          <!-- Formulario de Transferencia -->
+          <mat-card class="transfer-card">
+            <mat-card-header>
+              <mat-icon mat-card-avatar>payment</mat-icon>
+              <mat-card-title>Datos de la Transferencia</mat-card-title>
+              <mat-card-subtitle>Revisa los datos del destinatario antes de confirmar</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <form
+                class="transfer-form"
+                [formGroup]="datosTransferencia"
+                (ngSubmit)="enviarTransferencia()"
+                autocomplete="off">
+                <!-- Grid 2 columnas - Datos del destinatario (solo lectura) -->
+                <div class="form-grid">
+                  <!-- Nombre -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Nombre del Destinatario</mat-label>
+                    <input
+                      matInput
+                      formControlName="nombre"
+                      readonly
+                      aria-label="Nombre del destinatario">
+                      <mat-icon matPrefix>person</mat-icon>
+                    </mat-form-field>
+                    <!-- RUT -->
+                    <mat-form-field appearance="outline">
+                      <mat-label>RUT</mat-label>
+                      <input
+                        matInput
+                        formControlName="rut_destinatario"
+                        readonly
+                        aria-label="RUT del destinatario">
+                        <mat-icon matPrefix>badge</mat-icon>
+                      </mat-form-field>
+                      <!-- Email -->
+                      <mat-form-field appearance="outline">
+                        <mat-label>Correo Electrónico</mat-label>
+                        <input
+                          matInput
+                          formControlName="email"
+                          readonly
+                          aria-label="Correo del destinatario">
+                          <mat-icon matPrefix>email</mat-icon>
+                        </mat-form-field>
+                        <!-- Tipo de Cuenta -->
+                        <mat-form-field appearance="outline">
+                          <mat-label>Tipo de Cuenta</mat-label>
+                          <input
+                            matInput
+                            formControlName="tipo_cuenta"
+                            readonly
+                            aria-label="Tipo de cuenta">
+                            <mat-icon matPrefix>account_box</mat-icon>
+                          </mat-form-field>
+                          <!-- Banco -->
+                          <mat-form-field appearance="outline">
+                            <mat-label>Banco</mat-label>
+                            <input
+                              matInput
+                              formControlName="banco"
+                              readonly
+                              aria-label="Banco del destinatario">
+                              <mat-icon matPrefix>account_balance</mat-icon>
+                            </mat-form-field>
+                            <!-- Número de Cuenta -->
+                            <mat-form-field appearance="outline">
+                              <mat-label>Número de Cuenta</mat-label>
+                              <input
+                                matInput
+                                formControlName="cuenta"
+                                readonly
+                                aria-label="Número de cuenta">
+                                <mat-icon matPrefix>account_balance_wallet</mat-icon>
+                              </mat-form-field>
+                            </div>
+                            <!-- Monto (campo editable destacado) -->
+                            <div class="monto-section">
+                              <mat-form-field appearance="outline" class="monto-field">
+                                <mat-label>Monto a Transferir</mat-label>
+                                <input
+                                  matInput
+                                  type="number"
+                                  formControlName="monto"
+                                  placeholder="Ingrese el monto en CLP"
+                                  aria-label="Monto a transferir"
+                                  aria-describedby="monto-error"
+                                  required>
+                                  <span matPrefix>$&nbsp;</span>
+                                  <span matSuffix>CLP</span>
+                                  <mat-icon matPrefix>attach_money</mat-icon>
+                                  @if (montoNoValido) {
+                                    <mat-error id="monto-error">
+                                      El monto debe ser mayor a $0
+                                    </mat-error>
+                                  }
+                                </mat-form-field>
+                              </div>
+                              <!-- Botones de acción -->
+                              <div class="form-actions">
+                                <button
+                                  mat-button
+                                  type="button"
+                                  (click)="limpiarFormulario()"
+                                  aria-label="Limpiar formulario">
+                                  Limpiar
+                                </button>
+                                <button
+                                  mat-flat-button
+                                  color="primary"
+                                  type="submit"
+                                  [disabled]="datosTransferencia.invalid"
+                                  aria-label="Transferir">
+                                  <mat-icon>send</mat-icon>
+                                  Transferir
+                                </button>
+                              </div>
+                            </form>
+                          </mat-card-content>
+                        </mat-card>
+                      </div>
+                    }
+                  </div>
+                </div>

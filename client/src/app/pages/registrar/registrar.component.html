@@ -26,162 +26,176 @@
               autocomplete="given-name"
               aria-label="Nombre del destinatario"
               required>
-            <mat-icon matPrefix>person</mat-icon>
-            <mat-error *ngIf="nombreNoValido">
-              El nombre es requerido (mínimo 3 caracteres)
-            </mat-error>
-          </mat-form-field>
+              <mat-icon matPrefix>person</mat-icon>
+              @if (nombreNoValido) {
+                <mat-error>
+                  El nombre es requerido (mínimo 3 caracteres)
+                </mat-error>
+              }
+            </mat-form-field>
 
-          <!-- Apellido -->
-          <mat-form-field appearance="outline">
-            <mat-label>Apellido</mat-label>
-            <input
-              matInput
-              formControlName="apellido"
-              placeholder="Pérez"
-              autocomplete="family-name"
-              aria-label="Apellido del destinatario"
-              required>
-            <mat-icon matPrefix>person_outline</mat-icon>
-            <mat-error *ngIf="apellidoNoValido">
-              El apellido es requerido (mínimo 3 caracteres)
-            </mat-error>
-          </mat-form-field>
+            <!-- Apellido -->
+            <mat-form-field appearance="outline">
+              <mat-label>Apellido</mat-label>
+              <input
+                matInput
+                formControlName="apellido"
+                placeholder="Pérez"
+                autocomplete="family-name"
+                aria-label="Apellido del destinatario"
+                required>
+                <mat-icon matPrefix>person_outline</mat-icon>
+                @if (apellidoNoValido) {
+                  <mat-error>
+                    El apellido es requerido (mínimo 3 caracteres)
+                  </mat-error>
+                }
+              </mat-form-field>
 
-          <!-- RUT -->
-          <mat-form-field appearance="outline">
-            <mat-label>RUT</mat-label>
-            <input
-              matInput
-              formControlName="rut"
-              placeholder="12.345.678-9"
-              (keyup)="verificarRut($event)"
-              autocomplete="off"
-              aria-label="RUT del destinatario"
-              required>
-            <mat-icon matPrefix>badge</mat-icon>
-            <mat-error *ngIf="rutNoValido">
-              El RUT ingresado no es válido
-            </mat-error>
-          </mat-form-field>
+              <!-- RUT -->
+              <mat-form-field appearance="outline">
+                <mat-label>RUT</mat-label>
+                <input
+                  matInput
+                  formControlName="rut"
+                  placeholder="12.345.678-9"
+                  (keyup)="verificarRut($event)"
+                  autocomplete="off"
+                  aria-label="RUT del destinatario"
+                  required>
+                  <mat-icon matPrefix>badge</mat-icon>
+                  @if (rutNoValido) {
+                    <mat-error>
+                      El RUT ingresado no es válido
+                    </mat-error>
+                  }
+                </mat-form-field>
 
-          <!-- Teléfono -->
-          <mat-form-field appearance="outline">
-            <mat-label>Teléfono</mat-label>
-            <input
-              matInput
-              type="tel"
-              formControlName="telefono"
-              placeholder="+56 9 1234 5678"
-              autocomplete="tel"
-              aria-label="Teléfono del destinatario"
-              required>
-            <mat-icon matPrefix>phone</mat-icon>
-            <mat-error *ngIf="telefonoNoValido">
-              El teléfono es requerido
-            </mat-error>
-          </mat-form-field>
+                <!-- Teléfono -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Teléfono</mat-label>
+                  <input
+                    matInput
+                    type="tel"
+                    formControlName="telefono"
+                    placeholder="+56 9 1234 5678"
+                    autocomplete="tel"
+                    aria-label="Teléfono del destinatario"
+                    required>
+                    <mat-icon matPrefix>phone</mat-icon>
+                    @if (telefonoNoValido) {
+                      <mat-error>
+                        El teléfono es requerido
+                      </mat-error>
+                    }
+                  </mat-form-field>
 
-          <!-- Email -->
-          <mat-form-field appearance="outline">
-            <mat-label>Correo Electrónico</mat-label>
-            <input
-              matInput
-              type="email"
-              formControlName="email"
-              placeholder="ejemplo@correo.com"
-              autocomplete="email"
-              aria-label="Correo del destinatario"
-              required>
-            <mat-icon matPrefix>email</mat-icon>
-            <mat-error *ngIf="emailNoValido">
-              Ingrese un correo electrónico válido
-            </mat-error>
-          </mat-form-field>
+                  <!-- Email -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input
+                      matInput
+                      type="email"
+                      formControlName="email"
+                      placeholder="ejemplo@correo.com"
+                      autocomplete="email"
+                      aria-label="Correo del destinatario"
+                      required>
+                      <mat-icon matPrefix>email</mat-icon>
+                      @if (emailNoValido) {
+                        <mat-error>
+                          Ingrese un correo electrónico válido
+                        </mat-error>
+                      }
+                    </mat-form-field>
 
-          <!-- Número de Cuenta -->
-          <mat-form-field appearance="outline">
-            <mat-label>Número de Cuenta</mat-label>
-            <input
-              matInput
-              formControlName="cuenta"
-              placeholder="1234567890"
-              autocomplete="off"
-              aria-label="Número de cuenta del destinatario"
-              required>
-            <mat-icon matPrefix>account_balance_wallet</mat-icon>
-            <mat-error *ngIf="cuentanoValido">
-              El número de cuenta es requerido
-            </mat-error>
-          </mat-form-field>
+                    <!-- Número de Cuenta -->
+                    <mat-form-field appearance="outline">
+                      <mat-label>Número de Cuenta</mat-label>
+                      <input
+                        matInput
+                        formControlName="cuenta"
+                        placeholder="1234567890"
+                        autocomplete="off"
+                        aria-label="Número de cuenta del destinatario"
+                        required>
+                        <mat-icon matPrefix>account_balance_wallet</mat-icon>
+                        @if (cuentanoValido) {
+                          <mat-error>
+                            El número de cuenta es requerido
+                          </mat-error>
+                        }
+                      </mat-form-field>
 
-          <!-- Banco -->
-          <mat-form-field appearance="outline">
-            <mat-label>Banco</mat-label>
-            <mat-select formControlName="banco" aria-label="Seleccione el banco">
-              <mat-option value="">
-                <mat-icon>info</mat-icon>
-                <span>-- Seleccione un banco --</span>
-              </mat-option>
-              <mat-option *ngFor="let banco of bancos?.banks" [value]="banco.name">
-                <mat-icon>account_balance</mat-icon>
-                <span>{{ banco.name }}</span>
-              </mat-option>
-            </mat-select>
-            <mat-icon matPrefix>account_balance</mat-icon>
-            <mat-error>
-              Debe seleccionar un banco
-            </mat-error>
-          </mat-form-field>
+                      <!-- Banco -->
+                      <mat-form-field appearance="outline">
+                        <mat-label>Banco</mat-label>
+                        <mat-select formControlName="banco" aria-label="Seleccione el banco">
+                          <mat-option value="">
+                            <mat-icon>info</mat-icon>
+                            <span>-- Seleccione un banco --</span>
+                          </mat-option>
+                          @for (banco of bancos?.banks; track banco) {
+                            <mat-option [value]="banco.name">
+                              <mat-icon>account_balance</mat-icon>
+                              <span>{{ banco.name }}</span>
+                            </mat-option>
+                          }
+                        </mat-select>
+                        <mat-icon matPrefix>account_balance</mat-icon>
+                        <mat-error>
+                          Debe seleccionar un banco
+                        </mat-error>
+                      </mat-form-field>
 
-          <!-- Tipo de Cuenta -->
-          <mat-form-field appearance="outline">
-            <mat-label>Tipo de Cuenta</mat-label>
-            <mat-select formControlName="tipo_cuenta" aria-label="Seleccione el tipo de cuenta">
-              <mat-option value="">
-                <mat-icon>info</mat-icon>
-                <span>-- Seleccione tipo --</span>
-              </mat-option>
-              <mat-option value="Cuenta Vista / RUT">
-                <mat-icon>credit_card</mat-icon>
-                <span>Cuenta Vista / RUT</span>
-              </mat-option>
-              <mat-option value="Cuenta Ahorros">
-                <mat-icon>savings</mat-icon>
-                <span>Cuenta Ahorros</span>
-              </mat-option>
-              <mat-option value="Cuenta Corriente">
-                <mat-icon>account_balance_wallet</mat-icon>
-                <span>Cuenta Corriente</span>
-              </mat-option>
-            </mat-select>
-            <mat-icon matPrefix>account_box</mat-icon>
-            <mat-error>
-              Debe seleccionar un tipo de cuenta
-            </mat-error>
-          </mat-form-field>
-        </div>
+                      <!-- Tipo de Cuenta -->
+                      <mat-form-field appearance="outline">
+                        <mat-label>Tipo de Cuenta</mat-label>
+                        <mat-select formControlName="tipo_cuenta" aria-label="Seleccione el tipo de cuenta">
+                          <mat-option value="">
+                            <mat-icon>info</mat-icon>
+                            <span>-- Seleccione tipo --</span>
+                          </mat-option>
+                          <mat-option value="Cuenta Vista / RUT">
+                            <mat-icon>credit_card</mat-icon>
+                            <span>Cuenta Vista / RUT</span>
+                          </mat-option>
+                          <mat-option value="Cuenta Ahorros">
+                            <mat-icon>savings</mat-icon>
+                            <span>Cuenta Ahorros</span>
+                          </mat-option>
+                          <mat-option value="Cuenta Corriente">
+                            <mat-icon>account_balance_wallet</mat-icon>
+                            <span>Cuenta Corriente</span>
+                          </mat-option>
+                        </mat-select>
+                        <mat-icon matPrefix>account_box</mat-icon>
+                        <mat-error>
+                          Debe seleccionar un tipo de cuenta
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
 
-        <!-- Botones de acción -->
-        <div class="form-actions">
-          <button
-            mat-button
-            type="button"
-            routerLink="/transferencias"
-            aria-label="Cancelar y volver">
-            Cancelar
-          </button>
-          <button
-            mat-flat-button
-            color="primary"
-            type="submit"
-            [disabled]="datosTransferencia.invalid"
-            aria-label="Registrar destinatario">
-            <mat-icon>person_add</mat-icon>
-            Registrar Destinatario
-          </button>
-        </div>
-      </form>
-    </mat-card>
-  </div>
-</div>
+                    <!-- Botones de acción -->
+                    <div class="form-actions">
+                      <button
+                        mat-button
+                        type="button"
+                        routerLink="/transferencias"
+                        aria-label="Cancelar y volver">
+                        Cancelar
+                      </button>
+                      <button
+                        mat-flat-button
+                        color="primary"
+                        type="submit"
+                        [disabled]="datosTransferencia.invalid"
+                        aria-label="Registrar destinatario">
+                        <mat-icon>person_add</mat-icon>
+                        Registrar Destinatario
+                      </button>
+                    </div>
+                  </form>
+                </mat-card>
+              </div>
+            </div>

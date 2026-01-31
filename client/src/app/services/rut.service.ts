@@ -16,11 +16,11 @@ export class RutService {
 			return { rutError: true };
 		}
 
-		let cleanValue: string = clean(control.value);
+		const cleanValue: string = clean(control.value);
 
-		let esValido: boolean = validate(cleanValue);
+		const esValido: boolean = validate(cleanValue);
 
-		let formateado: string = format(cleanValue);
+		const formateado: string = format(cleanValue);
 
 		if (esValido) {
 			control.setValue(formateado);

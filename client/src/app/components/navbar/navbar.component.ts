@@ -6,13 +6,14 @@ import { Router } from '@angular/router';
  * Barra de navegación principal con menú responsive y gestión de sesión
  */
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss'],
+    standalone: false
 })
 export class NavbarComponent implements OnInit {
-  public loggedIn: boolean = false;
-  public userName: string = '';
+  public loggedIn = false;
+  public userName = '';
 
   constructor(private router: Router) {}
 

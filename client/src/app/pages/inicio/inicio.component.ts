@@ -14,18 +14,19 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
  * Reemplaza Bootstrap + SweetAlert por Material nativo
  */
 @Component({
-  selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.scss'],
+    selector: 'app-inicio',
+    templateUrl: './inicio.component.html',
+    styleUrls: ['./inicio.component.scss'],
+    standalone: false
 })
 export class InicioComponent implements OnInit {
   public datosLogin!: FormGroup;
   public datosRegistro!: FormGroup;
-  public alreadyLogged: boolean = false;
+  public alreadyLogged = false;
   public sesion: any;
-  public selectedTabIndex: number = 0;
-  public hidePasswordLogin: boolean = true;
-  public hidePasswordRegistro: boolean = true;
+  public selectedTabIndex = 0;
+  public hidePasswordLogin = true;
+  public hidePasswordRegistro = true;
 
   // RUTs no válidos (secuencias repetitivas)
   private noValidos: string[] = [
@@ -38,7 +39,7 @@ export class InicioComponent implements OnInit {
   ];
 
   // RegExp para validar correos
-  private emailPattern: string =
+  private emailPattern =
     '^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$';
 
   constructor(

@@ -14,14 +14,15 @@ import { LoadingService } from '../../shared/services/loading.service';
  * Migrado a MatTable con paginación, ordenamiento y búsqueda integrada
  */
 @Component({
-  selector: 'app-historial',
-  templateUrl: './historial.component.html',
-  styleUrls: ['./historial.component.scss'],
+    selector: 'app-historial',
+    templateUrl: './historial.component.html',
+    styleUrls: ['./historial.component.scss'],
+    standalone: false
 })
 export class HistorialComponent implements OnInit {
   public historial!: ListaHistorial;
   public dataSource!: MatTableDataSource<any>;
-  public searchText: string = '';
+  public searchText = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

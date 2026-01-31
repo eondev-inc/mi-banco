@@ -14,9 +14,10 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
  * Migrado a Material Design con grid responsive y mat-select con íconos
  */
 @Component({
-  selector: 'app-registrar',
-  templateUrl: './registrar.component.html',
-  styleUrls: ['./registrar.component.scss'],
+    selector: 'app-registrar',
+    templateUrl: './registrar.component.html',
+    styleUrls: ['./registrar.component.scss'],
+    standalone: false
 })
 export class RegistrarComponent implements OnInit {
   public datosTransferencia!: FormGroup;
@@ -33,7 +34,7 @@ export class RegistrarComponent implements OnInit {
   ];
 
   // RegExp para validar correos
-  private emailPattern: string =
+  private emailPattern =
     '^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$';
 
   constructor(
