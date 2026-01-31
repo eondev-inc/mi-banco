@@ -1,11 +1,20 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { LoadingOverlayComponent } from './shared/components/loading-overlay/loading-overlay.component';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: false
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, LoadingOverlayComponent],
+  template: `
+    <router-outlet />
+    <app-loading-overlay />
+  `,
+  styles: [`
+    :host {
+      display: block;
+      min-height: 100vh;
+    }
+  `]
 })
-export class AppComponent {
-  title = 'mi-banco';
-}
+export class AppComponent {}
