@@ -148,7 +148,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
   `,
   styles: [`
     .history-card {
-      border-radius: 16px !important;
+      border-radius: 0.5rem !important;
       overflow: hidden;
     }
 
@@ -185,29 +185,29 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
 
     .cell-amount {
       font-weight: 700;
-      color: #D32F2F;
+      color: #DC3545;
       white-space: nowrap;
     }
 
     .chip-type {
-      --mat-chip-elevated-container-color: #E3F2FD;
-      --mat-chip-label-text-color: #1565C0;
+      --mat-chip-elevated-container-color: #CFF4FC;
+      --mat-chip-label-text-color: #0AA2C0;
       font-size: 0.75rem;
     }
 
     .chip-completada {
-      --mat-chip-elevated-container-color: #C8E6C9;
-      --mat-chip-label-text-color: #388E3C;
+      --mat-chip-elevated-container-color: #E0FAED;
+      --mat-chip-label-text-color: #2E8B57;
     }
 
     .chip-pendiente {
-      --mat-chip-elevated-container-color: #FFE0B2;
-      --mat-chip-label-text-color: #F57C00;
+      --mat-chip-elevated-container-color: #FFF3E0;
+      --mat-chip-label-text-color: #E56B00;
     }
 
     .chip-rechazada {
-      --mat-chip-elevated-container-color: #FFCDD2;
-      --mat-chip-label-text-color: #C62828;
+      --mat-chip-elevated-container-color: #FBE7E9;
+      --mat-chip-label-text-color: #B72C39;
     }
 
     .loading-state,
@@ -221,7 +221,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
       font-size: 64px;
       width: 64px;
       height: 64px;
-      color: #BDBDBD;
+      color: #C4C4C4;
     }
 
     .empty-state h3 {

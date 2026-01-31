@@ -1,19 +1,14 @@
 // ============================================================================
-// MI-BANCO - ESTILOS GLOBALES
-// Punto de entrada para el sistema de diseño bancario
+// MI-BANCO - ESTILOS GLOBALES (Boldo-inspired)
+// Manrope font, navy + green palette, pill-shaped controls
 // ============================================================================
 
-// Importar tema Material Design custom
 @use './styles/banking-theme';
-
-// Importar variables (ya incluidas en banking-theme, pero disponibles aquí si se necesitan)
 @use './styles/variables' as vars;
-
-// Importar utilidades
 @use './styles/utilities';
 
 // ----------------------------------------------------------------------------
-// ESTILOS GLOBALES BASE
+// BASE
 // ----------------------------------------------------------------------------
 html,
 body {
@@ -26,7 +21,7 @@ body {
   font-family: vars.$font-family-base;
   font-size: vars.$font-size-body;
   line-height: vars.$line-height-normal;
-  color: vars.$text-primary;
+  color: vars.$text-secondary;
   background-color: vars.$background-page;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -37,54 +32,34 @@ body {
 }
 
 // ----------------------------------------------------------------------------
-// RESET Y NORMALIZACIÓN
+// TYPOGRAPHY (Boldo: black headings, Manrope, 1.2 line-height)
 // ----------------------------------------------------------------------------
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  font-weight: vars.$font-weight-medium;
+  font-weight: vars.$font-weight-bold;
   line-height: vars.$line-height-tight;
+  color: vars.$text-primary;
 }
 
-h1 {
-  font-size: vars.$font-size-h1;
-}
-
-h2 {
-  font-size: vars.$font-size-h2;
-}
-
-h3 {
-  font-size: vars.$font-size-h3;
-}
-
-h4 {
-  font-size: vars.$font-size-h4;
-}
-
-h5 {
-  font-size: vars.$font-size-h5;
-}
-
-h6 {
-  font-size: vars.$font-size-h6;
-}
+h1 { font-size: vars.$font-size-h1; }
+h2 { font-size: vars.$font-size-h2; }
+h3 { font-size: vars.$font-size-h3; }
+h4 { font-size: vars.$font-size-h4; }
+h5 { font-size: vars.$font-size-h5; }
+h6 { font-size: vars.$font-size-h6; }
 
 p {
   margin: 0 0 vars.$spacing-md 0;
+  color: vars.$text-secondary;
 }
 
 a {
-  color: vars.$primary-500;
+  color: vars.$secondary-500;
   text-decoration: none;
   transition: color vars.$transition-fast;
 
   &:hover {
-    color: vars.$primary-700;
+    color: vars.$secondary-700;
     text-decoration: underline;
   }
 
@@ -105,7 +80,7 @@ button {
 }
 
 // ----------------------------------------------------------------------------
-// LAYOUT PRINCIPAL
+// LAYOUT
 // ----------------------------------------------------------------------------
 .main-content {
   min-height: calc(100vh - vars.$toolbar-height);
@@ -122,7 +97,7 @@ button {
 
   &__title {
     font-size: vars.$font-size-h3;
-    font-weight: vars.$font-weight-medium;
+    font-weight: vars.$font-weight-bold;
     color: vars.$text-primary;
     margin-bottom: vars.$spacing-sm;
   }
@@ -134,7 +109,7 @@ button {
 }
 
 // ----------------------------------------------------------------------------
-// CARDS Y CONTENEDORES
+// CARDS (Boldo card radius 0.5rem)
 // ----------------------------------------------------------------------------
 .card {
   background-color: vars.$background-card;
@@ -154,7 +129,7 @@ button {
 
     &-title {
       font-size: vars.$font-size-h5;
-      font-weight: vars.$font-weight-medium;
+      font-weight: vars.$font-weight-bold;
       color: vars.$text-primary;
       margin: 0;
     }
@@ -164,10 +139,6 @@ button {
       font-size: vars.$font-size-small;
       margin-top: vars.$spacing-xs;
     }
-  }
-
-  &__content {
-    // Contenido principal de la card
   }
 
   &__actions {
@@ -188,7 +159,7 @@ button {
 }
 
 // ----------------------------------------------------------------------------
-// FORMULARIOS
+// FORMS
 // ----------------------------------------------------------------------------
 .form-row {
   display: grid;
@@ -210,7 +181,7 @@ button {
 }
 
 // ----------------------------------------------------------------------------
-// ESTADOS DE VALIDACIÓN
+// VALIDATION
 // ----------------------------------------------------------------------------
 .validation-error {
   color: vars.$error-500;
@@ -228,7 +199,7 @@ button {
 }
 
 // ----------------------------------------------------------------------------
-// TABLAS RESPONSIVE
+// TABLES
 // ----------------------------------------------------------------------------
 .table-container {
   overflow-x: auto;
@@ -237,21 +208,20 @@ button {
   border-radius: vars.$border-radius-md;
 
   @media (max-width: vars.$breakpoint-md) {
-    // Scroll horizontal en móviles
     -webkit-overflow-scrolling: touch;
   }
 }
 
 // ----------------------------------------------------------------------------
-// BADGES Y CHIPS
+// BADGES (pill-shaped, Boldo style)
 // ----------------------------------------------------------------------------
 .badge {
   display: inline-flex;
   align-items: center;
   padding: vars.$spacing-xs vars.$spacing-sm;
-  border-radius: vars.$border-radius-full;
+  border-radius: vars.$border-radius-pill;
   font-size: vars.$font-size-caption;
-  font-weight: vars.$font-weight-medium;
+  font-weight: vars.$font-weight-semi-bold;
   line-height: 1;
 
   &.badge-success {
@@ -290,15 +260,8 @@ button {
   margin: vars.$spacing-lg 0;
 }
 
-.divider-vertical {
-  width: 1px;
-  background-color: vars.$divider-color;
-  border: none;
-  margin: 0 vars.$spacing-md;
-}
-
 // ----------------------------------------------------------------------------
-// SCROLLBARS PERSONALIZADOS (Webkit)
+// SCROLLBARS
 // ----------------------------------------------------------------------------
 ::-webkit-scrollbar {
   width: 8px;
@@ -311,7 +274,7 @@ button {
 
 ::-webkit-scrollbar-thumb {
   background: vars.$gray-400;
-  border-radius: vars.$border-radius-sm;
+  border-radius: vars.$border-radius-pill;
 
   &:hover {
     background: vars.$gray-500;
@@ -319,7 +282,41 @@ button {
 }
 
 // ----------------------------------------------------------------------------
-// PRINT STYLES
+// BOLDO UTILITY CLASSES
+// ----------------------------------------------------------------------------
+.bg-dark {
+  background-color: vars.$primary-500;
+  color: white;
+}
+
+.text-success {
+  color: vars.$accent-500;
+}
+
+.text-muted {
+  color: vars.$text-secondary;
+}
+
+.btn-success {
+  background-color: vars.$accent-500 !important;
+  color: vars.$primary-500 !important;
+
+  &:hover {
+    background-color: vars.$accent-700 !important;
+  }
+}
+
+.btn-dark {
+  background-color: vars.$primary-500 !important;
+  color: white !important;
+
+  &:hover {
+    background-color: vars.$primary-700 !important;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// PRINT
 // ----------------------------------------------------------------------------
 @media print {
   .no-print {
@@ -338,7 +335,7 @@ button {
 }
 
 // ----------------------------------------------------------------------------
-// ACCESIBILIDAD - MOTION REDUCTION
+// REDUCED MOTION
 // ----------------------------------------------------------------------------
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -351,7 +348,7 @@ button {
 }
 
 // ----------------------------------------------------------------------------
-// HIGH CONTRAST MODE
+// HIGH CONTRAST
 // ----------------------------------------------------------------------------
 @media (prefers-contrast: high) {
   .mat-card,

@@ -1,13 +1,12 @@
-import { Component, signal, computed, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatBadgeModule } from '@angular/material/badge';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../core/auth/auth.service';
@@ -31,13 +30,12 @@ interface NavItem {
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    MatBadgeModule,
     MatDividerModule,
     MatTooltipModule
   ],
   template: `
     <mat-sidenav-container class="layout-container">
-      <!-- Sidenav for mobile -->
+      <!-- Sidenav: Boldo dark navy -->
       <mat-sidenav
         #sidenav
         [mode]="isMobile() ? 'over' : 'side'"
@@ -51,9 +49,9 @@ interface NavItem {
           <span class="sidenav-brand">Mi Banco</span>
         </div>
 
-        <mat-divider></mat-divider>
+        <div class="sidenav-divider"></div>
 
-        <mat-nav-list>
+        <mat-nav-list class="sidenav-nav">
           @for (item of navItems; track item.route) {
             <a mat-list-item
                [routerLink]="item.route"
@@ -67,9 +65,9 @@ interface NavItem {
         </mat-nav-list>
 
         <div class="sidenav-footer">
-          <mat-divider></mat-divider>
+          <div class="sidenav-divider"></div>
           <mat-nav-list>
-            <a mat-list-item (click)="logout()">
+            <a mat-list-item (click)="logout()" class="logout-item">
               <mat-icon matListItemIcon>logout</mat-icon>
               <span matListItemTitle>Cerrar Sesion</span>
             </a>
@@ -77,10 +75,10 @@ interface NavItem {
         </div>
       </mat-sidenav>
 
-      <!-- Main content area -->
+      <!-- Main content -->
       <mat-sidenav-content class="layout-content">
-        <!-- Top toolbar -->
-        <mat-toolbar class="layout-toolbar" color="primary">
+        <!-- Toolbar: clean white -->
+        <mat-toolbar class="layout-toolbar">
           @if (isMobile()) {
             <button mat-icon-button
                     (click)="sidenav.toggle()"
@@ -91,11 +89,11 @@ interface NavItem {
 
           <span class="toolbar-spacer"></span>
 
-          <!-- User menu -->
           <button mat-icon-button
                   [matMenuTriggerFor]="userMenu"
                   aria-label="Menu de usuario"
-                  matTooltip="Mi cuenta">
+                  matTooltip="Mi cuenta"
+                  class="user-avatar-btn">
             <mat-icon>account_circle</mat-icon>
           </button>
 
@@ -115,7 +113,6 @@ interface NavItem {
           </mat-menu>
         </mat-toolbar>
 
-        <!-- Page content -->
         <main class="page-content" role="main">
           <router-outlet />
         </main>
@@ -129,59 +126,99 @@ interface NavItem {
 
     .layout-sidenav {
       width: 260px;
-      background: var(--mb-surface, #fff);
-      border-right: 1px solid var(--mb-divider, #e0e0e0);
+      background: #0A2640;
+      border-right: none;
     }
 
     .sidenav-header {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 20px 16px;
+      padding: 24px 20px;
     }
 
     .sidenav-logo {
       font-size: 32px;
       width: 32px;
       height: 32px;
-      color: var(--mb-primary, #1976D2);
+      color: #65E4A3;
     }
 
     .sidenav-brand {
       font-size: 1.25rem;
       font-weight: 700;
-      color: var(--mb-primary, #1976D2);
+      color: #ffffff;
       letter-spacing: -0.5px;
+    }
+
+    .sidenav-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 0 16px;
+    }
+
+    .sidenav-nav .mat-mdc-list-item {
+      color: rgba(255, 255, 255, 0.7);
+      margin: 2px 8px;
+      border-radius: 0.5rem;
+    }
+    .sidenav-nav .mat-mdc-list-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #F1F1F1;
+    }
+    .sidenav-nav .mat-mdc-list-item .mat-icon {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .active-link {
+      background: rgba(101, 228, 163, 0.12) !important;
+      color: #65E4A3 !important;
+    }
+    .active-link .mat-icon {
+      color: #65E4A3 !important;
     }
 
     .sidenav-footer {
       margin-top: auto;
     }
 
-    .active-link {
-      background: rgba(25, 118, 210, 0.08) !important;
-      color: var(--mb-primary, #1976D2) !important;
-      border-left: 3px solid var(--mb-primary, #1976D2);
+    .logout-item {
+      color: rgba(255, 255, 255, 0.5) !important;
+    }
+    .logout-item:hover {
+      color: #E57373 !important;
+      background: rgba(229, 115, 115, 0.08) !important;
     }
 
     .layout-toolbar {
       position: sticky;
       top: 0;
       z-index: 100;
+      background: #ffffff;
+      color: #0A2640;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
     .toolbar-spacer {
       flex: 1;
     }
 
+    .user-avatar-btn .mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+      color: #0A2640;
+    }
+
     .layout-content {
       display: flex;
       flex-direction: column;
+      background: #F7F9FA;
     }
 
     .page-content {
       flex: 1;
-      padding: 24px;
+      padding: 32px;
       max-width: 1200px;
       width: 100%;
       margin: 0 auto;

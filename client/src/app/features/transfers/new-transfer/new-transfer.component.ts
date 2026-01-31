@@ -128,7 +128,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
   styles: [`
     .transfer-card {
       max-width: 640px;
-      border-radius: 16px !important;
+      border-radius: 0.5rem !important;
     }
 
     .full-width { width: 100%; }
@@ -157,7 +157,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
     .currency-prefix {
       font-size: 1.25rem;
       font-weight: 500;
-      color: #757575;
+      color: #5B7075;
     }
 
     .form-actions {
@@ -170,7 +170,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
       height: 48px;
       padding: 0 32px;
       font-size: 1rem;
-      border-radius: 12px !important;
+      border-radius: 5rem !important;
     }
 
     .submit-btn mat-icon { margin-right: 8px; }

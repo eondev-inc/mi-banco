@@ -32,19 +32,19 @@ import { MatIconModule } from '@angular/material/icon';
       font-size: 36px;
       width: 36px;
       height: 36px;
-      color: var(--mb-primary, #1976D2);
+      color: var(--mb-primary, #0A2640);
       margin-top: 2px;
     }
     .page-header__title {
       font-size: 1.75rem;
       font-weight: 700;
-      color: var(--mb-text-primary, #212121);
+      color: var(--mb-text-primary, #000000);
       margin: 0;
       letter-spacing: -0.5px;
     }
     .page-header__subtitle {
       font-size: 0.9375rem;
-      color: var(--mb-text-secondary, #616161);
+      color: var(--mb-text-secondary, #5B7075);
       margin: 4px 0 0;
     }
   `]
