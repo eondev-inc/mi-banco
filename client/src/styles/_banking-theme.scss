@@ -1,178 +1,132 @@
 // ============================================================================
-// MI-BANCO - TEMA MATERIAL CUSTOM
-// Tema bancario profesional basado en Material Design 3
-// Compatible con Angular Material 18
+// MI-BANCO - TEMA MATERIAL 3 EXPRESSIVE
+// Material Design 3 con colores vibrantes y personalidad financiera
+// Compatible con Angular Material 21
 // ============================================================================
 
 @use '@angular/material' as mat;
 @use './variables' as vars;
 
 // ----------------------------------------------------------------------------
-// DEFINIR PALETAS DE COLOR PERSONALIZADAS
-// Usando los colores definidos en _variables.scss
+// MATERIAL 3 THEME CONFIGURATION
+// Usando M3 theme API con paletas de Angular Material 21
 // ----------------------------------------------------------------------------
 
-// Paleta primaria (azul)
-$mi-banco-primary-palette: (
-  50: vars.$primary-50,
-  100: vars.$primary-100,
-  200: vars.$primary-100,
-  300: vars.$primary-300,
-  400: vars.$primary-300,
-  500: vars.$primary-500,
-  600: vars.$primary-500,
-  700: vars.$primary-700,
-  800: vars.$primary-700,
-  900: vars.$primary-900,
-  A100: vars.$primary-100,
-  A200: vars.$primary-300,
-  A400: vars.$primary-500,
-  A700: vars.$primary-700,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: rgba(black, 0.87),
-    A200: rgba(black, 0.87),
-    A400: white,
-    A700: white,
-  )
-);
-
-// Paleta accent (naranja)
-$mi-banco-accent-palette: (
-  50: vars.$accent-100,
-  100: vars.$accent-100,
-  200: vars.$accent-100,
-  300: vars.$accent-300,
-  400: vars.$accent-300,
-  500: vars.$accent-500,
-  600: vars.$accent-500,
-  700: vars.$accent-700,
-  800: vars.$accent-700,
-  900: vars.$accent-900,
-  A100: vars.$accent-100,
-  A200: vars.$accent-300,
-  A400: vars.$accent-500,
-  A700: vars.$accent-700,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: rgba(black, 0.87),
-    A200: rgba(black, 0.87),
-    A400: white,
-    A700: white,
-  )
-);
-
-// Paleta warn (rojo)
-$mi-banco-warn-palette: (
-  50: vars.$error-100,
-  100: vars.$error-100,
-  200: vars.$error-100,
-  300: vars.$error-300,
-  400: vars.$error-300,
-  500: vars.$error-500,
-  600: vars.$error-500,
-  700: vars.$error-700,
-  800: vars.$error-700,
-  900: vars.$error-700,
-  A100: vars.$error-100,
-  A200: vars.$error-300,
-  A400: vars.$error-500,
-  A700: vars.$error-700,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: rgba(black, 0.87),
-    A200: rgba(black, 0.87),
-    A400: white,
-    A700: white,
-  )
-);
-
-$mi-banco-primary: mat.m2-define-palette($mi-banco-primary-palette, 500);
-$mi-banco-accent: mat.m2-define-palette($mi-banco-accent-palette, 500);
-$mi-banco-warn: mat.m2-define-palette($mi-banco-warn-palette, 500);
-
-// ----------------------------------------------------------------------------
-// CREAR TEMA CLARO
-// ----------------------------------------------------------------------------
-$mi-banco-theme: mat.m2-define-light-theme((
+$mi-banco-theme: mat.define-theme((
   color: (
-    primary: $mi-banco-primary,
-    accent: $mi-banco-accent,
-    warn: $mi-banco-warn,
+    theme-type: light,
+    primary: mat.$blue-palette,
+    tertiary: mat.$orange-palette,
+  ),
+  typography: (
+    brand-family: 'Roboto',
+    plain-family: 'Roboto',
+  ),
+  density: (
+    scale: 0,
   )
 ));
 
-// ----------------------------------------------------------------------------
-// APLICAR TEMA A TODOS LOS COMPONENTES
-// ----------------------------------------------------------------------------
-@include mat.all-component-themes($mi-banco-theme);
-
-// ----------------------------------------------------------------------------
-// CUSTOMIZACIONES ESPECÍFICAS DEL TEMA BANCARIO
-// ----------------------------------------------------------------------------
-
-// Toolbar con color primario más prominente
-.mat-toolbar.mat-primary {
-  background-color: vars.$primary-500;
-  color: white;
+// Apply the theme globally
+html {
+  @include mat.all-component-themes($mi-banco-theme);
 }
 
-// Cards con elevación sutil
-.mat-mdc-card {
+// ----------------------------------------------------------------------------
+// CSS CUSTOM PROPERTIES (Design Tokens M3 Expressive)
+// Para uso consistente en componentes standalone
+// ----------------------------------------------------------------------------
+:root {
+  // Primary palette
+  --mb-primary: #{vars.$primary-500};
+  --mb-primary-light: #{vars.$primary-100};
+  --mb-primary-dark: #{vars.$primary-700};
+  --mb-on-primary: #ffffff;
+
+  // Accent / Tertiary
+  --mb-accent: #{vars.$accent-500};
+  --mb-accent-light: #{vars.$accent-100};
+
+  // Semantic colors
+  --mb-success: #{vars.$success-500};
+  --mb-error: #{vars.$error-500};
+  --mb-warning: #{vars.$warning-500};
+  --mb-info: #{vars.$info-500};
+
+  // Surfaces
+  --mb-surface: #ffffff;
+  --mb-surface-variant: #{vars.$gray-50};
+  --mb-background: #{vars.$background-page};
+  --mb-divider: #{vars.$divider-color};
+
+  // Text
+  --mb-text-primary: #{vars.$text-primary};
+  --mb-text-secondary: #{vars.$text-secondary};
+
+  // Elevation
+  --mb-shadow-sm: #{vars.$shadow-1};
+  --mb-shadow-md: #{vars.$shadow-2};
+  --mb-shadow-lg: #{vars.$shadow-3};
+
+  // Shape (M3 Expressive rounded corners)
+  --mb-shape-sm: 8px;
+  --mb-shape-md: 12px;
+  --mb-shape-lg: 16px;
+  --mb-shape-xl: 24px;
+  --mb-shape-full: 9999px;
+
+  // Motion (M3 Expressive emphasis curves)
+  --mb-motion-standard: 300ms cubic-bezier(0.2, 0, 0, 1);
+  --mb-motion-emphasized: 500ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+// ----------------------------------------------------------------------------
+// M3 EXPRESSIVE COMPONENT OVERRIDES
+// Colores vibrantes, tipografia audaz, animaciones dinamicas
+// ----------------------------------------------------------------------------
+
+// Toolbar con gradiente sutil y elevacion
+.mat-toolbar.mat-primary {
+  background: linear-gradient(135deg, vars.$primary-500, vars.$primary-700);
+  color: white;
   box-shadow: vars.$shadow-2;
-  border-radius: vars.$border-radius-md;
+}
+
+// Cards con bordes redondeados M3 y hover expresivo
+.mat-mdc-card {
+  border-radius: var(--mb-shape-lg) !important;
+  box-shadow: var(--mb-shadow-md);
+  transition: transform var(--mb-motion-standard),
+              box-shadow var(--mb-motion-standard);
 
   &:hover {
-    box-shadow: vars.$shadow-3;
-    transition: box-shadow vars.$transition-base;
+    box-shadow: var(--mb-shadow-lg);
   }
 }
 
-// Form fields con apariencia outline profesional
+// Form fields
 .mat-mdc-form-field {
   font-family: vars.$font-family-base;
 }
 
-// Botones con alturas y espaciados consistentes
+// Botones M3 Expressive
 .mat-mdc-button,
 .mat-mdc-raised-button,
 .mat-mdc-unelevated-button,
-.mat-mdc-outlined-button {
-  min-width: vars.$button-min-width;
-  height: vars.$button-height;
-  border-radius: vars.$border-radius-sm;
+.mat-mdc-outlined-button,
+.mat-mdc-flat-button {
+  border-radius: var(--mb-shape-md) !important;
   font-weight: vars.$font-weight-medium;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
+  transition: all var(--mb-motion-standard);
 }
 
-// Snackbars con colores semánticos
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  border-radius: var(--mb-shape-lg) !important;
+}
+
+// Snackbars semanticos
 .mat-mdc-snack-bar-container {
   &.success-snackbar {
     --mat-snackbar-container-color: #{vars.$success-500};
@@ -199,15 +153,17 @@ $mi-banco-theme: mat.m2-define-light-theme((
   }
 }
 
-// Tablas con estilos bancarios
+// Tablas bancarias
 .mat-mdc-table {
   background-color: white;
 
   .mat-mdc-header-row {
-    background-color: vars.$gray-100;
+    background-color: vars.$gray-50;
   }
 
   .mat-mdc-row {
+    transition: background-color var(--mb-motion-standard);
+
     &:hover {
       background-color: vars.$background-hover;
     }
@@ -224,39 +180,31 @@ $mi-banco-theme: mat.m2-define-light-theme((
   }
 }
 
-// Paginador con mejor contraste
 .mat-mdc-paginator {
   background-color: white;
   border-top: 1px solid vars.$divider-color;
 }
 
-// Tabs con estilo bancario
 .mat-mdc-tab-group {
   .mat-mdc-tab {
-    color: vars.$text-secondary;
     font-weight: vars.$font-weight-medium;
     min-width: 120px;
-
-    &.mat-mdc-tab-active {
-      color: vars.$primary-500;
-    }
   }
 }
 
-// Dialog con mejores sombras
+// Dialog M3
 .mat-mdc-dialog-container {
-  --mat-dialog-container-elevation: #{vars.$shadow-5};
-  border-radius: vars.$border-radius-lg;
+  border-radius: var(--mb-shape-xl) !important;
 }
 
-// Menu con separación visual
 .mat-mdc-menu-panel {
-  box-shadow: vars.$shadow-3;
-  border-radius: vars.$border-radius-md;
+  border-radius: var(--mb-shape-md) !important;
 }
 
-// Chips con colores semánticos
+// Chips semanticos
 .mat-mdc-chip {
+  border-radius: var(--mb-shape-sm) !important;
+
   &.chip-success {
     --mat-chip-elevated-container-color: #{vars.$success-100};
     --mat-chip-label-text-color: #{vars.$success-700};
@@ -278,12 +226,15 @@ $mi-banco-theme: mat.m2-define-light-theme((
   }
 }
 
-// Progress spinner con color primario
 .mat-mdc-progress-spinner {
   --mat-progress-spinner-active-indicator-color: #{vars.$primary-500};
 }
 
-// Focus visible mejorado para accesibilidad
+.mat-sidenav {
+  border-radius: 0 var(--mb-shape-lg) var(--mb-shape-lg) 0;
+}
+
+// Focus visible mejorado (WCAG 2.0 AA)
 *:focus-visible {
   outline: vars.$focus-ring-width solid vars.$focus-ring-color;
   outline-offset: vars.$focus-ring-offset;
