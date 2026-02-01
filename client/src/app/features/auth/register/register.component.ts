@@ -52,19 +52,33 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
             <mat-stepper [linear]="true" #stepper>
               <!-- Step 1: Personal info -->
-              <mat-step [stepControl]="registerForm" label="Datos personales">
+              <mat-step [stepControl]="personalInfoGroup" label="Datos personales">
                 <div class="step-content">
-                  <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Nombre completo</mat-label>
-                    <input matInput
-                           formControlName="nombre"
-                           autocomplete="name"
-                           aria-label="Nombre completo">
-                    <mat-icon matPrefix>person</mat-icon>
-                    @if (registerForm.get('nombre')?.hasError('required') && registerForm.get('nombre')?.touched) {
-                      <mat-error>El nombre es obligatorio</mat-error>
-                    }
-                  </mat-form-field>
+                  <div class="form-row">
+                    <mat-form-field appearance="outline" class="half-width">
+                      <mat-label>Nombres</mat-label>
+                      <input matInput
+                             formControlName="nombre"
+                             autocomplete="given-name"
+                             aria-label="Nombres">
+                      <mat-icon matPrefix>person</mat-icon>
+                      @if (registerForm.get('nombre')?.hasError('required') && registerForm.get('nombre')?.touched) {
+                        <mat-error>Los nombres son obligatorios</mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="half-width">
+                      <mat-label>Apellidos</mat-label>
+                      <input matInput
+                             formControlName="apellido"
+                             autocomplete="family-name"
+                             aria-label="Apellidos">
+                      <mat-icon matPrefix>person_outline</mat-icon>
+                      @if (registerForm.get('apellido')?.hasError('required') && registerForm.get('apellido')?.touched) {
+                        <mat-error>Los apellidos son obligatorios</mat-error>
+                      }
+                    </mat-form-field>
+                  </div>
 
                   <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Correo electronico</mat-label>
@@ -79,6 +93,32 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
                     }
                     @if (registerForm.get('email')?.hasError('email')) {
                       <mat-error>Correo invalido</mat-error>
+                    }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Numero de telefono</mat-label>
+                    <input matInput
+                           type="tel"
+                           formControlName="telefono"
+                           autocomplete="tel"
+                           placeholder="+56 9 1234 5678"
+                           aria-label="Numero de telefono">
+                    <mat-icon matPrefix>phone</mat-icon>
+                    @if (registerForm.get('telefono')?.hasError('required') && registerForm.get('telefono')?.touched) {
+                      <mat-error>El telefono es obligatorio</mat-error>
+                    }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Direccion</mat-label>
+                    <input matInput
+                           formControlName="direccion"
+                           autocomplete="street-address"
+                           aria-label="Direccion">
+                    <mat-icon matPrefix>home</mat-icon>
+                    @if (registerForm.get('direccion')?.hasError('required') && registerForm.get('direccion')?.touched) {
+                      <mat-error>La direccion es obligatoria</mat-error>
                     }
                   </mat-form-field>
 
@@ -231,6 +271,22 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
 
     .full-width { width: 100%; }
 
+    .half-width { width: 100%; }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+    }
+
+    .form-row .half-width { flex: 1; }
+
+    @media (max-width: 480px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
     .step-content {
       padding: 16px 0;
     }
@@ -285,10 +341,17 @@ export class RegisterComponent {
 
   readonly registerForm = this.fb.nonNullable.group({
     nombre: ['', [Validators.required, Validators.minLength(2)]],
+    apellido: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
+    telefono: ['', [Validators.required]],
+    direccion: ['', [Validators.required]],
     rut: ['', [Validators.required, rutValidator()]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
+
+  get personalInfoGroup() {
+    return this.registerForm;
+  }
 
   passwordStrength(): string {
     const pwd = this.registerForm.get('password')?.value ?? '';

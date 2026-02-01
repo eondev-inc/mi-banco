@@ -97,7 +97,7 @@ interface NavItem {
             <mat-icon>account_circle</mat-icon>
           </button>
 
-          <mat-menu #userMenu="matMenu">
+          <mat-menu #userMenu="matMenu" xPosition="before">
             <div class="user-menu-header" mat-menu-item disabled>
               <strong>{{ auth.userName() }}</strong>
             </div>
@@ -158,20 +158,29 @@ interface NavItem {
     }
 
     .sidenav-nav .mat-mdc-list-item {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.85) !important;
       margin: 2px 8px;
       border-radius: 0.5rem;
     }
+    .sidenav-nav .mat-mdc-list-item .mdc-list-item__primary-text {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
     .sidenav-nav .mat-mdc-list-item:hover {
       background: rgba(255, 255, 255, 0.08);
-      color: #F1F1F1;
+      color: #ffffff !important;
+    }
+    .sidenav-nav .mat-mdc-list-item:hover .mdc-list-item__primary-text {
+      color: #ffffff !important;
     }
     .sidenav-nav .mat-mdc-list-item .mat-icon {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.6) !important;
     }
 
     .active-link {
       background: rgba(101, 228, 163, 0.12) !important;
+      color: #65E4A3 !important;
+    }
+    .active-link .mdc-list-item__primary-text {
       color: #65E4A3 !important;
     }
     .active-link .mat-icon {
@@ -185,9 +194,15 @@ interface NavItem {
     .logout-item {
       color: rgba(255, 255, 255, 0.5) !important;
     }
+    .logout-item .mdc-list-item__primary-text {
+      color: rgba(255, 255, 255, 0.5) !important;
+    }
     .logout-item:hover {
       color: #E57373 !important;
       background: rgba(229, 115, 115, 0.08) !important;
+    }
+    .logout-item:hover .mdc-list-item__primary-text {
+      color: #E57373 !important;
     }
 
     .layout-toolbar {

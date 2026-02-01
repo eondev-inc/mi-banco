@@ -68,7 +68,10 @@ export class AuthService {
 
     return this.http.post<any>(`${environment.apiUrl}/usuario`, {
       nombre: data.nombre.trim(),
+      apellido: data.apellido.trim(),
       email: data.email.trim(),
+      telefono: data.telefono.trim(),
+      direccion: data.direccion.trim(),
       rut: clean(data.rut.trim()),
       password: data.password.trim()
     }).pipe(

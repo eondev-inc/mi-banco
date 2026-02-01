@@ -13,7 +13,10 @@ export interface LoginRequest {
 
 export interface RegisterRequest {
   nombre: string;
+  apellido: string;
   email: string;
+  telefono: string;
+  direccion: string;
   rut: string;
   password: string;
 }
