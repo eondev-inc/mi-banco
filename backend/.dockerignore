@@ -1,0 +1,74 @@
+# ============================================================================
+# .dockerignore - Archivos excluidos del contexto de Docker
+# ============================================================================
+# Reduce el tamaño del contexto de build y acelera la construcción
+# ============================================================================
+
+# Dependencias
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Build outputs
+dist
+build
+*.tsbuildinfo
+
+# Tests
+coverage
+.nyc_output
+test
+*.spec.ts
+*.e2e-spec.ts
+
+# IDE y editores
+.idea
+.vscode
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# Environment files
+.env.local
+.env.*.local
+*.env.backup
+
+# Logs
+logs
+*.log
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Documentación (no necesaria en runtime)
+*.md
+docs/
+README*
+CHANGELOG*
+LICENSE
+
+# Scripts de desarrollo
+scripts/init-indexes.ts
+
+# Archivos temporales
+tmp/
+temp/
+.cache/
+.tmp/
+
+# OS files
+Thumbs.db
+.DS_Store

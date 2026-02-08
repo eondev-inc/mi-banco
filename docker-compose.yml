@@ -15,54 +15,109 @@ services:
       - mongo-data:/data/db
     networks:
       - mi-banco-network
-
+    restart: unless-stopped
   # ==========================================================================
-  # SERVIDOR BACKEND (Express/Node.js)
+  # SERVIDOR BACKEND (NestJS + Fastify) - DESARROLLO CON HOT RELOAD
   # ==========================================================================
-  server:
-    build: ./server
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
     image: seventrust/mean_backend
-    container_name: mi-banco-server
+    container_name: mi-banco-backend-dev
     ports:
-      - "8000:8000"
-    links:
-      - mongo-db
+      - "8001:8001"
+    volumes:
+      # Montar código fuente para hot reload
+      - ./backend/src:/app/src
+      - ./backend/test:/app/test
+      - ./backend/tsconfig.json:/app/tsconfig.json
+      - ./backend/tsconfig.build.json:/app/tsconfig.build.json
+      - ./backend/nest-cli.json:/app/nest-cli.json
+      - ./backend/.env:/app/.env
+      # Volumen nombrado para node_modules (evita conflictos con host)
+      - backend-node-modules:/app/node_modules
+    environment:
+      # Server
+      PORT: 8001
+      NODE_ENV: development
+      ENABLE_CLUSTER: "false"
+      
+      # Database
+      MONGODB_URI: mongodb://mongo-db:27017/mi-banco
+      DB_NAME: mi-banco
+      DB_CONNECTION_TIMEOUT: 10000
+      DB_POOL_SIZE: 10
+      
+      # Security
+      ALLOWED_ORIGINS: http://localhost:4200,http://localhost:3000,http://localhost:80,http://localhost
+      RATE_LIMIT_MAX: 100
+      RATE_LIMIT_WINDOW: "15 minutes"
+      
+      # Logging
+      LOG_LEVEL: debug
+      
+      # Application
+      APP_NAME: mi-banco-api
+      APP_VERSION: "1.0.0"
+      
+      # Development
+      CHOKIDAR_USEPOLLING: "true"  # Necesario para detectar cambios en Docker
     depends_on:
       - mongo-db
     networks:
       - mi-banco-network
     restart: unless-stopped
+    stdin_open: true
+    tty: true
 
   # ==========================================================================
-  # CLIENTE FRONTEND - PRODUCCIÓN (Angular + Nginx)
+  # CLIENTE FRONTEND - DESARROLLO CON HOT RELOAD
   # ==========================================================================
-  # Este servicio compila la aplicación Angular y la sirve con Nginx
-  # Útil para pruebas de producción local
   client:
     build:
       context: ./client
       dockerfile: Dockerfile.dev
-    image: seventrust/mean_frontend
-    container_name: mi-banco-client
+    image: seventrust/mean_frontend_dev
+    container_name: mi-banco-client-dev
     ports:
       - "80:4200"
     volumes:
       # Montar código fuente para hot reload
-      - ./client/src:/app/src
-      - ./client/angular.json:/app/angular.json
-      - ./client/tsconfig.json:/app/tsconfig.json
-      - ./client/tsconfig.app.json:/app/tsconfig.app.json
+      - ./client:/app
       # Volumen nombrado para node_modules (evita conflictos con host)
       - client-node-modules:/app/node_modules
     environment:
       - NODE_ENV=development
       - NG_CLI_ANALYTICS=false
       - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
     networks:
       - mi-banco-network
     restart: unless-stopped
     stdin_open: true
     tty: true
+
+  # ==========================================================================
+  # SERVIDOR LEGACY (Express) - DEPRECATED
+  # ==========================================================================
+  # Mantener comentado para referencia, será eliminado en futuras versiones
+  # server:
+  #   build: 
+  #     context: ./server
+  #     dockerfile: Dockerfile
+  #   image: seventrust/mean_backend
+  #   container_name: mi-banco-server
+  #   ports:
+  #     - "8000:8000"
+  #   links:
+  #     - mongo-db
+  #   depends_on:
+  #     - mongo-db
+  #   networks:
+  #     - mi-banco-network
+  #   restart: unless-stopped
 
 # ==========================================================================
 # VOLÚMENES PERSISTENTES
@@ -72,6 +127,8 @@ volumes:
     name: mi-banco-mongo-data
   client-node-modules:
     name: mi-banco-client-node-modules
+  backend-node-modules:
+    name: mi-banco-backend-node-modules
 
 # ==========================================================================
 # RED PERSONALIZADA

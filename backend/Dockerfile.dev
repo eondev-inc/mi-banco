@@ -1,0 +1,56 @@
+# ============================================================================
+# Dockerfile.dev - Entorno de Desarrollo NestJS con Hot Reload
+# ============================================================================
+# Este Dockerfile está optimizado para desarrollo local con recarga automática
+# de cambios. Usa nest start --watch para detectar cambios en tiempo real.
+#
+# Uso:
+#   docker-compose up backend-dev
+#
+# Acceso:
+#   http://localhost:8001
+#   http://localhost:8001/api (Swagger docs)
+# ============================================================================
+
+FROM node:20-alpine
+
+# Metadatos
+LABEL maintainer="Mi-Banco Development Team"
+LABEL description="NestJS development environment with hot reload"
+LABEL version="1.0"
+
+# Instalar dependencias necesarias para compilación de módulos nativos
+# python3, make, g++ son necesarios para bcrypt
+RUN apk add --no-cache python3 make g++
+
+# Instalar herramientas globales
+RUN npm install -g @nestjs/cli
+
+# Establecer directorio de trabajo
+WORKDIR /app
+
+# Copiar package.json primero (mejor cache de capas)
+COPY package*.json ./
+
+# Instalar dependencias
+RUN npm install --legacy-peer-deps
+
+# Copiar tsconfig y configuraciones de NestJS
+COPY tsconfig*.json ./
+COPY nest-cli.json ./
+
+# Copiar el resto del código (puede ser sobrescrito por volumen en desarrollo)
+COPY . .
+
+# Exponer puerto de desarrollo
+EXPOSE 8001
+
+# Variables de entorno para desarrollo
+ENV NODE_ENV=development
+ENV PORT=8001
+ENV LOG_LEVEL=debug
+
+# Comando de desarrollo con hot reload
+# --watch: Recompila automáticamente cuando detecta cambios
+# --preserveWatchOutput: Mantiene la salida anterior en consola (más legible)
+CMD ["npm", "run", "start:dev"]
