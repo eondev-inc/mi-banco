@@ -3,8 +3,28 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap, map, catchError, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { User, LoginRequest, RegisterRequest } from '../models/user.model';
+import { 
+  User, 
+  LoginRequest, 
+  RegisterRequest,
+  ApiResponse,
+  LoginResponseBody,
+  RegisterResponseBody
+} from '../models/user.model';
 import { clean } from 'rut.js';
+
+/**
+ * Formats RUT without dots, only with hyphen (e.g., "12345678-9")
+ * Backend expects format: ^[0-9]+-[0-9Kk]$
+ */
+function formatRutForBackend(rut: string): string {
+  const cleaned = clean(rut);
+  if (!cleaned || cleaned.length < 2) return cleaned;
+  
+  const body = cleaned.slice(0, -1);
+  const dv = cleaned.slice(-1);
+  return `${body}-${dv}`;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -33,18 +53,17 @@ export class AuthService {
     this._isLoading.set(true);
     this._authError.set(null);
 
-    return this.http.get<any>(`${environment.apiUrl}/usuario`, {
-      params: {
-        rut: clean(credentials.rut.trim()),
-        password: credentials.password.trim()
-      }
+    return this.http.post<ApiResponse<LoginResponseBody>>(`${environment.apiUrl}/usuario/login`, {
+      rut: formatRutForBackend(credentials.rut.trim()),
+      password: credentials.password.trim()
     }).pipe(
       tap(response => {
+        const userData = response.body.usuario;
         const user: User = {
-          nombre: response.nombre ?? response.user?.nombre,
-          email: response.email ?? response.user?.email ?? '',
-          rut: clean(credentials.rut.trim()),
-          saldo: response.saldo ?? 1500000
+          nombre: userData.nombre,
+          email: userData.email ?? '',
+          rut: userData.rut,
+          saldo: 1500000 // Backend doesn't handle real balance
         };
         this.setSession(user);
         this._isLoading.set(false);
@@ -66,13 +85,23 @@ export class AuthService {
     this._isLoading.set(true);
     this._authError.set(null);
 
-    return this.http.post<any>(`${environment.apiUrl}/usuario`, {
+    return this.http.post<ApiResponse<RegisterResponseBody>>(`${environment.apiUrl}/usuario`, {
       nombre: data.nombre.trim(),
       email: data.email.trim(),
-      rut: clean(data.rut.trim()),
+      rut: formatRutForBackend(data.rut.trim()),
       password: data.password.trim()
     }).pipe(
-      tap(() => this._isLoading.set(false)),
+      tap(response => {
+        const userData = response.body.usuario;
+        const user: User = {
+          nombre: userData.nombre,
+          email: userData.email,
+          rut: userData.rut,
+          saldo: 1500000
+        };
+        this.setSession(user);
+        this._isLoading.set(false);
+      }),
       map(() => true),
       catchError(error => {
         this._authError.set(

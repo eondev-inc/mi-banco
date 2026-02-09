@@ -49,10 +49,10 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
             </div>
           }
 
-          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
-            <mat-stepper [linear]="true" #stepper>
-              <!-- Step 1: Personal info -->
-              <mat-step [stepControl]="registerForm" label="Datos personales">
+          <mat-stepper [linear]="true" #stepper>
+            <!-- Step 1: Personal info -->
+            <mat-step [stepControl]="personalInfoForm" label="Datos personales">
+              <form [formGroup]="personalInfoForm">
                 <div class="step-content">
                   <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Nombre completo</mat-label>
@@ -61,8 +61,11 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
                            autocomplete="name"
                            aria-label="Nombre completo">
                     <mat-icon matPrefix>person</mat-icon>
-                    @if (registerForm.get('nombre')?.hasError('required') && registerForm.get('nombre')?.touched) {
+                    @if (personalInfoForm.get('nombre')?.hasError('required') && personalInfoForm.get('nombre')?.touched) {
                       <mat-error>El nombre es obligatorio</mat-error>
+                    }
+                    @if (personalInfoForm.get('nombre')?.hasError('minlength')) {
+                      <mat-error>Minimo 2 caracteres</mat-error>
                     }
                   </mat-form-field>
 
@@ -74,10 +77,10 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
                            autocomplete="email"
                            aria-label="Correo electronico">
                     <mat-icon matPrefix>email</mat-icon>
-                    @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
+                    @if (personalInfoForm.get('email')?.hasError('required') && personalInfoForm.get('email')?.touched) {
                       <mat-error>El correo es obligatorio</mat-error>
                     }
-                    @if (registerForm.get('email')?.hasError('email')) {
+                    @if (personalInfoForm.get('email')?.hasError('email')) {
                       <mat-error>Correo invalido</mat-error>
                     }
                   </mat-form-field>
@@ -88,10 +91,12 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
                     </button>
                   </div>
                 </div>
-              </mat-step>
+              </form>
+            </mat-step>
 
-              <!-- Step 2: Security -->
-              <mat-step label="Seguridad">
+            <!-- Step 2: Security -->
+            <mat-step [stepControl]="securityForm" label="Seguridad">
+              <form [formGroup]="securityForm" (ngSubmit)="onSubmit()" novalidate>
                 <div class="step-content">
                   <mat-form-field appearance="outline" class="full-width">
                     <mat-label>RUT</mat-label>
@@ -101,10 +106,10 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
                            autocomplete="username"
                            aria-label="RUT">
                     <mat-icon matPrefix>badge</mat-icon>
-                    @if (registerForm.get('rut')?.hasError('required') && registerForm.get('rut')?.touched) {
+                    @if (securityForm.get('rut')?.hasError('required') && securityForm.get('rut')?.touched) {
                       <mat-error>El RUT es obligatorio</mat-error>
                     }
-                    @if (registerForm.get('rut')?.hasError('invalidRut')) {
+                    @if (securityForm.get('rut')?.hasError('invalidRut')) {
                       <mat-error>RUT invalido</mat-error>
                     }
                   </mat-form-field>
@@ -124,16 +129,16 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
                             [attr.aria-label]="hidePassword() ? 'Mostrar contrasena' : 'Ocultar contrasena'">
                       <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
                     </button>
-                    @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched) {
+                    @if (securityForm.get('password')?.hasError('required') && securityForm.get('password')?.touched) {
                       <mat-error>La contrasena es obligatoria</mat-error>
                     }
-                    @if (registerForm.get('password')?.hasError('minlength')) {
+                    @if (securityForm.get('password')?.hasError('minlength')) {
                       <mat-error>Minimo 6 caracteres</mat-error>
                     }
                   </mat-form-field>
 
                   <!-- Password strength indicator -->
-                  @if (registerForm.get('password')?.value) {
+                  @if (securityForm.get('password')?.value) {
                     <div class="password-strength">
                       <div class="password-strength__bar"
                            [class]="'password-strength__bar--' + passwordStrength()">
@@ -149,7 +154,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
                     <button mat-flat-button
                             color="primary"
                             type="submit"
-                            [disabled]="registerForm.invalid || auth.isLoading()">
+                            [disabled]="securityForm.invalid || auth.isLoading()">
                       @if (auth.isLoading()) {
                         <mat-spinner diameter="20" class="btn-spinner"></mat-spinner>
                         Registrando...
@@ -159,9 +164,9 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
                     </button>
                   </div>
                 </div>
-              </mat-step>
-            </mat-stepper>
-          </form>
+              </form>
+            </mat-step>
+          </mat-stepper>
         </mat-card-content>
 
         <mat-card-actions align="end">
@@ -283,6 +288,18 @@ export class RegisterComponent {
 
   readonly hidePassword = signal(true);
 
+  // Separate FormGroups for each step
+  readonly personalInfoForm = this.fb.nonNullable.group({
+    nombre: ['', [Validators.required, Validators.minLength(2)]],
+    email: ['', [Validators.required, Validators.email]]
+  });
+
+  readonly securityForm = this.fb.nonNullable.group({
+    rut: ['', [Validators.required, rutValidator()]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
+
+  // Combined form for submission
   readonly registerForm = this.fb.nonNullable.group({
     nombre: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
@@ -291,7 +308,7 @@ export class RegisterComponent {
   });
 
   passwordStrength(): string {
-    const pwd = this.registerForm.get('password')?.value ?? '';
+    const pwd = this.securityForm.get('password')?.value ?? '';
     if (pwd.length < 6) return 'weak';
     if (pwd.length >= 10 && /[A-Z]/.test(pwd) && /[0-9]/.test(pwd)) return 'strong';
     return 'medium';
@@ -303,13 +320,20 @@ export class RegisterComponent {
   }
 
   onSubmit(): void {
-    if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched();
+    // Validate both forms
+    if (this.personalInfoForm.invalid || this.securityForm.invalid) {
+      this.personalInfoForm.markAllAsTouched();
+      this.securityForm.markAllAsTouched();
       return;
     }
 
     this.auth.clearError();
-    const data = this.registerForm.getRawValue();
+    
+    // Combine data from both forms
+    const data = {
+      ...this.personalInfoForm.getRawValue(),
+      ...this.securityForm.getRawValue()
+    };
 
     this.auth.register(data).subscribe(success => {
       if (success) {

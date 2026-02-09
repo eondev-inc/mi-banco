@@ -211,6 +211,7 @@ export class NewTransferComponent implements OnInit {
   readonly transferForm = this.fb.nonNullable.group({
     nombre: ['', Validators.required],
     rut_destinatario: ['', Validators.required],
+    email: [''],  // Hidden field required by backend
     banco: ['', Validators.required],
     tipo_cuenta: ['', Validators.required],
     monto: [0, [Validators.required, Validators.min(1)]]
@@ -228,6 +229,7 @@ export class NewTransferComponent implements OnInit {
     this.transferForm.patchValue({
       nombre: `${b.nombre} ${b.apellido}`,
       rut_destinatario: b.rut_destinatario,
+      email: b.email,  // Store email from selected beneficiary
       banco: b.banco,
       tipo_cuenta: b.tipo_cuenta
     });

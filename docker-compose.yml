@@ -72,32 +72,49 @@ services:
     tty: true
 
   # ==========================================================================
-  # CLIENTE FRONTEND - DESARROLLO CON HOT RELOAD
+  # CLIENTE FRONTEND - PRODUCCIÓN CON NGINX
   # ==========================================================================
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile.dev
-    image: seventrust/mean_frontend_dev
-    container_name: mi-banco-client-dev
+      dockerfile: Dockerfile
+    image: seventrust/mean_frontend
+    container_name: mi-banco-client
     ports:
-      - "80:4200"
-    volumes:
-      # Montar código fuente para hot reload
-      - ./client:/app
-      # Volumen nombrado para node_modules (evita conflictos con host)
-      - client-node-modules:/app/node_modules
-    environment:
-      - NODE_ENV=development
-      - NG_CLI_ANALYTICS=false
-      - CHOKIDAR_USEPOLLING=true
+      - "80:80"
     depends_on:
       - backend
     networks:
       - mi-banco-network
     restart: unless-stopped
-    stdin_open: true
-    tty: true
+
+  # ==========================================================================
+  # CLIENTE FRONTEND - DESARROLLO CON HOT RELOAD (COMENTADO)
+  # ==========================================================================
+  # Descomentar este servicio si necesitas desarrollo con hot-reload
+  # Nota: La compilación inicial puede tardar 10-15 minutos
+  # client-dev:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile.dev
+  #   image: seventrust/mean_frontend_dev
+  #   container_name: mi-banco-client-dev
+  #   ports:
+  #     - "4200:4200"
+  #   volumes:
+  #     - ./client:/app
+  #     - client-node-modules:/app/node_modules
+  #   environment:
+  #     - NODE_ENV=development
+  #     - NG_CLI_ANALYTICS=false
+  #     - CHOKIDAR_USEPOLLING=true
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - mi-banco-network
+  #   restart: unless-stopped
+  #   stdin_open: true
+  #   tty: true
 
   # ==========================================================================
   # SERVIDOR LEGACY (Express) - DEPRECATED
