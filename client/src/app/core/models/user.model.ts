@@ -1,3 +1,5 @@
+// ==================== User & Auth Models ====================
+
 export interface User {
   _id?: string;
   nombre: string;
@@ -18,6 +20,8 @@ export interface RegisterRequest {
   password: string;
 }
 
+// ==================== Beneficiary & Transfer Models ====================
+
 export interface Beneficiary {
   _id?: string;
   rut_destinatario: string;
@@ -36,6 +40,7 @@ export interface Transfer {
   rut_destinatario: string;
   rut_cliente: string;
   nombre: string;
+  email?: string;  // Required by backend API
   banco: string;
   tipo_cuenta: string;
   monto: number;
@@ -53,4 +58,46 @@ export interface AccountSummary {
   ingresos: number;
   egresos: number;
   transferenciasRecientes: number;
+}
+
+// ==================== API Response Types ====================
+
+/**
+ * Standard API response wrapper from NestJS backend
+ */
+export interface ApiResponse<T> {
+  ok: boolean;
+  body: T;
+}
+
+/**
+ * API error response body
+ */
+export interface ApiErrorBody {
+  message: string;
+  error?: string;
+}
+
+/**
+ * Response bodies for specific endpoints
+ */
+export interface LoginResponseBody {
+  usuario: User;
+}
+
+export interface RegisterResponseBody {
+  usuario: User;
+}
+
+export interface DestinatariosResponseBody {
+  destinatarios: Beneficiary[];
+}
+
+export interface HistorialResponseBody {
+  historial: Transfer[];
+}
+
+export interface CreateResponseBody<T = any> {
+  message: string;
+  created: T;
 }

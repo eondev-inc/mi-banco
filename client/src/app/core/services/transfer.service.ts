@@ -2,8 +2,29 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap, map, catchError, of, firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Transfer, Beneficiary, AccountSummary } from '../models/user.model';
+import { 
+  Transfer, 
+  Beneficiary, 
+  AccountSummary,
+  ApiResponse,
+  HistorialResponseBody,
+  DestinatariosResponseBody,
+  CreateResponseBody
+} from '../models/user.model';
 import { clean } from 'rut.js';
+
+/**
+ * Formats RUT without dots, only with hyphen (e.g., "12345678-9")
+ * Backend expects format: ^[0-9]+-[0-9Kk]$
+ */
+function formatRutForBackend(rut: string): string {
+  const cleaned = clean(rut);
+  if (!cleaned || cleaned.length < 2) return cleaned;
+  
+  const body = cleaned.slice(0, -1);
+  const dv = cleaned.slice(-1);
+  return `${body}-${dv}`;
+}
 
 @Injectable({ providedIn: 'root' })
 export class TransferService {
@@ -32,13 +53,10 @@ export class TransferService {
 
   loadTransfers(rut: string): Observable<Transfer[]> {
     this._isLoading.set(true);
-    return this.http.get<any>(`${environment.apiUrl}/transferencias`, {
-      params: { rut: clean(rut) }
+    return this.http.get<ApiResponse<HistorialResponseBody>>(`${environment.apiUrl}/transferencias`, {
+      params: { rut: formatRutForBackend(rut) }
     }).pipe(
-      map(res => {
-        const list = res.historial ?? res ?? [];
-        return Array.isArray(list) ? list : [];
-      }),
+      map(res => res.body?.historial ?? []),
       tap(transfers => {
         this._transfers.set(transfers);
         this._isLoading.set(false);
@@ -51,13 +69,10 @@ export class TransferService {
   }
 
   loadBeneficiaries(rut: string): Observable<Beneficiary[]> {
-    return this.http.get<any>(`${environment.apiUrl}/cuentas`, {
-      params: { rut: clean(rut) }
+    return this.http.get<ApiResponse<DestinatariosResponseBody>>(`${environment.apiUrl}/cuentas`, {
+      params: { rut: formatRutForBackend(rut) }
     }).pipe(
-      map(res => {
-        const list = res.destinatarios ?? res ?? [];
-        return Array.isArray(list) ? list : [];
-      }),
+      map(res => res.body?.destinatarios ?? []),
       tap(beneficiaries => this._beneficiaries.set(beneficiaries)),
       catchError(() => of([]))
     );
@@ -66,10 +81,11 @@ export class TransferService {
   async createTransfer(rut_cliente: string, data: Partial<Transfer>): Promise<boolean> {
     try {
       await firstValueFrom(
-        this.http.post(`${environment.apiUrl}/transferencias`, {
-          rut_destinatario: clean(data.rut_destinatario?.trim() ?? ''),
-          rut_cliente: clean(rut_cliente),
+        this.http.post<ApiResponse<CreateResponseBody<Transfer>>>(`${environment.apiUrl}/transferencias`, {
+          rut_destinatario: formatRutForBackend(data.rut_destinatario?.trim() ?? ''),
+          rut_cliente: formatRutForBackend(rut_cliente),
           nombre: data.nombre?.trim(),
+          email: data.email?.trim(),
           banco: data.banco?.trim(),
           tipo_cuenta: data.tipo_cuenta?.trim(),
           monto: data.monto
@@ -84,8 +100,8 @@ export class TransferService {
   async registerBeneficiary(rut_cliente: string, data: Partial<Beneficiary>): Promise<boolean> {
     try {
       await firstValueFrom(
-        this.http.post(`${environment.apiUrl}/cuentas`, {
-          rut_destinatario: clean(data.rut_destinatario?.trim() ?? ''),
+        this.http.post<ApiResponse<CreateResponseBody<Beneficiary>>>(`${environment.apiUrl}/cuentas`, {
+          rut_destinatario: formatRutForBackend(data.rut_destinatario?.trim() ?? ''),
           nombre: data.nombre?.trim(),
           apellido: data.apellido?.trim(),
           email: data.email?.trim(),
@@ -93,7 +109,7 @@ export class TransferService {
           banco: data.banco?.trim(),
           numero_cuenta: data.numero_cuenta?.trim(),
           tipo_cuenta: data.tipo_cuenta?.trim(),
-          rut_cliente: clean(rut_cliente)
+          rut_cliente: formatRutForBackend(rut_cliente)
         })
       );
       return true;
