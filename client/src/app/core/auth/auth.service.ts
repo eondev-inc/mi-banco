@@ -39,7 +39,7 @@ export class AuthService {
   readonly isAuthenticated = computed(() => !!this._currentUser());
   readonly isLoading = this._isLoading.asReadonly();
   readonly authError = this._authError.asReadonly();
-  readonly userName = computed(() => this._currentUser()?.nombre ?? '');
+  readonly userName = computed(() => this._currentUser()?.nombreCompleto ?? '');
   readonly userRut = computed(() => this._currentUser()?.rut ?? '');
 
   constructor(
@@ -60,9 +60,16 @@ export class AuthService {
       tap(response => {
         const userData = response.body.usuario;
         const user: User = {
-          nombre: userData.nombre,
+          nombres: userData.nombres,
+          apellidos: userData.apellidos,
+          nombreCompleto: userData.nombreCompleto,
           email: userData.email ?? '',
           rut: userData.rut,
+          telefono: userData.telefono,
+          fechaNacimiento: userData.fechaNacimiento,
+          direccion: userData.direccion,
+          regionId: userData.regionId,
+          comunaId: userData.comunaId,
           saldo: 1500000 // Backend doesn't handle real balance
         };
         this.setSession(user);
@@ -86,17 +93,31 @@ export class AuthService {
     this._authError.set(null);
 
     return this.http.post<ApiResponse<RegisterResponseBody>>(`${environment.apiUrl}/usuario`, {
-      nombre: data.nombre.trim(),
+      nombres: data.nombres.trim(),
+      apellidos: data.apellidos.trim(),
       email: data.email.trim(),
+      emailConfirmacion: data.emailConfirmacion.trim(),
       rut: formatRutForBackend(data.rut.trim()),
+      telefono: data.telefono.trim(),
+      fechaNacimiento: data.fechaNacimiento,
+      direccion: data.direccion.trim(),
+      regionId: data.regionId,
+      comunaId: data.comunaId,
       password: data.password.trim()
     }).pipe(
       tap(response => {
         const userData = response.body.usuario;
         const user: User = {
-          nombre: userData.nombre,
+          nombres: userData.nombres,
+          apellidos: userData.apellidos,
+          nombreCompleto: userData.nombreCompleto,
           email: userData.email,
           rut: userData.rut,
+          telefono: userData.telefono,
+          fechaNacimiento: userData.fechaNacimiento,
+          direccion: userData.direccion,
+          regionId: userData.regionId,
+          comunaId: userData.comunaId,
           saldo: 1500000
         };
         this.setSession(user);
@@ -130,9 +151,16 @@ export class AuthService {
     this._currentUser.set(user);
     // Store minimal session data - avoid storing sensitive tokens in localStorage
     localStorage.setItem('mb_session', JSON.stringify({
-      nombre: user.nombre,
+      nombres: user.nombres,
+      apellidos: user.apellidos,
+      nombreCompleto: user.nombreCompleto,
       email: user.email,
       rut: user.rut,
+      telefono: user.telefono,
+      fechaNacimiento: user.fechaNacimiento,
+      direccion: user.direccion,
+      regionId: user.regionId,
+      comunaId: user.comunaId,
       saldo: user.saldo
     }));
   }
@@ -141,9 +169,9 @@ export class AuthService {
     try {
       const stored = localStorage.getItem('mb_session');
       if (stored) {
-        const data = JSON.parse(stored);
-        if (data.rut && data.nombre) {
-          this._currentUser.set(data as User);
+        const data = JSON.parse(stored) as User;
+        if (data.rut && data.nombres) {
+          this._currentUser.set(data);
         }
       }
     } catch {

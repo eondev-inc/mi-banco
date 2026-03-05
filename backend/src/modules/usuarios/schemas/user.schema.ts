@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema, Types } from 'mongoose';
 import {
   IDestinatario,
   ITransferencia,
@@ -10,10 +10,15 @@ import {
   collection: 'users',
   // Performance optimization: disable auto-indexing in production
   autoIndex: process.env.NODE_ENV !== 'production',
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
 })
 export class User extends Document {
   @Prop({ required: true, type: String })
-  nombre: string;
+  nombres: string;
+
+  @Prop({ required: true, type: String })
+  apellidos: string;
 
   @Prop({ required: true, type: String, unique: true, index: true })
   email: string;
@@ -24,13 +29,41 @@ export class User extends Document {
   @Prop({ required: true, type: String, select: false })
   password: string;
 
+  @Prop({ required: true, type: String })
+  telefono: string;
+
+  @Prop({ required: true, type: Date })
+  fechaNacimiento: Date;
+
+  @Prop({ required: true, type: String })
+  direccion: string;
+
+  @Prop({
+    required: true,
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'Region',
+    index: true,
+  })
+  regionId: Types.ObjectId;
+
+  @Prop({
+    required: true,
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'Comuna',
+    index: true,
+  })
+  comunaId: Types.ObjectId;
+
+  // Virtual field — populated by Mongoose, not stored in DB
+  nombreCompleto: string;
+
   @Prop({
     type: [
       {
         nombre: { type: String, required: true },
         apellido: { type: String, required: true },
         email: { type: String, required: true },
-        rut_destinatario: { type: String, required: true, index: true },
+        rut_destinatario: { type: String, required: true },
         telefono: { type: String, required: true },
         banco: { type: String, required: true },
         tipo_cuenta: { type: String, required: true },
@@ -59,6 +92,11 @@ export class User extends Document {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+// Virtual: nombreCompleto for backward compatibility
+UserSchema.virtual('nombreCompleto').get(function (this: User) {
+  return `${this.nombres} ${this.apellidos}`;
+});
 
 // Compound indexes for common queries
 UserSchema.index({ email: 1, rut: 1 }); // For user lookups

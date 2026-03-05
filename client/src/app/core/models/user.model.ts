@@ -1,23 +1,37 @@
 // ==================== User & Auth Models ====================
 
 export interface User {
-  _id?: string;
-  nombre: string;
-  email: string;
-  rut: string;
-  saldo?: number;
+	_id?: string;
+	nombres: string;
+	apellidos: string;
+	nombreCompleto: string;
+	email: string;
+	rut: string;
+	telefono: string;
+	fechaNacimiento: string;
+	direccion: string;
+	regionId: string;
+	comunaId: string;
+	saldo?: number;
 }
 
 export interface LoginRequest {
-  rut: string;
-  password: string;
+	rut: string;
+	password: string;
 }
 
 export interface RegisterRequest {
-  nombre: string;
-  email: string;
-  rut: string;
-  password: string;
+	nombres: string;
+	apellidos: string;
+	email: string;
+	emailConfirmacion: string;
+	rut: string;
+	telefono: string;
+	fechaNacimiento: string;
+	direccion: string;
+	regionId: string;
+	comunaId: string;
+	password: string;
 }
 
 // ==================== Beneficiary & Transfer Models ====================

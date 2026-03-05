@@ -3,15 +3,18 @@ import {
   ConflictException,
   NotFoundException,
   UnauthorizedException,
+  BadRequestException,
   Logger,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { User } from './schemas/user.schema';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { LoginUsuarioDto } from './dto/login-usuario.dto';
 import { UsuarioResponseDto } from './dto/usuario-response.dto';
 import { EncryptionService } from '@/common/services/encryption.service';
+import { Region } from '@modules/regiones/schemas/region.schema';
+import { Comuna } from '@modules/regiones/schemas/comuna.schema';
 
 @Injectable()
 export class UsuariosService {
@@ -19,6 +22,8 @@ export class UsuariosService {
 
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
+    @InjectModel(Region.name) private readonly regionModel: Model<Region>,
+    @InjectModel(Comuna.name) private readonly comunaModel: Model<Comuna>,
     private readonly encryptionService: EncryptionService,
   ) {}
 
@@ -36,6 +41,37 @@ export class UsuariosService {
     });
 
     try {
+      // Validate email confirmation
+      if (createUsuarioDto.email !== createUsuarioDto.emailConfirmacion) {
+        throw new BadRequestException(
+          'El email y la confirmación de email no coinciden',
+        );
+      }
+
+      // Validate regionId exists
+      const regionId = new Types.ObjectId(createUsuarioDto.regionId);
+      const regionExists = await this.regionModel
+        .findById(regionId)
+        .select('_id')
+        .lean()
+        .exec();
+      if (!regionExists) {
+        throw new NotFoundException('La región especificada no existe');
+      }
+
+      // Validate comunaId exists and belongs to the given region
+      const comunaId = new Types.ObjectId(createUsuarioDto.comunaId);
+      const comunaExists = await this.comunaModel
+        .findOne({ _id: comunaId, regionId })
+        .select('_id')
+        .lean()
+        .exec();
+      if (!comunaExists) {
+        throw new NotFoundException(
+          'La comuna especificada no existe o no pertenece a la región indicada',
+        );
+      }
+
       // Optimized: only select necessary fields for existence check and use lean()
       const existingUser = await this.userModel
         .findOne({
@@ -70,8 +106,13 @@ export class UsuariosService {
         createUsuarioDto.password,
       );
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { emailConfirmacion, ...userData } = createUsuarioDto;
+
       const newUser = new this.userModel({
-        ...createUsuarioDto,
+        ...userData,
+        regionId,
+        comunaId,
         password: hashedPassword,
         destinatarios: [],
         transferencia: [],
@@ -86,21 +127,32 @@ export class UsuariosService {
       });
 
       return new UsuarioResponseDto({
-        nombre: newUser.nombre,
+        nombres: newUser.nombres,
+        apellidos: newUser.apellidos,
+        nombreCompleto: newUser.nombreCompleto,
         email: newUser.email,
         rut: newUser.rut,
+        telefono: newUser.telefono,
+        fechaNacimiento: newUser.fechaNacimiento,
+        direccion: newUser.direccion,
+        regionId: newUser.regionId,
+        comunaId: newUser.comunaId,
         destinatarios: newUser.destinatarios,
         transferencia: newUser.transferencia,
       });
     } catch (error) {
-      if (error instanceof ConflictException) {
+      if (
+        error instanceof ConflictException ||
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
         throw error;
       }
       this.logger.error({
         message: 'Error creating user',
         rut: createUsuarioDto.rut,
-        error: error.message,
-        stack: error.stack,
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
       });
       throw error;
     }
@@ -150,9 +202,16 @@ export class UsuariosService {
       });
 
       return new UsuarioResponseDto({
-        nombre: user.nombre,
+        nombres: user.nombres,
+        apellidos: user.apellidos,
+        nombreCompleto: user.nombreCompleto,
         email: user.email,
         rut: user.rut,
+        telefono: user.telefono,
+        fechaNacimiento: user.fechaNacimiento,
+        direccion: user.direccion,
+        regionId: user.regionId,
+        comunaId: user.comunaId,
         destinatarios: user.destinatarios,
         transferencia: user.transferencia,
       });
@@ -163,8 +222,8 @@ export class UsuariosService {
       this.logger.error({
         message: 'Error during login',
         rut: loginUsuarioDto.rut,
-        error: error.message,
-        stack: error.stack,
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
       });
       throw error;
     }

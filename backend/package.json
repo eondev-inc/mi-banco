@@ -19,6 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:indexes": "ts-node scripts/init-indexes.ts",
+    "db:seed:regiones": "ts-node -r tsconfig-paths/register scripts/seed-regiones-comunas.ts",
     "load:test": "node test/load-test.js",
     "load:health": "autocannon -c 100 -d 30 -p 1 http://localhost:8001/health"
   },
