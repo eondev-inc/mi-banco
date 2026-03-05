@@ -63,9 +63,9 @@ import { rutValidator } from '../../shared/validators/rut.validator';
           <form [formGroup]="profileForm" (ngSubmit)="onSave()" novalidate>
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Nombre completo</mat-label>
-              <input matInput formControlName="nombre">
+              <input matInput formControlName="nombreCompleto">
               <mat-icon matPrefix>person</mat-icon>
-              @if (profileForm.get('nombre')?.hasError('required') && profileForm.get('nombre')?.touched) {
+              @if (profileForm.get('nombreCompleto')?.hasError('required') && profileForm.get('nombreCompleto')?.touched) {
                 <mat-error>El nombre es obligatorio</mat-error>
               }
             </mat-form-field>
@@ -247,7 +247,7 @@ export class ProfileComponent {
   private readonly snackBar = inject(MatSnackBar);
 
   readonly profileForm = this.fb.nonNullable.group({
-    nombre: [this.auth.currentUser()?.nombre ?? '', Validators.required],
+    nombreCompleto: [this.auth.currentUser()?.nombreCompleto ?? '', Validators.required],
     email: [this.auth.currentUser()?.email ?? '', [Validators.email]],
     rut: [{ value: this.auth.userRut(), disabled: true }]
   });

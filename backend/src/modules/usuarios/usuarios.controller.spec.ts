@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
 import { UsuariosController } from './usuarios.controller';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
@@ -9,10 +10,20 @@ describe('UsuariosController', () => {
   let controller: UsuariosController;
   let service: UsuariosService;
 
+  const mockRegionId = new Types.ObjectId();
+  const mockComunaId = new Types.ObjectId();
+
   const mockUsuarioResponse = new UsuarioResponseDto({
-    nombre: 'Test User',
+    nombres: 'Juan Carlos',
+    apellidos: 'Pérez González',
+    nombreCompleto: 'Juan Carlos Pérez González',
     email: 'test@example.com',
     rut: '12345678-9',
+    telefono: '+56912345678',
+    fechaNacimiento: new Date('1990-05-15'),
+    direccion: 'Av. Test 1234',
+    regionId: mockRegionId,
+    comunaId: mockComunaId,
     destinatarios: [],
     transferencia: [],
   });
@@ -48,9 +59,16 @@ describe('UsuariosController', () => {
 
   describe('create', () => {
     const createUserDto: CreateUsuarioDto = {
-      nombre: 'Test User',
+      nombres: 'Juan Carlos',
+      apellidos: 'Pérez González',
       email: 'test@example.com',
+      emailConfirmacion: 'test@example.com',
       rut: '12345678-9',
+      telefono: '+56912345678',
+      fechaNacimiento: '1990-05-15',
+      direccion: 'Av. Test 1234',
+      regionId: mockRegionId.toHexString(),
+      comunaId: mockComunaId.toHexString(),
       password: 'test123',
     };
 
@@ -75,7 +93,8 @@ describe('UsuariosController', () => {
       const result = await controller.create(createUserDto);
 
       expect(result.ok).toBe(true);
-      expect(result.body.usuario).toHaveProperty('nombre');
+      expect(result.body.usuario).toHaveProperty('nombres');
+      expect(result.body.usuario).toHaveProperty('apellidos');
       expect(result.body.usuario).toHaveProperty('email');
       expect(result.body.usuario).toHaveProperty('rut');
       expect(result.body.usuario).not.toHaveProperty('password');
@@ -109,7 +128,7 @@ describe('UsuariosController', () => {
       const result = await controller.login(loginDto);
 
       expect(result.ok).toBe(true);
-      expect(result.body.usuario).toHaveProperty('nombre');
+      expect(result.body.usuario).toHaveProperty('nombres');
       expect(result.body.usuario).toHaveProperty('email');
       expect(result.body.usuario).toHaveProperty('rut');
       expect(result.body.usuario).not.toHaveProperty('password');

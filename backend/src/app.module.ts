@@ -9,6 +9,7 @@ import { DatabaseHealthService } from './config/database/database-health.service
 import { UsuariosModule } from './modules/usuarios/usuarios.module';
 import { DestinatariosModule } from './modules/destinatarios/destinatarios.module';
 import { TransferenciasModule } from './modules/transferencias/transferencias.module';
+import { RegionesModule } from './modules/regiones/regiones.module';
 import databaseConfig from './config/database/database.config';
 import { loggerConfig } from './config/logger/logger.config';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
@@ -26,6 +27,7 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
     UsuariosModule,
     DestinatariosModule,
     TransferenciasModule,
+    RegionesModule,
   ],
   controllers: [AppController],
   providers: [

@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export interface ITransferencia {
   nombre: string;
@@ -22,12 +22,20 @@ export interface IDestinatario {
 }
 
 export interface IUser {
-  nombre: string;
+  nombres: string;
+  apellidos: string;
   email: string;
   rut: string;
   password: string;
+  telefono: string;
+  fechaNacimiento: Date;
+  direccion: string;
+  regionId: Types.ObjectId;
+  comunaId: Types.ObjectId;
   destinatarios: IDestinatario[];
   transferencia: ITransferencia[];
+  // Virtual
+  nombreCompleto?: string;
 }
 
 export interface IUserDocument extends IUser, Document {}
