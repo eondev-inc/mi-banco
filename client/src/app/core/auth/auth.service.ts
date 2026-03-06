@@ -20,10 +20,44 @@ import { clean } from 'rut.js';
 function formatRutForBackend(rut: string): string {
   const cleaned = clean(rut);
   if (!cleaned || cleaned.length < 2) return cleaned;
-  
+
   const body = cleaned.slice(0, -1);
   const dv = cleaned.slice(-1);
   return `${body}-${dv}`;
+}
+
+/**
+ * Sanitizes a name string returned by the backend.
+ * Returns empty string if the value contains "undefined" (legacy DB doc issue)
+ * or is falsy.
+ */
+function sanitizeName(value: string | undefined | null): string {
+  if (!value) return '';
+  const trimmed = value.trim();
+  // The backend virtual returns "undefined undefined" for legacy users
+  // that were registered before the nombres/apellidos migration
+  if (/undefined/.test(trimmed)) return '';
+  return trimmed;
+}
+
+/**
+ * Builds a full name from parts, with fallback chain:
+ * 1. Use nombreCompleto if valid
+ * 2. Compose from nombres + apellidos if both are valid
+ * 3. Use nombres alone
+ * 4. Return empty string
+ */
+function buildNombreCompleto(data: {
+  nombreCompleto?: string | null;
+  nombres?: string | null;
+  apellidos?: string | null;
+  nombre?: string | null; // legacy field
+}): { nombres: string; apellidos: string; nombreCompleto: string } {
+  const nombres = sanitizeName(data.nombres) || sanitizeName(data.nombre);
+  const apellidos = sanitizeName(data.apellidos);
+  const fromParts = [nombres, apellidos].filter(Boolean).join(' ');
+  const nombreCompleto = sanitizeName(data.nombreCompleto) || fromParts;
+  return { nombres, apellidos, nombreCompleto };
 }
 
 @Injectable({ providedIn: 'root' })
@@ -58,23 +92,19 @@ export class AuthService {
       password: credentials.password.trim()
     }).pipe(
       tap(response => {
-        const userData = response.body.usuario;
-        // Fallback defensivo: usuarios viejos en DB pueden traer `nombre` en vez de `nombres`
-        const nombres = userData.nombres ?? (userData as any).nombre ?? '';
-        const apellidos = userData.apellidos ?? '';
-        const nombreCompleto = userData.nombreCompleto
-          ?? (nombres && apellidos ? `${nombres} ${apellidos}` : nombres);
+        const ud = response.body.usuario as any;
+        const { nombres, apellidos, nombreCompleto } = buildNombreCompleto(ud);
         const user: User = {
           nombres,
           apellidos,
           nombreCompleto,
-          email: userData.email ?? '',
-          rut: userData.rut,
-          telefono: userData.telefono,
-          fechaNacimiento: userData.fechaNacimiento,
-          direccion: userData.direccion,
-          regionId: userData.regionId,
-          comunaId: userData.comunaId,
+          email: ud.email ?? '',
+          rut: ud.rut,
+          telefono: ud.telefono,
+          fechaNacimiento: ud.fechaNacimiento,
+          direccion: ud.direccion,
+          regionId: ud.regionId,
+          comunaId: ud.comunaId,
           saldo: 1500000 // Backend doesn't handle real balance
         };
         this.setSession(user);
@@ -174,19 +204,24 @@ export class AuthService {
     try {
       const stored = localStorage.getItem('mb_session');
       if (stored) {
-        const data = JSON.parse(stored) as User & { nombre?: string };
-        if (data.rut) {
-          // Fallback para sesiones antiguas con campo `nombre` (sin 's')
-          if (!data.nombres && data.nombre) {
-            data.nombres = data.nombre;
-            data.apellidos = data.apellidos ?? '';
-            data.nombreCompleto = data.nombreCompleto
-              ?? (data.nombres ? `${data.nombres} ${data.apellidos}`.trim() : '');
-          }
-          if (data.nombres) {
-            this._currentUser.set(data);
-          }
+        const raw = JSON.parse(stored) as any;
+        if (!raw.rut) return;
+
+        const { nombres, apellidos, nombreCompleto } = buildNombreCompleto(raw);
+
+        if (!nombres && !nombreCompleto) {
+          // No usable name data — clear corrupted session
+          localStorage.removeItem('mb_session');
+          return;
         }
+
+        const user: User = {
+          ...raw,
+          nombres,
+          apellidos,
+          nombreCompleto,
+        };
+        this._currentUser.set(user);
       }
     } catch {
       localStorage.removeItem('mb_session');
