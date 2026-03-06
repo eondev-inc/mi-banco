@@ -144,7 +144,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
   `,
   styles: [`
     .beneficiary-card {
-      max-width: 720px;
+      max-width: 800px;
       border-radius: 0.5rem !important;
     }
 

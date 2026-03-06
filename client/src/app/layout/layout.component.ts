@@ -218,8 +218,8 @@ interface NavItem {
 
     .page-content {
       flex: 1;
-      padding: 32px;
-      max-width: 1200px;
+      padding: 40px 48px;
+      max-width: 1400px;
       width: 100%;
       margin: 0 auto;
     }

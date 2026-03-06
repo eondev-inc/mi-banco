@@ -59,10 +59,15 @@ export class AuthService {
     }).pipe(
       tap(response => {
         const userData = response.body.usuario;
+        // Fallback defensivo: usuarios viejos en DB pueden traer `nombre` en vez de `nombres`
+        const nombres = userData.nombres ?? (userData as any).nombre ?? '';
+        const apellidos = userData.apellidos ?? '';
+        const nombreCompleto = userData.nombreCompleto
+          ?? (nombres && apellidos ? `${nombres} ${apellidos}` : nombres);
         const user: User = {
-          nombres: userData.nombres,
-          apellidos: userData.apellidos,
-          nombreCompleto: userData.nombreCompleto,
+          nombres,
+          apellidos,
+          nombreCompleto,
           email: userData.email ?? '',
           rut: userData.rut,
           telefono: userData.telefono,
@@ -169,9 +174,18 @@ export class AuthService {
     try {
       const stored = localStorage.getItem('mb_session');
       if (stored) {
-        const data = JSON.parse(stored) as User;
-        if (data.rut && data.nombres) {
-          this._currentUser.set(data);
+        const data = JSON.parse(stored) as User & { nombre?: string };
+        if (data.rut) {
+          // Fallback para sesiones antiguas con campo `nombre` (sin 's')
+          if (!data.nombres && data.nombre) {
+            data.nombres = data.nombre;
+            data.apellidos = data.apellidos ?? '';
+            data.nombreCompleto = data.nombreCompleto
+              ?? (data.nombres ? `${data.nombres} ${data.apellidos}`.trim() : '');
+          }
+          if (data.nombres) {
+            this._currentUser.set(data);
+          }
         }
       }
     } catch {

@@ -127,7 +127,7 @@ import { rutValidator } from '../../../shared/validators/rut.validator';
   `,
   styles: [`
     .transfer-card {
-      max-width: 640px;
+      max-width: 720px;
       border-radius: 0.5rem !important;
     }
 

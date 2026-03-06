@@ -40,7 +40,7 @@ import { MatIconModule } from '@angular/material/icon';
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px !important;
+      padding: 24px !important;
     }
     .summary-card__info {
       display: flex;
@@ -55,7 +55,7 @@ import { MatIconModule } from '@angular/material/icon';
       letter-spacing: 0.5px;
     }
     .summary-card__value {
-      font-size: 1.75rem;
+      font-size: 2rem;
       font-weight: 700;
       color: var(--mb-text-primary, #000000);
       letter-spacing: -0.5px;

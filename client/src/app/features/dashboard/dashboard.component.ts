@@ -146,14 +146,14 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      margin-bottom: 24px;
+      gap: 24px;
+      margin-bottom: 32px;
     }
 
     .quick-actions-card,
     .recent-transactions-card {
       border-radius: 0.5rem !important;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
 
     .quick-actions {
@@ -168,9 +168,9 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      padding: 20px 24px;
+      padding: 24px 32px;
       border-radius: 0.5rem !important;
-      min-width: 120px;
+      min-width: 140px;
       font-size: 0.8125rem;
     }
 
@@ -193,7 +193,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
 
     .transaction-item {
       height: auto !important;
-      padding: 12px 0 !important;
+      padding: 16px 0 !important;
     }
 
     .transaction-icon {
