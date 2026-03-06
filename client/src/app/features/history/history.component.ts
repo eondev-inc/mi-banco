@@ -156,7 +156,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 16px 16px 0;
+      padding: 24px 24px 0;
       flex-wrap: wrap;
     }
 
@@ -213,7 +213,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
     .loading-state,
     .empty-state {
       text-align: center;
-      padding: 64px 24px;
+      padding: 80px 32px;
       color: #757575;
     }
 

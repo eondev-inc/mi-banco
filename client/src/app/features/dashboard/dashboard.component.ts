@@ -1,11 +1,10 @@
-import { Component, inject, OnInit, signal, computed } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, inject, OnInit, computed } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import { MatChipsModule } from '@angular/material/chips';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../core/auth/auth.service';
 import { TransferService } from '../../core/services/transfer.service';
@@ -24,7 +23,6 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
     MatIconModule,
     MatDividerModule,
     MatListModule,
-    MatChipsModule,
     DatePipe,
     SummaryCardComponent,
     PageHeaderComponent,
@@ -71,33 +69,6 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
         subtitle="Cuenta verificada">
       </app-summary-card>
     </div>
-
-    <!-- Quick Actions -->
-    <mat-card class="quick-actions-card">
-      <mat-card-header>
-        <mat-card-title>Acciones Rapidas</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="quick-actions">
-          <button mat-stroked-button routerLink="/transfers/new" class="quick-action-btn">
-            <mat-icon>send</mat-icon>
-            <span>Transferir</span>
-          </button>
-          <button mat-stroked-button routerLink="/transfers/beneficiary" class="quick-action-btn">
-            <mat-icon>person_add</mat-icon>
-            <span>Nuevo Destinatario</span>
-          </button>
-          <button mat-stroked-button routerLink="/history" class="quick-action-btn">
-            <mat-icon>receipt_long</mat-icon>
-            <span>Ver Historial</span>
-          </button>
-          <button mat-stroked-button routerLink="/profile" class="quick-action-btn">
-            <mat-icon>settings</mat-icon>
-            <span>Mi Perfil</span>
-          </button>
-        </div>
-      </mat-card-content>
-    </mat-card>
 
     <!-- Recent Transactions -->
     <mat-card class="recent-transactions-card">
@@ -146,39 +117,13 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      margin-bottom: 24px;
+      gap: 24px;
+      margin-bottom: 32px;
     }
 
-    .quick-actions-card,
     .recent-transactions-card {
       border-radius: 0.5rem !important;
-      margin-bottom: 24px;
-    }
-
-    .quick-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      padding: 8px 0;
-    }
-
-    .quick-action-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      padding: 20px 24px;
-      border-radius: 0.5rem !important;
-      min-width: 120px;
-      font-size: 0.8125rem;
-    }
-
-    .quick-action-btn mat-icon {
-      font-size: 28px;
-      width: 28px;
-      height: 28px;
-      color: #0A2640;
+      margin-bottom: 32px;
     }
 
     .recent-transactions-card mat-card-header {
@@ -193,7 +138,7 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
 
     .transaction-item {
       height: auto !important;
-      padding: 12px 0 !important;
+      padding: 16px 0 !important;
     }
 
     .transaction-icon {
@@ -239,15 +184,6 @@ import { CurrencyClpPipe } from '../../shared/pipes/currency-clp.pipe';
       .summary-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
-      }
-
-      .quick-actions {
-        flex-direction: column;
-      }
-
-      .quick-action-btn {
-        flex-direction: row;
-        justify-content: flex-start;
       }
     }
   `]

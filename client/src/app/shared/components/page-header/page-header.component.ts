@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
       display: flex;
       align-items: flex-start;
       gap: 16px;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
     }
     .page-header__icon {
       font-size: 36px;

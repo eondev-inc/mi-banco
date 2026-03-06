@@ -133,7 +133,7 @@ import { rutValidator } from '../../shared/validators/rut.validator';
     .profile-layout {
       display: grid;
       grid-template-columns: 300px 1fr;
-      gap: 24px;
+      gap: 32px;
       align-items: start;
     }
 
@@ -150,7 +150,7 @@ import { rutValidator } from '../../shared/validators/rut.validator';
 
     .profile-summary-card {
       text-align: center;
-      padding: 24px 16px;
+      padding: 32px 24px;
     }
 
     .profile-avatar {
@@ -158,9 +158,9 @@ import { rutValidator } from '../../shared/validators/rut.validator';
     }
 
     .profile-avatar__icon {
-      font-size: 80px;
-      width: 80px;
-      height: 80px;
+      font-size: 96px;
+      width: 96px;
+      height: 96px;
       color: #0A2640;
     }
 
