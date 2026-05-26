@@ -9,6 +9,8 @@ import { AppModule } from '../src/app.module';
 describe('Destinatarios (e2e)', () => {
   let app: NestFastifyApplication;
   let testUserRut: string;
+  let regionId: string;
+  let comunaId: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -32,12 +34,35 @@ describe('Destinatarios (e2e)', () => {
     await app.init();
     await app.getHttpAdapter().getInstance().ready();
 
+    // Obtener region y comuna reales de la base de datos
+    const regResult = await app.inject({ method: 'GET', url: '/regiones' });
+    const regBody = JSON.parse(regResult.payload);
+    if (regBody.ok && regBody.body.regiones.length > 0) {
+      regionId = regBody.body.regiones[0]._id;
+      const comResult = await app.inject({
+        method: 'GET',
+        url: `/regiones/${regionId}/comunas`,
+      });
+      const comBody = JSON.parse(comResult.payload);
+      if (comBody.ok && comBody.body.comunas.length > 0) {
+        comunaId = comBody.body.comunas[0]._id;
+      }
+    }
+
     // Create a test user for destinatarios tests
     const timestamp = Date.now();
+    const rutBase = String(timestamp).slice(-7);
     const testUser = {
-      nombre: 'Test User Destinatarios',
+      nombres: 'Test',
+      apellidos: 'User Destinatarios',
       email: `testdest${timestamp}@example.com`,
-      rut: `${String(timestamp).slice(-8)}-${timestamp % 10}`,
+      emailConfirmacion: `testdest${timestamp}@example.com`,
+      rut: `${rutBase}-${Number(rutBase[rutBase.length - 1]) % 10}`,
+      telefono: '+56912345678',
+      fechaNacimiento: '1990-01-01',
+      direccion: 'Av. Test 1234',
+      regionId,
+      comunaId,
       password: 'test123456',
     };
 
