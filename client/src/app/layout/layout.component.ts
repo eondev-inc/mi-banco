@@ -38,6 +38,7 @@ interface NavItem {
       <!-- Sidenav: Boldo dark navy -->
       <mat-sidenav
         #sidenav
+        id="main-sidenav"
         [mode]="isMobile() ? 'over' : 'side'"
         [opened]="!isMobile()"
         class="layout-sidenav"
@@ -52,7 +53,8 @@ interface NavItem {
                   class="sidenav-toggle"
                   (click)="toggleCollapse()"
                   [attr.aria-label]="isCollapsed() ? 'Expandir menú' : 'Contraer menú'"
-                  [attr.aria-expanded]="!isCollapsed()">
+                  [attr.aria-expanded]="!isCollapsed()"
+                  aria-controls="main-sidenav">
             <mat-icon>{{ isCollapsed() ? 'menu' : 'menu_open' }}</mat-icon>
           </button>
         </div>
@@ -341,6 +343,7 @@ interface NavItem {
     .sidenav-collapsed .logout-item span[matListItemTitle] {
       opacity: 0;
       width: 0;
+      min-width: 0;
       overflow: hidden;
       transition: opacity 0.2s ease, width 0.3s ease;
     }
