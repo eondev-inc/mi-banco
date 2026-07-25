@@ -29,12 +29,12 @@ services:
       - "8001:8001"
     volumes:
       # Montar código fuente para hot reload
-      - ./backend/src:/app/src
-      - ./backend/test:/app/test
-      - ./backend/tsconfig.json:/app/tsconfig.json
-      - ./backend/tsconfig.build.json:/app/tsconfig.build.json
-      - ./backend/nest-cli.json:/app/nest-cli.json
-      - ./backend/.env:/app/.env
+      - ./backend/src:/app/src:z
+      - ./backend/test:/app/test:z
+      - ./backend/tsconfig.json:/app/tsconfig.json:z
+      - ./backend/tsconfig.build.json:/app/tsconfig.build.json:z
+      - ./backend/nest-cli.json:/app/nest-cli.json:z
+      - ./backend/.env:/app/.env:z
       # Volumen nombrado para node_modules (evita conflictos con host)
       - backend-node-modules:/app/node_modules
     environment:
@@ -42,27 +42,28 @@ services:
       PORT: 8001
       NODE_ENV: development
       ENABLE_CLUSTER: "false"
-      
+
       # Database
       MONGODB_URI: mongodb://mongo-db:27017/mi-banco
       DB_NAME: mi-banco
       DB_CONNECTION_TIMEOUT: 10000
       DB_POOL_SIZE: 10
-      
+
       # Security
-      ALLOWED_ORIGINS: http://localhost:4200,http://localhost:3000,http://localhost:80,http://localhost
+      ALLOWED_ORIGINS: >-
+        http://localhost:4200,http://localhost:3000,http://localhost
       RATE_LIMIT_MAX: 100
       RATE_LIMIT_WINDOW: "15 minutes"
-      
+
       # Logging
       LOG_LEVEL: debug
-      
+
       # Application
       APP_NAME: mi-banco-api
       APP_VERSION: "1.0.0"
-      
+
       # Development
-      CHOKIDAR_USEPOLLING: "true"  # Necesario para detectar cambios en Docker
+      CHOKIDAR_USEPOLLING: "true" # Necesario para detectar cambios en Docker
     depends_on:
       - mongo-db
     networks:
@@ -102,7 +103,7 @@ services:
   #   ports:
   #     - "4200:4200"
   #   volumes:
-  #     - ./client:/app
+  #     - ./client:/app:z
   #     - client-node-modules:/app/node_modules
   #   environment:
   #     - NODE_ENV=development
@@ -121,7 +122,7 @@ services:
   # ==========================================================================
   # Mantener comentado para referencia, será eliminado en futuras versiones
   # server:
-  #   build: 
+  #   build:
   #     context: ./server
   #     dockerfile: Dockerfile
   #   image: seventrust/mean_backend

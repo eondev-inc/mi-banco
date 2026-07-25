@@ -38,15 +38,25 @@ interface NavItem {
       <!-- Sidenav: Boldo dark navy -->
       <mat-sidenav
         #sidenav
+        id="main-sidenav"
         [mode]="isMobile() ? 'over' : 'side'"
         [opened]="!isMobile()"
         class="layout-sidenav"
+        [class.sidenav-collapsed]="isCollapsed() && !isMobile()"
         role="navigation"
         aria-label="Menu principal">
 
         <div class="sidenav-header">
           <mat-icon class="sidenav-logo">account_balance</mat-icon>
           <span class="sidenav-brand">Mi Banco</span>
+          <button mat-icon-button
+                  class="sidenav-toggle"
+                  (click)="toggleCollapse()"
+                  [attr.aria-label]="isCollapsed() ? 'Expandir menú' : 'Contraer menú'"
+                  [attr.aria-expanded]="!isCollapsed()"
+                  aria-controls="main-sidenav">
+            <mat-icon>{{ isCollapsed() ? 'menu' : 'menu_open' }}</mat-icon>
+          </button>
         </div>
 
         <div class="sidenav-divider"></div>
@@ -57,7 +67,9 @@ interface NavItem {
                [routerLink]="item.route"
                routerLinkActive="active-link"
                [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
-               (click)="isMobile() && sidenav.close()">
+               (click)="isMobile() && sidenav.close()"
+               [matTooltip]="isCollapsed() && !isMobile() ? item.label : ''"
+               matTooltipPosition="after">
               <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
               <span matListItemTitle>{{ item.label }}</span>
             </a>
@@ -75,7 +87,9 @@ interface NavItem {
           </div>
           <div class="sidenav-divider"></div>
           <mat-nav-list>
-            <a mat-list-item (click)="logout()" class="logout-item">
+            <a mat-list-item (click)="logout()" class="logout-item"
+               [matTooltip]="isCollapsed() && !isMobile() ? 'Cerrar Sesión' : ''"
+               matTooltipPosition="after">
               <mat-icon matListItemIcon>logout</mat-icon>
               <span matListItemTitle>Cerrar Sesion</span>
             </a>
@@ -136,6 +150,7 @@ interface NavItem {
       width: 270px;
       background: #0A2640;
       border-right: none;
+      transition: width 0.3s ease;
     }
 
     .sidenav-header {
@@ -311,6 +326,43 @@ interface NavItem {
       padding: 8px 16px;
       opacity: 1 !important;
     }
+
+    /* Collapsed sidebar state */
+    .layout-sidenav.sidenav-collapsed {
+      width: 80px;
+    }
+
+    .sidenav-collapsed .sidenav-header {
+      justify-content: center;
+      padding: 28px 8px 24px;
+    }
+
+    .sidenav-collapsed .sidenav-brand,
+    .sidenav-collapsed .sidenav-user__info,
+    .sidenav-collapsed .mdc-list-item__primary-text,
+    .sidenav-collapsed .logout-item span[matListItemTitle] {
+      opacity: 0;
+      width: 0;
+      min-width: 0;
+      overflow: hidden;
+      transition: opacity 0.2s ease, width 0.3s ease;
+    }
+
+    .sidenav-collapsed .sidenav-nav .mat-mdc-list-item,
+    .sidenav-collapsed .sidenav-user {
+      justify-content: center;
+    }
+
+    .sidenav-toggle {
+      color: rgba(255, 255, 255, 0.6);
+      margin-left: auto;
+    }
+    .sidenav-toggle:hover {
+      color: #ffffff;
+    }
+    .sidenav-collapsed .sidenav-toggle {
+      margin-left: 0;
+    }
   `]
 })
 export class LayoutComponent implements OnInit {
@@ -319,6 +371,11 @@ export class LayoutComponent implements OnInit {
   private readonly router = inject(Router);
 
   readonly isMobile = signal(false);
+  readonly isCollapsed = signal(false);
+
+  toggleCollapse(): void {
+    this.isCollapsed.update(v => !v);
+  }
 
   readonly navItems: NavItem[] = [
     { label: 'Resumen', route: '/dashboard', icon: 'dashboard' },
